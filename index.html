@@ -132,7 +132,7 @@
     </form>
 
     <div class="text-center text-xs font-mono text-zinc-400 pb-1">
-      AESTHETIX AI • VERSION v4 • STRICT PSL ENGINE
+      AESTHETIX AI • VERSION v4 • BRUTAL PSL ENGINE
     </div>
   </section>
 
@@ -178,7 +178,7 @@
           <path d="M36 96 Q60 116 84 96" stroke-opacity="0.65" />
         </svg>
         <span class="absolute -bottom-2.5 px-3 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-[#0d0e16] text-cyan-300 border border-cyan-500/40 font-bold">
-          v4 • Strict PSL
+          v4 • Brutal Pro AI
         </span>
       </div>
 
@@ -187,7 +187,7 @@
           Biometric<br/><span class="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-300 bg-clip-text text-transparent">Face Scan v4</span>
         </h1>
         <p class="text-xs text-zinc-400 leading-relaxed">
-          2-angle scan (Front + 90° Profile) with fWHR, gonial &amp; E-line metrics from <strong class="text-zinc-200">Sub-3</strong> to <strong class="text-amber-300">True Adam</strong>.
+          Deep <strong class="text-zinc-200">gemini-2.5-pro</strong> 2-angle scan with unfiltered, harsh truth on appearance &amp; PSL from <strong class="text-zinc-200">Sub-3</strong> to <strong class="text-amber-300">True Adam</strong>.
         </p>
       </div>
     </div>
@@ -252,11 +252,11 @@
     </div>
 
     <!-- Analyzing laser overlay -->
-    <div id="analyzingOverlay" class="hidden absolute inset-0 z-30 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+    <div id="analyzingOverlay" class="hidden absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
       <div class="laser-line absolute left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-cyan-300 to-transparent"></div>
       <div class="w-14 h-14 rounded-2xl border-2 border-cyan-400 border-t-transparent animate-spin mb-4"></div>
-      <h3 id="analyzingTitle" class="text-lg font-extrabold text-white">Running v4 Biometric Analysis...</h3>
-      <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">fWHR • Gonial Angle • E-Line • Symmetry • PSL</p>
+      <h3 id="analyzingTitle" class="text-lg font-extrabold text-white">Running Deep AI Analysis (gemini-2.5-pro)...</h3>
+      <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">Unfiltered critique • Front + 90° Profile • PSL</p>
     </div>
 
     <!-- Top camera HUD -->
@@ -309,19 +309,19 @@
 
 
   <!-- =========================================================
-       SCREEN 3: FULLSCREEN ANALYSIS (NO SCROLL)
+       SCREEN 3: FULLSCREEN ANALYSIS (BUTTONS LOWERED & CLEAR)
   ========================================================== -->
-  <section id="screenResults" class="screen hidden-screen justify-between px-4 py-3 bg-[#06070c]">
-    <div class="flex items-center justify-between gap-2">
-      <button id="rescanBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-white/12 hover:bg-white/18 text-white border border-white/15 active:scale-95">
+  <section id="screenResults" class="screen hidden-screen justify-between px-4 pt-6 pb-3 bg-[#06070c]">
+    <div class="flex items-center justify-between gap-2 mt-2">
+      <button id="rescanBtn" type="button" class="px-3.5 py-2.5 rounded-2xl text-xs font-extrabold bg-white/12 hover:bg-white/18 text-white border border-white/15 active:scale-95">
         ↻ New Scan
       </button>
 
-      <button id="saveScanBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition">
+      <button id="saveScanBtn" type="button" class="px-4 py-2.5 rounded-2xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition">
         💾 Save Scan
       </button>
 
-      <button id="resSavedListBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-500/15 text-cyan-200 border border-cyan-400/35 active:scale-95">
+      <button id="resSavedListBtn" type="button" class="px-3.5 py-2.5 rounded-2xl text-xs font-mono font-bold bg-cyan-500/15 text-cyan-200 border border-cyan-400/35 active:scale-95">
         Saved (<span id="resSavedCount">0</span>)
       </button>
     </div>
@@ -330,14 +330,14 @@
       <div class="flex items-center justify-between gap-2">
         <div>
           <div class="flex items-center gap-1.5">
-            <span id="resUserHeader" class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">STRICT PSL</span>
-            <span id="resSourceTag" class="px-2 py-0.5 rounded text-[9px] font-mono bg-violet-500/20 text-violet-200 border border-violet-500/30 truncate max-w-[140px]">v4 AI</span>
+            <span id="resUserHeader" class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">BRUTAL PSL</span>
+            <span id="resSourceTag" class="px-2 py-0.5 rounded text-[9px] font-mono bg-violet-500/20 text-violet-200 border border-violet-500/30 truncate max-w-[155px]">gemini-2.5-pro</span>
           </div>
           <div class="flex items-baseline gap-2 mt-0.5">
             <h2 id="resRankName" class="text-3xl font-black tracking-tight text-white">MTN</h2>
-            <span id="resPslScore" class="font-mono text-sm font-bold text-cyan-300">4.7 PSL</span>
+            <span id="resPslScore" class="font-mono text-sm font-bold text-cyan-300">4.5 PSL</span>
           </div>
-          <p id="resPotential" class="text-[11px] text-emerald-300 font-semibold">Ceiling: HTN (5.5 PSL)</p>
+          <p id="resPotential" class="text-[11px] text-emerald-300 font-semibold">Ceiling: HTN (5.3 PSL)</p>
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
@@ -372,7 +372,7 @@
       <div class="grid grid-cols-4 gap-1.5 pt-0.5 text-center">
         <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
           <span class="text-[8px] font-mono text-zinc-400 block">GONIAL</span>
-          <span id="resGonial" class="text-xs font-bold font-mono text-white">124°</span>
+          <span id="resGonial" class="text-xs font-bold font-mono text-white">126°</span>
         </div>
         <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
           <span class="text-[8px] font-mono text-zinc-400 block">E-LINE</span>
@@ -380,21 +380,21 @@
         </div>
         <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
           <span class="text-[8px] font-mono text-zinc-400 block">fWHR</span>
-          <span id="resFwhr" class="text-xs font-bold font-mono text-violet-300">1.82</span>
+          <span id="resFwhr" class="text-xs font-bold font-mono text-violet-300">1.78</span>
         </div>
         <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
           <span class="text-[8px] font-mono text-zinc-400 block">SYMMETRY</span>
-          <span id="resSymmetry" class="text-xs font-bold font-mono text-emerald-300">89%</span>
+          <span id="resSymmetry" class="text-xs font-bold font-mono text-emerald-300">86%</span>
         </div>
       </div>
     </div>
 
     <div class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-surface border border-white/15">
       <button id="tabMetricsBtn" type="button" class="py-2 rounded-xl text-xs font-extrabold bg-violet-600 text-white transition">
-        Scores &amp; Verdict
+        Scores &amp; Brutal Verdict
       </button>
       <button id="tabTrainBtn" type="button" class="py-2 rounded-xl text-xs font-extrabold text-zinc-300 hover:text-white transition">
-        Fixes &amp; Routine
+        Flaws &amp; Routine
       </button>
     </div>
 
@@ -406,8 +406,8 @@
     </div>
 
     <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-1.5">
-      <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/30 space-y-1">
-        <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Top Areas to Improve:</span>
+      <div class="rounded-2xl p-2.5 bg-surface border border-rose-500/35 space-y-1">
+        <span class="text-[10px] font-mono uppercase text-rose-300 font-bold">Brutal Flaws &amp; Fixes:</span>
         <ul id="resWeaknessesList" class="space-y-1 text-[11px] text-zinc-200 leading-snug"></ul>
       </div>
 
@@ -450,12 +450,11 @@
         <button id="closeGeminiModalBtn" type="button" class="w-9 h-9 rounded-full bg-white/10 text-white font-bold text-sm active:scale-95">✕</button>
       </div>
       <p class="text-xs text-zinc-400 leading-relaxed">
-        Default API key is preloaded for all users. You can update it below anytime.
+        Locked to deep analysis model <strong class="text-zinc-200">gemini-2.5-pro</strong> for slower, thorough visual inspection.
       </p>
       <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
       <select id="geminiModelInput" class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
-        <option value="gemini-2.5-flash">gemini-2.5-flash (Fast)</option>
-        <option value="gemini-2.5-pro">gemini-2.5-pro (Deepest)</option>
+        <option value="gemini-2.5-pro">gemini-2.5-pro (Deepest • Default)</option>
       </select>
       <div class="flex gap-2 pt-1">
         <button id="resetDefaultKeyBtn" type="button" class="px-3.5 py-3 rounded-xl text-xs font-bold bg-white/10 text-zinc-200 border border-white/10 active:scale-95">Default</button>
@@ -471,8 +470,9 @@
     (function () {
       const APP_VERSION = 'v4';
       const APP_PASSWORD = 'bradar';
+      const DEEP_MODEL = 'gemini-2.5-pro';
       const DEFAULT_GEMINI_KEY = 'AQ.Ab8RN6JadGBmNKfESpjeL3JJBXeqpZIGwWT8Jota5MjPynE-uQ';
-      const STORAGE_GEMINI = 'aesthetix_v4_gemini';
+      const STORAGE_GEMINI = 'aesthetix_v4_gemini_pro';
       const STORAGE_ROUTINE = 'aesthetix_v4_routine';
       const STORAGE_AUTH = 'aesthetix_v4_session';
       const STORAGE_SAVED = 'aesthetix_v4_saved_scans';
@@ -489,10 +489,10 @@
       ];
 
       const ROUTINE_ITEMS = [
-        { id: 'bf', text: 'Lower body fat (10–14%) & cut excess sodium for sharper jaw', done: false },
-        { id: 'posture', text: 'Chin tucks & upright neck posture (gonial & E-line)', done: false },
-        { id: 'skin', text: 'Skincare: Cleanser, moisturizer, retinoid/niacinamide & SPF', done: false },
-        { id: 'groom', text: 'Eyebrows, hair framing for face shape & 8h sleep', done: false }
+        { id: 'bf', text: 'Cut body fat to ~10–13% & drop excess water retention', done: false },
+        { id: 'posture', text: 'Daily chin tucks & neck posture to fight forward head/soft jaw', done: false },
+        { id: 'skin', text: 'Strict skincare: cleanser, retinoid/moisturizer & daily SPF', done: false },
+        { id: 'groom', text: 'Sharp eyebrow shape, haircut suited to skull/face & 8h sleep', done: false }
       ];
 
       const state = {
@@ -505,7 +505,7 @@
         savedScans: [],
         stream: null,
         trackTimer: null,
-        gemini: { apiKey: DEFAULT_GEMINI_KEY, model: 'gemini-2.5-flash' },
+        gemini: { apiKey: DEFAULT_GEMINI_KEY, model: DEEP_MODEL },
         routine: ROUTINE_ITEMS.map((r) => ({ ...r }))
       };
 
@@ -634,13 +634,13 @@
           const g = JSON.parse(localStorage.getItem(STORAGE_GEMINI) || 'null');
           if (g && typeof g.apiKey === 'string' && g.apiKey.trim()) {
             state.gemini.apiKey = g.apiKey.trim();
-            state.gemini.model = g.model || 'gemini-2.5-flash';
           } else {
             state.gemini.apiKey = DEFAULT_GEMINI_KEY;
           }
         } catch (_) {
           state.gemini.apiKey = DEFAULT_GEMINI_KEY;
         }
+        state.gemini.model = DEEP_MODEL;
 
         try {
           const r = JSON.parse(localStorage.getItem(STORAGE_ROUTINE) || 'null');
@@ -917,7 +917,6 @@
       async function captureCurrentFrame() {
         if (state.isCapturing) return;
 
-        // Om kameran råkat pausa eller saknar videoWidth trots stream, försök återuppta först
         if (!state.stream || !el.liveVideo.videoWidth) {
           el.fallbackStepLabel.textContent = state.step === 'front' ? '1. Front' : '2. 90° Profile';
           el.cameraFallbackBg.classList.remove('hidden');
@@ -935,7 +934,7 @@
           const canvas = el.hiddenCanvas;
           const vw = el.liveVideo.videoWidth;
           const vh = el.liveVideo.videoHeight;
-          const maxSide = 960;
+          const maxSide = 1024;
           let w = vw, h = vh;
           if (w > maxSide || h > maxSide) {
             if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
@@ -949,7 +948,7 @@
           ctx.drawImage(el.liveVideo, 0, 0, w, h);
           ctx.restore();
 
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
           await handleCapturedPhoto(dataUrl);
         } finally {
           state.isCapturing = false;
@@ -964,7 +963,7 @@
         reader.onload = (ev) => {
           const img = new Image();
           img.onload = async () => {
-            const maxSide = 960;
+            const maxSide = 1024;
             let w = img.width, h = img.height;
             if (w > maxSide || h > maxSide) {
               if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
@@ -973,7 +972,7 @@
             const canvas = el.hiddenCanvas;
             canvas.width = w; canvas.height = h;
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-            await handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
+            await handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.9));
           };
           img.src = ev.target.result;
         };
@@ -995,164 +994,50 @@
         }
       }
 
-      // Advanced Strict PSL Engine (v4)
       function mapStrictPsl(psl) {
-        const val = clamp(Number(psl) || 4.2, 1.0, 8.0);
+        const val = clamp(Number(psl) || 4.0, 1.0, 8.0);
         let idx = PSL_LEVELS.findIndex((t) => val >= t.min && val <= t.max);
         if (idx === -1) idx = val < 2.5 ? 0 : PSL_LEVELS.length - 1;
         return { idx, tier: PSL_LEVELS[idx], psl: Number(val.toFixed(1)) };
       }
 
-      function extractImageBiometrics(dataUrl) {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => {
-            const W = 96, H = 120;
-            const canvas = el.hiddenCanvas;
-            canvas.width = W; canvas.height = H;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, W, H);
-            const { data } = ctx.getImageData(0, 0, W, H);
-
-            const lum = new Float32Array(W * H);
-            let sum = 0, sqSum = 0, edges = 0, symDiff = 0, symN = 0, hash = 2166136261;
-
-            for (let i = 0; i < W * H; i++) {
-              const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
-              const l = 0.299 * r + 0.587 * g + 0.114 * b;
-              lum[i] = l;
-              sum += l;
-              sqSum += l * l;
-              if (i % 11 === 0) {
-                hash ^= (r ^ (g << 3) ^ (b << 7));
-                hash = Math.imul(hash, 16777619);
-              }
-            }
-
-            for (let y = 22; y < H - 20; y++) {
-              for (let x = 22; x < W - 22; x++) {
-                const idx = y * W + x;
-                edges += (Math.abs(lum[idx + 1] - lum[idx - 1]) + Math.abs(lum[idx + W] - lum[idx - W])) * 0.5;
-              }
-            }
-
-            const half = Math.floor(W / 2);
-            for (let y = 24; y < H - 20; y++) {
-              for (let x = 20; x < half - 1; x++) {
-                symDiff += Math.abs(lum[y * W + x] - lum[y * W + (W - 1 - x)]);
-                symN++;
-              }
-            }
-
-            const mean = sum / (W * H);
-            const std = Math.sqrt(Math.max(0, sqSum / (W * H) - mean * mean));
-            const edgeAvg = edges / ((W - 44) * (H - 42));
-            const symDelta = symN ? symDiff / symN : 28;
-
-            resolve({
-              definition: clamp(2.8 + edgeAvg / 5.8, 2.5, 8.2),
-              boneContrast: clamp(3.0 + std / 16.5, 2.5, 8.3),
-              symmetryPct: Math.round(clamp(95 - symDelta * 1.15, 68, 96)),
-              lighting: clamp(8.5 - Math.abs(mean - 130) / 14, 3.0, 8.5),
-              seed: (hash >>> 0) % 1000
-            });
-          };
-          img.src = dataUrl;
-        });
-      }
-
-      function computeAdvancedLocalReport(frontBio, profileBio, isDemo) {
-        const s = ((frontBio.seed * 17 + profileBio.seed) % 1000) / 1000;
-        const micro = (s - 0.5) * 0.7;
-
-        const jawline = Number(clamp(profileBio.definition * 0.55 + profileBio.boneContrast * 0.45 + micro, 2.6, 8.4).toFixed(1));
-        const eyeArea = Number(clamp(frontBio.definition * 0.5 + (frontBio.symmetryPct / 12) * 0.5 + micro * 0.6, 2.8, 8.2).toFixed(1));
-        const cheekbones = Number(clamp(frontBio.boneContrast * 0.55 + frontBio.definition * 0.45 + micro * 0.8, 2.8, 8.3).toFixed(1));
-        const symmetryScore = Number(clamp((frontBio.symmetryPct - 52) / 5.2, 2.5, 8.6).toFixed(1));
-        const skin = Number(clamp(frontBio.lighting * 0.6 + (8.2 - Math.abs(frontBio.definition - 5.4) * 0.5) * 0.4, 2.8, 8.4).toFixed(1));
-
-        const weightedTen = jawline * 0.28 + eyeArea * 0.25 + cheekbones * 0.20 + symmetryScore * 0.15 + skin * 0.12;
-        const strictPsl = clamp(1.35 + weightedTen * 0.66, 1.5, 7.6);
-        const mapped = mapStrictPsl(strictPsl);
-        const maxPotPsl = clamp(mapped.psl + 0.75, 2.5, 7.8);
-        const maxPotTier = mapStrictPsl(maxPotPsl).tier;
-
-        const gonial = Math.round(clamp(129 - (jawline - 4.5) * 2.6 + (s - 0.5) * 3, 114, 138));
-        const eline = jawline >= 6.2 ? 'Forward' : jawline >= 4.7 ? 'Neutral' : 'Recessed';
-        const fwhr = Number(clamp(1.72 + (frontBio.symmetryPct - 75) * 0.008 + (s - 0.5) * 0.12, 1.58, 2.08).toFixed(2));
-
-        const metrics = [
-          { name: 'Jawline & Gonial (90°)', score: jawline, fix: 'Lower body fat %, reduce bloat & train neck posture.' },
-          { name: 'Eye Area & Brow Frame', score: eyeArea, fix: 'Grow/groom brows, 8h sleep & reduce dark circles.' },
-          { name: 'Cheekbones & Maxilla', score: cheekbones, fix: 'Leaner face definition sharpens zygomatic shadow.' },
-          { name: 'Bilateral Symmetry', score: symmetryScore, fix: 'Back sleeping, even chewing & balanced hair framing.' },
-          { name: 'Skin Quality & Clarity', score: skin, fix: 'Daily cleanser, moisturizer, retinoid & sunscreen.' }
-        ];
-
-        const weakest = [...metrics].sort((a, b) => a.score - b.score).slice(0, 3);
-
-        return {
-          id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-          timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-          source: isDemo ? 'v4 Demo • Strict PSL' : 'v4 Biometric Engine',
-          rank: mapped.tier.name,
-          rankIdx: mapped.idx,
-          psl: mapped.psl,
-          potential: `Ceiling: ${maxPotTier.name} (${maxPotPsl.toFixed(1)} PSL)`,
-          gonial: `${gonial}°`,
-          eline,
-          fwhr: fwhr.toFixed(2),
-          symmetry: `${frontBio.symmetryPct}%`,
-          metrics,
-          verdict: `Strict v4 front + 90° profile evaluation places you at ${mapped.tier.name} (${mapped.psl} PSL) with fWHR ${fwhr.toFixed(2)}. Primary bottlenecks: ${weakest[0].name.toLowerCase()} (${weakest[0].score}/10) and ${weakest[1].name.toLowerCase()} (${weakest[1].score}/10).`,
-          weaknesses: weakest.map((w) => `<strong>${w.name} (${w.score}/10):</strong> ${w.fix}`),
-          frontPhoto: state.photos.front,
-          profilePhoto: state.photos.profile
-        };
-      }
-
-      async function callAdvancedGeminiAI(frontUrl, profileUrl) {
-        const key = state.gemini.apiKey.trim();
-        const model = state.gemini.model || 'gemini-2.5-flash';
+      async function callBrutalGeminiProAI(frontUrl, profileUrl) {
+        const key = (state.gemini.apiKey || DEFAULT_GEMINI_KEY).trim();
+        const model = DEEP_MODEL;
         const frontB64 = frontUrl.split(',')[1];
         const profB64 = profileUrl.split(',')[1];
 
-        const prompt = `You are an ultra-strict, objective v4 biometric PSL facial aesthetics analyst. Respond strictly in English.
-Analyze both images carefully:
-Image 1: FRONTAL VIEW (symmetry, IPD, canthal tilt, brow ridge/eyebrows, cheekbones, skin quality, facial width-to-height ratio fWHR).
-Image 2: 90° SIDE PROFILE (mandibular definition, gonial angle, chin projection, Ricketts E-line balance, maxillary projection).
+        const prompt = `You are a blunt, unfiltered, coldly objective facial aesthetics & PSL rater running deep analysis. Respond strictly in English.
+DO NOT flatter, coddle, sugarcoat, or give fake compliments. Tell the user the raw, honest truth about how their face and features actually look in these two photos:
+Image 1: FRONTAL VIEW — analyze eye area, brow symmetry, upper eyelid exposure, cheekbones/zygomatic prominence, facial symmetry, skin texture/blemishes/redness, and fWHR.
+Image 2: 90° PROFILE VIEW — analyze mandible/jawline definition, gonial angle, chin projection, maxillary/midface support, submental fullness/neck posture, and Ricketts E-line lip/chin relationship.
 
-STRICT PSL CALIBRATION (DO NOT INFLATE RATINGS):
-- Sub-3 (1.0–2.4 PSL): Severe disharmony/asymmetry.
-- Sub-5 (2.5–3.4 PSL): Clearly below average.
-- LTN (3.5–4.3 PSL): Below average (soft jaw, weak eye area, or poor skin).
-- MTN (4.4–5.2 PSL): Average baseline (most everyday people).
-- HTN (5.3–6.0 PSL): Clearly above average with crisp bone structure (top 10–15%).
-- Chadlite (6.1–6.8 PSL): Rare, strong jaw & eye tilt, high dimorphism (top 2–4%).
-- Chad (6.9–7.5 PSL): Model tier (top 0.5%).
-- True Adam (7.6–8.0 PSL): Near-impossible aesthetic ideal.
+BRUTAL CALIBRATION RULES:
+- Be direct and candid about flaws, bloat, weak bone structure, asymmetry, or skin issues—state what you genuinely see without soft padding.
+- Most average people sit around MTN (4.4–5.0 PSL) or LTN (3.6–4.3 PSL) if bone definition, leanness, or eye/jaw structure is lacking. Do NOT inflate scores.
+- Keep the verdict and fixes punchy, concrete, and ruthless in honesty while still giving real practical actions to improve what can be changed.
 
 Return ONLY valid JSON in this exact format:
 {
-  "rank": "MTN",
-  "psl": 4.6,
-  "potential": "Ceiling: HTN (5.5 PSL)",
-  "gonial": "124°",
-  "eline": "Neutral",
-  "fwhr": "1.82",
-  "symmetry": "88%",
+  "rank": "LTN",
+  "psl": 4.1,
+  "potential": "Ceiling: HTN (5.4 PSL)",
+  "gonial": "127°",
+  "eline": "Recessed",
+  "fwhr": "1.76",
+  "symmetry": "84%",
   "metrics": [
-    { "name": "Jawline & Gonial (90°)", "score": 4.8, "fix": "Concrete actionable fix in English" },
-    { "name": "Eye Area & Brow Frame", "score": 4.9, "fix": "Concrete actionable fix in English" },
-    { "name": "Cheekbones & Maxilla", "score": 4.6, "fix": "Concrete actionable fix in English" },
-    { "name": "Bilateral Symmetry", "score": 5.1, "fix": "Concrete actionable fix in English" },
-    { "name": "Skin Quality & Clarity", "score": 4.7, "fix": "Concrete actionable fix in English" }
+    { "name": "Jawline & Gonial (90°)", "score": 4.0, "fix": "Blunt, specific fix in English" },
+    { "name": "Eye Area & Brow Frame", "score": 4.3, "fix": "Blunt, specific fix in English" },
+    { "name": "Cheekbones & Maxilla", "score": 4.1, "fix": "Blunt, specific fix in English" },
+    { "name": "Bilateral Symmetry", "score": 4.4, "fix": "Blunt, specific fix in English" },
+    { "name": "Skin Quality & Clarity", "score": 4.2, "fix": "Blunt, specific fix in English" }
   ],
-  "verdict": "Direct, objective 2-sentence assessment in English covering strengths and main holding factors.",
+  "verdict": "Direct, unfiltered 2-sentence truth on how the person actually looks and what holds them back most.",
   "weaknesses": [
-    "<strong>Priority 1:</strong> Specific improvement action",
-    "<strong>Priority 2:</strong> Specific improvement action",
-    "<strong>Priority 3:</strong> Specific improvement action"
+    "<strong>Flaw 1:</strong> Blunt, honest breakdown & concrete fix",
+    "<strong>Flaw 2:</strong> Blunt, honest breakdown & concrete fix",
+    "<strong>Flaw 3:</strong> Blunt, honest breakdown & concrete fix"
   ]
 }`;
 
@@ -1175,28 +1060,39 @@ Return ONLY valid JSON in this exact format:
                 { inlineData: { mimeType: 'image/jpeg', data: profB64 } }
               ]
             }],
-            generationConfig: { temperature: 0.25, responseMimeType: 'application/json' }
+            generationConfig: {
+              temperature: 0.45,
+              thinkingConfig: { thinkingBudget: 2048 },
+              responseMimeType: 'application/json'
+            }
           })
         });
 
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) {
+          const errTxt = await res.text().catch(() => '');
+          throw new Error(`Gemini Pro error (${res.status}): ${errTxt.slice(0, 140)}`);
+        }
+
         const json = await res.json();
-        const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        const parsed = JSON.parse(text.replace(/^```json\s*/i, '').replace(/```$/i, '').trim());
+        const parts = json?.candidates?.[0]?.content?.parts || [];
+        const textPart = parts.find((p) => typeof p.text === 'string' && !p.thought) || parts[parts.length - 1];
+        const rawText = (textPart && textPart.text) || '';
+        const cleaned = rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+        const parsed = JSON.parse(cleaned);
         const mapped = mapStrictPsl(parsed.psl);
 
         return {
           id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
           timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-          source: `v4 Gemini (${model})`,
+          source: `AI • ${model}`,
           rank: parsed.rank || mapped.tier.name,
           rankIdx: mapped.idx,
           psl: mapped.psl,
           potential: parsed.potential || `Ceiling: ${mapStrictPsl(mapped.psl + 0.8).tier.name}`,
-          gonial: parsed.gonial || '124°',
+          gonial: parsed.gonial || '126°',
           eline: parsed.eline || 'Neutral',
-          fwhr: parsed.fwhr || '1.80',
-          symmetry: parsed.symmetry || '89%',
+          fwhr: parsed.fwhr || '1.78',
+          symmetry: parsed.symmetry || '85%',
           metrics: Array.isArray(parsed.metrics) ? parsed.metrics.slice(0, 5) : [],
           verdict: parsed.verdict || '',
           weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses.slice(0, 3) : [],
@@ -1207,34 +1103,43 @@ Return ONLY valid JSON in this exact format:
 
       async function runFullAnalysis(isDemo) {
         el.analyzingOverlay.classList.remove('hidden');
-        el.analyzingTitle.textContent = state.gemini.apiKey.trim() && !isDemo
-          ? 'v4 Gemini AI analyzing 2 angles...'
-          : 'Running v4 strict biometric scan...';
+        el.analyzingTitle.textContent = 'Deep AI scan running (gemini-2.5-pro)...';
 
         try {
-          const [fBio, pBio] = await Promise.all([
-            extractImageBiometrics(state.photos.front),
-            extractImageBiometrics(state.photos.profile)
-          ]);
-
-          let report = null;
-          if (!isDemo && state.gemini.apiKey.trim()) {
-            try {
-              const aiRep = await callAdvancedGeminiAI(state.photos.front, state.photos.profile);
-              if (aiRep.metrics.length) report = aiRep;
-            } catch (_) {
-              report = computeAdvancedLocalReport(fBio, pBio, false);
-              report.source = 'v4 Local Fallback';
-            }
-          }
-
-          if (!report) {
-            report = computeAdvancedLocalReport(fBio, pBio, isDemo);
-          }
-
+          const report = await callBrutalGeminiProAI(state.photos.front, state.photos.profile);
+          if (isDemo) report.source = `Demo • ${DEEP_MODEL}`;
           state.currentReport = report;
           stopCameraStream();
           renderResultsScreen(report);
+          showScreen('results');
+        } catch (err) {
+          stopCameraStream();
+          const fallbackReport = {
+            id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+            source: 'AI Error • Check Key/Quota',
+            rank: 'N/A',
+            rankIdx: 2,
+            psl: 0,
+            potential: 'AI analysis failed',
+            gonial: '—',
+            eline: '—',
+            fwhr: '—',
+            symmetry: '—',
+            metrics: [
+              { name: 'Jawline & Gonial (90°)', score: 0, fix: 'AI scan did not complete.' },
+              { name: 'Eye Area & Brow Frame', score: 0, fix: 'AI scan did not complete.' },
+              { name: 'Cheekbones & Maxilla', score: 0, fix: 'AI scan did not complete.' },
+              { name: 'Bilateral Symmetry', score: 0, fix: 'AI scan did not complete.' },
+              { name: 'Skin Quality & Clarity', score: 0, fix: 'AI scan did not complete.' }
+            ],
+            verdict: `Could not complete ${DEEP_MODEL} scan: ${err && err.message ? err.message : 'Network/API error'}. Open AI settings to verify your key/quota and retry.`,
+            weaknesses: ['<strong>AI Connection:</strong> Verify your Gemini API key or billing quota in AI settings, then scan again.'],
+            frontPhoto: state.photos.front,
+            profilePhoto: state.photos.profile
+          };
+          state.currentReport = fallbackReport;
+          renderResultsScreen(fallbackReport);
           showScreen('results');
         } finally {
           el.analyzingOverlay.classList.add('hidden');
@@ -1245,29 +1150,30 @@ Return ONLY valid JSON in this exact format:
         state.currentReport = rep;
         el.resSourceTag.textContent = rep.source;
         el.resRankName.textContent = rep.rank;
-        el.resPslScore.textContent = `${Number(rep.psl).toFixed(1)} PSL`;
+        el.resPslScore.textContent = rep.psl > 0 ? `${Number(rep.psl).toFixed(1)} PSL` : '— PSL';
         el.resPotential.textContent = rep.potential;
         el.resImgFront.src = rep.frontPhoto || state.photos.front || '';
         el.resImgProfile.src = rep.profilePhoto || state.photos.profile || '';
         el.resGonial.textContent = rep.gonial;
         el.resEline.textContent = rep.eline;
-        el.resFwhr.textContent = rep.fwhr || '1.80';
+        el.resFwhr.textContent = rep.fwhr || '—';
         el.resSymmetry.textContent = rep.symmetry;
         el.resVerdictText.textContent = rep.verdict;
 
         el.saveScanBtn.textContent = '💾 Save Scan';
-        el.saveScanBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition';
+        el.saveScanBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition';
 
         document.querySelectorAll('.psl-bar').forEach((bar, i) => {
           const col = PSL_LEVELS[i]?.color || 'bg-cyan-400';
+          const active = rep.psl > 0 && i <= rep.rankIdx;
           bar.className = `psl-bar h-2 ${i === 0 ? 'rounded-l' : ''} ${i === 7 ? 'rounded-r' : ''} ${
-            i <= rep.rankIdx ? col : 'bg-white/10'
+            active ? col : 'bg-white/10'
           }`;
         });
 
         el.resMetricsList.innerHTML = rep.metrics.map((m) => {
-          const sc = clamp(Number(m.score) || 4.5, 1, 10);
-          const pct = clamp(sc * 10, 10, 100);
+          const sc = clamp(Number(m.score) || 0, 0, 10);
+          const pct = clamp(sc * 10, 0, 100);
           return `
             <div class="rounded-xl px-3 py-1.5 bg-surface border border-white/10">
               <div class="flex justify-between text-[11px] mb-0.5">
@@ -1282,7 +1188,7 @@ Return ONLY valid JSON in this exact format:
         }).join('');
 
         el.resWeaknessesList.innerHTML = rep.weaknesses
-          .map((w) => `<li class="flex items-start gap-1.5"><span class="text-cyan-400">•</span><span>${w}</span></li>`)
+          .map((w) => `<li class="flex items-start gap-1.5"><span class="text-rose-400">•</span><span>${w}</span></li>`)
           .join('');
 
         renderCompactRoutine();
@@ -1298,7 +1204,7 @@ Return ONLY valid JSON in this exact format:
           saveScansToStorage();
         }
         el.saveScanBtn.textContent = '✓ Saved';
-        el.saveScanBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-cyan-400 text-black active:scale-95 transition';
+        el.saveScanBtn.className = 'px-4 py-2.5 rounded-2xl text-xs font-extrabold bg-cyan-400 text-black active:scale-95 transition';
       }
 
       function openSavedModal() {
@@ -1397,7 +1303,7 @@ Return ONLY valid JSON in this exact format:
           ctx.fillStyle = '#94a3b8';
           ctx.font = 'bold 14px monospace';
           ctx.fillText(label, 20, 34);
-          return c.toDataURL('image/jpeg', 0.8);
+          return c.toDataURL('image/jpeg', 0.85);
         };
         state.photos.front = make('v4 DEMO FRONT');
         state.photos.profile = make('v4 DEMO 90°');
@@ -1439,17 +1345,18 @@ Return ONLY valid JSON in this exact format:
 
       const openModal = () => {
         el.geminiKeyInput.value = state.gemini.apiKey;
-        el.geminiModelInput.value = state.gemini.model;
+        el.geminiModelInput.value = DEEP_MODEL;
         el.geminiModal.classList.remove('hidden');
       };
       el.openGeminiBtn.addEventListener('click', openModal);
       el.closeGeminiModalBtn.addEventListener('click', () => el.geminiModal.classList.add('hidden'));
       el.resetDefaultKeyBtn.addEventListener('click', () => {
         el.geminiKeyInput.value = DEFAULT_GEMINI_KEY;
+        el.geminiModelInput.value = DEEP_MODEL;
       });
       el.saveGeminiBtn.addEventListener('click', () => {
         state.gemini.apiKey = el.geminiKeyInput.value.trim() || DEFAULT_GEMINI_KEY;
-        state.gemini.model = el.geminiModelInput.value;
+        state.gemini.model = DEEP_MODEL;
         try { localStorage.setItem(STORAGE_GEMINI, JSON.stringify(state.gemini)); } catch (_) {}
         updateGeminiDot();
         el.geminiModal.classList.add('hidden');
