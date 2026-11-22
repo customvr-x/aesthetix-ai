@@ -65,7 +65,6 @@
       animation: laserSweep 1.7s ease-in-out infinite;
       box-shadow: 0 0 24px rgba(6, 182, 212, 0.95), 0 0 46px rgba(139, 92, 246, 0.75);
     }
-    /* Stronger TikTok/Snapchat-style selfie ring light */
     .ringlight-strong {
       box-shadow:
         inset 0 0 115px 42px rgba(255, 253, 242, 0.94),
@@ -142,7 +141,6 @@
        SCREEN 1: FULLSCREEN START (v4)
   ========================================================== -->
   <section id="screenStart" class="screen hidden-screen justify-between px-5 py-5 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
-    <!-- Top bar -->
     <div class="flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 min-w-0">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px] shrink-0">
@@ -170,7 +168,6 @@
       </div>
     </div>
 
-    <!-- Center hero -->
     <div class="flex flex-col items-center text-center space-y-4 my-auto">
       <div class="relative w-36 h-44 rounded-[36px] border border-cyan-400/40 bg-white/[0.03] flex items-center justify-center shadow-[0_0_50px_rgba(139,92,246,0.22)]">
         <svg viewBox="0 0 120 150" class="w-24 h-32 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -195,7 +192,6 @@
       </div>
     </div>
 
-    <!-- Bottom large accessible buttons -->
     <div class="space-y-2.5 pb-1">
       <button id="startScanFlowBtn" type="button" class="w-full py-4 rounded-2xl text-base font-black tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_10px_35px_rgba(139,92,246,0.45)] active:scale-[0.98] transition">
         START SCAN
@@ -218,10 +214,7 @@
   <section id="screenCamera" class="screen hidden-screen bg-black">
     <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-contain bg-black scale-x-[-1]"></video>
 
-    <!-- Strong TikTok/Snapchat-inspired selfie ring light -->
     <div id="ringLightLayer" class="pointer-events-none absolute inset-0 z-10 transition-all duration-200"></div>
-
-    <!-- Fullscreen flash pop on capture -->
     <div id="screenFlashOverlay" class="fixed inset-0 z-40"></div>
 
     <div id="cameraFallbackBg" class="hidden absolute inset-0 z-20 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
@@ -266,7 +259,7 @@
       <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">fWHR • Gonial Angle • E-Line • Symmetry • PSL</p>
     </div>
 
-    <!-- Top camera HUD with large high-contrast controls -->
+    <!-- Top camera HUD -->
     <div class="relative z-20 flex items-center justify-between px-3.5 pt-3 gap-1.5">
       <button id="cancelCameraBtn" type="button" class="px-3.5 py-2 rounded-2xl text-xs font-bold bg-black/75 backdrop-blur-md text-white border border-white/20 active:scale-95">
         ✕ Back
@@ -292,22 +285,22 @@
     <div class="relative z-20 mt-3 px-4 flex justify-center">
       <div id="liveGuidanceBanner" class="px-4 py-2.5 rounded-2xl bg-black/75 backdrop-blur-md border border-cyan-400/45 text-center max-w-sm shadow-lg">
         <p id="guidanceMainText" class="text-sm font-extrabold text-white">Step 1: Look straight into camera</p>
-        <p id="guidanceSubText" class="text-xs text-cyan-300 mt-0.5">Auto-fitting head frame...</p>
+        <p id="guidanceSubText" class="text-xs text-cyan-300 mt-0.5">Wide lens active • Auto-fitting head frame...</p>
       </div>
     </div>
 
-    <!-- Bottom camera controls -->
-    <div class="relative z-20 mt-auto px-6 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/95 via-black/60 to-transparent">
-      <div class="w-13 h-17 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
+    <!-- Bottom camera controls with larger shutter button -->
+    <div class="relative z-20 mt-auto px-5 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/95 via-black/60 to-transparent">
+      <div class="w-14 h-18 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
         <img id="camThumbFront" alt="Front" class="hidden w-full h-full object-cover rounded-lg" />
         <span id="camThumbFrontTxt" class="text-[10px] font-mono font-bold text-zinc-300 text-center leading-tight">1.<br/>FRONT</span>
       </div>
 
-      <button id="shutterBtn" type="button" aria-label="Capture photo" class="w-22 h-22 rounded-full p-1.5 border-4 border-white bg-white/15 active:scale-90 transition flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.3)]">
+      <button id="shutterBtn" type="button" aria-label="Capture photo" class="w-24 h-24 rounded-full p-2 border-4 border-white bg-white/20 active:scale-90 transition flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.35)]">
         <div id="shutterInner" class="w-full h-full rounded-full bg-white transition"></div>
       </button>
 
-      <div class="w-13 h-17 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
+      <div class="w-14 h-18 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
         <img id="camThumbProfile" alt="Profile" class="hidden w-full h-full object-cover rounded-lg" />
         <span id="camThumbProfileTxt" class="text-[10px] font-mono font-bold text-zinc-300 text-center leading-tight">2.<br/>90°</span>
       </div>
@@ -319,7 +312,6 @@
        SCREEN 3: FULLSCREEN ANALYSIS (NO SCROLL)
   ========================================================== -->
   <section id="screenResults" class="screen hidden-screen justify-between px-4 py-3 bg-[#06070c]">
-    <!-- Top action bar with large buttons -->
     <div class="flex items-center justify-between gap-2">
       <button id="rescanBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-white/12 hover:bg-white/18 text-white border border-white/15 active:scale-95">
         ↻ New Scan
@@ -334,7 +326,6 @@
       </button>
     </div>
 
-    <!-- Rank & Advanced Biometrics Card -->
     <div class="rounded-3xl p-3.5 bg-card border border-white/15 space-y-2 shadow-xl">
       <div class="flex items-center justify-between gap-2">
         <div>
@@ -355,7 +346,6 @@
         </div>
       </div>
 
-      <!-- PSL Ladder: Sub-3 to True Adam -->
       <div class="space-y-1">
         <div class="flex justify-between text-[9px] font-mono text-zinc-400">
           <span>Sub-3</span>
@@ -379,7 +369,6 @@
         </div>
       </div>
 
-      <!-- 4 Advanced Biometrics -->
       <div class="grid grid-cols-4 gap-1.5 pt-0.5 text-center">
         <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
           <span class="text-[8px] font-mono text-zinc-400 block">GONIAL</span>
@@ -400,7 +389,6 @@
       </div>
     </div>
 
-    <!-- Large Tabs -->
     <div class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-surface border border-white/15">
       <button id="tabMetricsBtn" type="button" class="py-2 rounded-xl text-xs font-extrabold bg-violet-600 text-white transition">
         Scores &amp; Verdict
@@ -410,7 +398,6 @@
       </button>
     </div>
 
-    <!-- Panel A: Detailed Sub-scores + Verdict -->
     <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-1.5">
       <div id="resMetricsList" class="space-y-1"></div>
       <div class="rounded-2xl p-2.5 bg-surface border border-white/10">
@@ -418,7 +405,6 @@
       </div>
     </div>
 
-    <!-- Panel B: Priority Fixes + Daily Routine -->
     <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-1.5">
       <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/30 space-y-1">
         <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Top Areas to Improve:</span>
@@ -625,7 +611,6 @@
         try {
           localStorage.setItem(STORAGE_SAVED, JSON.stringify(state.savedScans.slice(0, 20)));
         } catch (_) {
-          // If quota exceeded, keep latest 6
           try {
             state.savedScans = state.savedScans.slice(0, 6);
             localStorage.setItem(STORAGE_SAVED, JSON.stringify(state.savedScans));
@@ -709,7 +694,6 @@
         updateFlashUI();
       });
 
-      // Login
       el.loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const user = el.loginUsername.value.trim();
@@ -735,7 +719,18 @@
         showScreen('login');
       });
 
-      // Camera
+      async function ensureLiveVideoPlaying() {
+        if (!state.stream) return;
+        if (el.liveVideo.srcObject !== state.stream) {
+          el.liveVideo.srcObject = state.stream;
+        }
+        try {
+          if (el.liveVideo.paused) {
+            await el.liveVideo.play();
+          }
+        } catch (_) {}
+      }
+
       async function openCameraFlow() {
         state.step = 'front';
         state.isCapturing = false;
@@ -797,7 +792,7 @@
           el.guidanceSubText.textContent = 'Wide lens active • Align head in frame';
         } else {
           el.guidanceMainText.textContent = 'Step 2: Turn head 90° sideways';
-          el.guidanceSubText.textContent = 'Show jawline, nose & chin in profile';
+          el.guidanceSubText.textContent = 'Front captured! Now take 90° profile';
         }
 
         if (state.photos.front) {
@@ -829,7 +824,7 @@
         const detector = hasFaceDetector ? new window.FaceDetector({ fastMode: true, maxDetectedFaces: 1 }) : null;
 
         state.trackTimer = setInterval(async () => {
-          if (!state.stream || !el.liveVideo.videoWidth) return;
+          if (!state.stream || !el.liveVideo.videoWidth || state.isCapturing) return;
 
           let normX = 0.5, normY = 0.46, normScale = 1.0, faceFound = false;
 
@@ -912,7 +907,7 @@
           }
         }
         el.screenFlashOverlay.classList.add('flash-pop');
-        await new Promise((r) => setTimeout(r, 280));
+        await new Promise((r) => setTimeout(r, 260));
         el.screenFlashOverlay.classList.remove('flash-pop');
         if (torchTrack) {
           try { await torchTrack.applyConstraints({ advanced: [{ torch: false }] }); } catch (_) {}
@@ -920,12 +915,23 @@
       }
 
       async function captureCurrentFrame() {
-        if (state.isCapturing || !state.stream || !el.liveVideo.videoWidth) return;
+        if (state.isCapturing) return;
+
+        // Om kameran råkat pausa eller saknar videoWidth trots stream, försök återuppta först
+        if (!state.stream || !el.liveVideo.videoWidth) {
+          el.fallbackStepLabel.textContent = state.step === 'front' ? '1. Front' : '2. 90° Profile';
+          el.cameraFallbackBg.classList.remove('hidden');
+          return;
+        }
+
         state.isCapturing = true;
+        el.shutterBtn.disabled = true;
+
         try {
           if (state.flashOn) {
             await triggerStrongSelfieFlash();
           }
+
           const canvas = el.hiddenCanvas;
           const vw = el.liveVideo.videoWidth;
           const vh = el.liveVideo.videoHeight;
@@ -942,9 +948,12 @@
           ctx.scale(-1, 1);
           ctx.drawImage(el.liveVideo, 0, 0, w, h);
           ctx.restore();
-          handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+          await handleCapturedPhoto(dataUrl);
         } finally {
           state.isCapturing = false;
+          el.shutterBtn.disabled = false;
         }
       }
 
@@ -954,7 +963,7 @@
         const reader = new FileReader();
         reader.onload = (ev) => {
           const img = new Image();
-          img.onload = () => {
+          img.onload = async () => {
             const maxSide = 960;
             let w = img.width, h = img.height;
             if (w > maxSide || h > maxSide) {
@@ -964,7 +973,7 @@
             const canvas = el.hiddenCanvas;
             canvas.width = w; canvas.height = h;
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-            handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
+            await handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
           };
           img.src = ev.target.result;
         };
@@ -972,15 +981,17 @@
         e.target.value = '';
       }
 
-      function handleCapturedPhoto(dataUrl) {
+      async function handleCapturedPhoto(dataUrl) {
         if (state.step === 'front') {
           state.photos.front = dataUrl;
           state.step = 'profile';
+          el.cameraFallbackBg.classList.add('hidden');
           updateCameraStepUI();
+          await ensureLiveVideoPlaying();
         } else {
           state.photos.profile = dataUrl;
           updateCameraStepUI();
-          runFullAnalysis(false);
+          await runFullAnalysis(false);
         }
       }
 
@@ -1279,7 +1290,6 @@ Return ONLY valid JSON in this exact format:
         updateSavedBadges();
       }
 
-      // Saved Scans Modal
       function saveCurrentScan() {
         if (!state.currentReport) return;
         const exists = state.savedScans.some((item) => item.id === state.currentReport.id);
@@ -1398,7 +1408,6 @@ Return ONLY valid JSON in this exact format:
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
-      // Event bindings
       el.startScanFlowBtn.addEventListener('click', openCameraFlow);
       el.quickDemoStartBtn.addEventListener('click', makeDemoPair);
       el.startSavedFromHomeBtn.addEventListener('click', openSavedModal);
