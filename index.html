@@ -65,6 +65,21 @@
       animation: laserSweep 1.8s ease-in-out infinite;
       box-shadow: 0 0 22px rgba(6, 182, 212, 0.95), 0 0 42px rgba(139, 92, 246, 0.7);
     }
+    /* Snapchat/TikTok-inspirerat ringljus runt skärmen för selfiekameran */
+    .ringlight-active {
+      box-shadow: inset 0 0 85px 28px rgba(255, 252, 235, 0.78), inset 0 0 24px 6px rgba(255, 255, 255, 0.95);
+    }
+    /* Själva blixten som slår till när fotot tas */
+    #screenFlashOverlay {
+      opacity: 0;
+      pointer-events: none;
+      background: #ffffff;
+      transition: opacity 90ms ease-out;
+    }
+    #screenFlashOverlay.flash-pop {
+      opacity: 0.96;
+      transition: opacity 50ms ease-in;
+    }
   </style>
 </head>
 <body>
@@ -122,7 +137,6 @@
        SKÄRM 1: HELSKÄRM START
   ========================================================== -->
   <section id="screenStart" class="screen hidden-screen justify-between px-6 py-6 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
-    <!-- Topprad -->
     <div class="flex items-center justify-between pt-1 gap-2">
       <div class="flex items-center gap-2 min-w-0">
         <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px] shrink-0">
@@ -144,7 +158,6 @@
       </div>
     </div>
 
-    <!-- Mitten: Hero & Skanner-ikon -->
     <div class="flex flex-col items-center text-center space-y-5 my-auto">
       <div class="relative w-36 h-44 rounded-[36px] border border-cyan-400/35 bg-white/[0.03] flex items-center justify-center shadow-[0_0_50px_rgba(139,92,246,0.2)]">
         <svg viewBox="0 0 120 150" class="w-24 h-32 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -169,7 +182,6 @@
       </div>
     </div>
 
-    <!-- Botten: Starta Skanning -->
     <div class="space-y-2.5 pb-2">
       <button id="startScanFlowBtn" type="button" class="w-full py-4 rounded-2xl text-base font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_10px_35px_rgba(139,92,246,0.4)] active:scale-[0.98] transition">
         STARTA SKANNING
@@ -177,19 +189,26 @@
       <div class="flex items-center justify-center gap-4 text-[11px] text-zinc-400">
         <button id="quickDemoStartBtn" type="button" class="underline hover:text-white transition">Testa Demo (2 vinklar)</button>
         <span>•</span>
-        <span>Gemini AI redo</span>
+        <span>Selfie Flash redo</span>
       </div>
     </div>
   </section>
 
 
   <!-- =========================================================
-       SKÄRM 2: HELSKÄRMSKAMERA MED DYNAMISK HUVUDRAM
+       SKÄRM 2: HELSKÄRMSKAMERA MED VIDVINKEL, RINGLJUS & BLIXT
   ========================================================== -->
   <section id="screenCamera" class="screen hidden-screen bg-black">
-    <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-cover scale-x-[-1]"></video>
+    <!-- Vidvinklig live-video utan överdriven iOS-beskärning -->
+    <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-contain bg-black scale-x-[-1]"></video>
 
-    <div id="cameraFallbackBg" class="hidden absolute inset-0 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
+    <!-- Snapchat/TikTok-liknande Ringljus-ram runt kanten -->
+    <div id="ringLightLayer" class="pointer-events-none absolute inset-0 z-10 transition-all duration-200"></div>
+
+    <!-- Helskärmsblixt när fotot knäpps -->
+    <div id="screenFlashOverlay" class="fixed inset-0 z-40"></div>
+
+    <div id="cameraFallbackBg" class="hidden absolute inset-0 z-20 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
       <p class="text-sm text-zinc-300 max-w-xs">Kameran kunde inte startas automatiskt. Tillåt kamera i iOS Safari eller välj bilder från kamerarullen nedan.</p>
       <label class="px-5 py-3 rounded-2xl text-xs font-bold bg-violet-600 text-white cursor-pointer active:scale-95">
         Välj bild för <span id="fallbackStepLabel">1. Framsida</span>
@@ -198,8 +217,8 @@
     </div>
 
     <!-- Dynamisk Auto-Anpassad Huvudram -->
-    <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-      <div id="dynamicHeadFrame" class="relative w-64 h-80 transition-all duration-150 ease-out flex items-center justify-center">
+    <div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+      <div id="dynamicHeadFrame" class="relative w-56 h-72 transition-all duration-150 ease-out flex items-center justify-center">
         <svg id="frameFrontSvg" viewBox="0 0 240 310" class="w-full h-full text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.55)]" fill="none" stroke="currentColor" stroke-width="2.2">
           <ellipse cx="120" cy="155" rx="84" ry="118" stroke-dasharray="10 6" />
           <path d="M24 55 L24 25 L54 25" stroke-width="3" />
@@ -232,27 +251,32 @@
     </div>
 
     <!-- Topp-HUD i kameran -->
-    <div class="relative z-20 flex items-center justify-between px-4 pt-3">
-      <button id="cancelCameraBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md text-white border border-white/15 active:scale-95">
+    <div class="relative z-20 flex items-center justify-between px-3.5 pt-3 gap-1.5">
+      <button id="cancelCameraBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/65 backdrop-blur-md text-white border border-white/15 active:scale-95">
         ✕ Avbryt
       </button>
 
-      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15">
-        <span id="pillStep1" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black">1. Framsida</span>
-        <span id="pillStep2" class="px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400">2. Profil 90°</span>
+      <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15">
+        <span id="pillStep1" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black">1. Front</span>
+        <span id="pillStep2" class="px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400">2. 90°</span>
       </div>
 
-      <label class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md text-zinc-200 border border-white/15 cursor-pointer active:scale-95">
-        Bild
-        <input id="cameraGalleryInput" type="file" accept="image/*" class="hidden" />
-      </label>
+      <div class="flex items-center gap-1.5">
+        <button id="flashToggleBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono font-bold bg-amber-400 text-black border border-amber-200 active:scale-95 transition">
+          ⚡ Blixt: PÅ
+        </button>
+        <label class="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-black/65 backdrop-blur-md text-zinc-200 border border-white/15 cursor-pointer active:scale-95">
+          Bild
+          <input id="cameraGalleryInput" type="file" accept="image/*" class="hidden" />
+        </label>
+      </div>
     </div>
 
     <!-- Live Head-Guidance Banner -->
     <div class="relative z-20 mt-3 px-4 flex justify-center">
       <div id="liveGuidanceBanner" class="px-4 py-2 rounded-2xl bg-black/70 backdrop-blur-md border border-cyan-400/40 text-center max-w-sm shadow-lg">
         <p id="guidanceMainText" class="text-xs sm:text-sm font-bold text-white">Steg 1: Titta rakt in i kameran</p>
-        <p id="guidanceSubText" class="text-[11px] text-cyan-300 mt-0.5">Anpassar huvudramen automatiskt...</p>
+        <p id="guidanceSubText" class="text-[11px] text-cyan-300 mt-0.5">Vidvinkel aktiv • Anpassar ram automatiskt...</p>
       </div>
     </div>
 
@@ -279,7 +303,6 @@
        SKÄRM 3: HELSKÄRMSANALYS (UTAN ATT SCROLLA NER)
   ========================================================== -->
   <section id="screenResults" class="screen hidden-screen justify-between px-4 py-3 bg-[#06070c]">
-    <!-- Topprad -->
     <div class="flex items-center justify-between gap-2">
       <button id="rescanBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/10 active:scale-95">
         ↻ Ny skanning
@@ -292,7 +315,6 @@
       </button>
     </div>
 
-    <!-- Rank-kort -->
     <div class="rounded-3xl p-3.5 bg-card border border-white/10 space-y-2.5 shadow-xl">
       <div class="flex items-center justify-between gap-2">
         <div>
@@ -310,7 +332,6 @@
         </div>
       </div>
 
-      <!-- PSL-mätare -->
       <div class="space-y-1">
         <div class="flex justify-between text-[9px] font-mono text-zinc-400">
           <span>Sub-3</span>
@@ -334,7 +355,6 @@
         </div>
       </div>
 
-      <!-- 3 Nyckelmått -->
       <div class="grid grid-cols-3 gap-2 pt-0.5 text-center">
         <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
           <span class="text-[9px] font-mono text-zinc-400 block">GONIAL (90°)</span>
@@ -351,7 +371,6 @@
       </div>
     </div>
 
-    <!-- Flikar -->
     <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-surface border border-white/10">
       <button id="tabMetricsBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition">
         Delbetyg &amp; Dom
@@ -361,7 +380,6 @@
       </button>
     </div>
 
-    <!-- Vy A: Delbetyg -->
     <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-2">
       <div id="resMetricsList" class="space-y-1.5"></div>
       <div class="rounded-2xl p-2.5 bg-surface border border-white/10">
@@ -369,7 +387,6 @@
       </div>
     </div>
 
-    <!-- Vy B: Träna på -->
     <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-2">
       <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/25 space-y-1">
         <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Högst prioritet att fixa:</span>
@@ -437,6 +454,8 @@
       const state = {
         username: '',
         step: 'front',
+        flashOn: true,
+        isCapturing: false,
         photos: { front: null, profile: null },
         stream: null,
         trackTimer: null,
@@ -461,6 +480,9 @@
         resGeminiBtn: document.getElementById('resGeminiBtn'),
         geminiStatusDot: document.getElementById('geminiStatusDot'),
         liveVideo: document.getElementById('liveVideo'),
+        ringLightLayer: document.getElementById('ringLightLayer'),
+        screenFlashOverlay: document.getElementById('screenFlashOverlay'),
+        flashToggleBtn: document.getElementById('flashToggleBtn'),
         cameraFallbackBg: document.getElementById('cameraFallbackBg'),
         fallbackStepLabel: document.getElementById('fallbackStepLabel'),
         fallbackFileInput: document.getElementById('fallbackFileInput'),
@@ -555,6 +577,7 @@
         } catch (_) {}
 
         updateGeminiDot();
+        updateFlashUI();
 
         try {
           const auth = JSON.parse(localStorage.getItem(STORAGE_AUTH) || 'null');
@@ -571,6 +594,23 @@
         const active = Boolean(state.gemini.apiKey.trim());
         el.geminiStatusDot.className = `inline-block w-2 h-2 rounded-full mr-1.5 ${active ? 'bg-emerald-400' : 'bg-amber-400'}`;
       }
+
+      function updateFlashUI() {
+        if (state.flashOn) {
+          el.flashToggleBtn.textContent = '⚡ Blixt: PÅ';
+          el.flashToggleBtn.className = 'px-2.5 py-1.5 rounded-full text-xs font-mono font-bold bg-amber-400 text-black border border-amber-200 active:scale-95 transition';
+          el.ringLightLayer.classList.add('ringlight-active');
+        } else {
+          el.flashToggleBtn.textContent = '⚡ Blixt: AV';
+          el.flashToggleBtn.className = 'px-2.5 py-1.5 rounded-full text-xs font-mono font-semibold bg-black/65 text-zinc-300 border border-white/15 active:scale-95 transition';
+          el.ringLightLayer.classList.remove('ringlight-active');
+        }
+      }
+
+      el.flashToggleBtn.addEventListener('click', () => {
+        state.flashOn = !state.flashOn;
+        updateFlashUI();
+      });
 
       // =========================================================
       // LOGIN HANTERING
@@ -605,12 +645,14 @@
       });
 
       // =========================================================
-      // KAMERA & REAL-TIME AUTO-ANPASSNING AV HUVUDRAM
+      // KAMERA (VIDVINKEL + SNAPCHAT/TIKTOK SELFIE-BLIXT)
       // =========================================================
       async function openCameraFlow() {
         state.step = 'front';
+        state.isCapturing = false;
         state.photos = { front: null, profile: null };
         updateCameraStepUI();
+        updateFlashUI();
         showScreen('camera');
         el.cameraFallbackBg.classList.add('hidden');
         el.liveVideo.classList.remove('hidden');
@@ -620,8 +662,13 @@
             throw new Error('Ingen kamera-API');
           }
           stopCameraStream();
+          // 1920x1080 ger bredare vidvinkel än stående 1280x1920 på många mobilsensorer
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 1920 } },
+            video: {
+              facingMode: 'user',
+              width: { ideal: 1920 },
+              height: { ideal: 1080 }
+            },
             audio: false
           });
           state.stream = stream;
@@ -663,7 +710,7 @@
 
         if (isFront) {
           el.guidanceMainText.textContent = 'Steg 1: Titta rakt in i kameran';
-          el.guidanceSubText.textContent = 'Neutralt uttryck • Håll huvudet i ramen';
+          el.guidanceSubText.textContent = 'Vidvinkel aktiv • Håll huvudet i ramen';
         } else {
           el.guidanceMainText.textContent = 'Steg 2: Vrid huvudet 90° åt sidan';
           el.guidanceSubText.textContent = 'Visa käklinje, näsa och haka i profil';
@@ -783,28 +830,62 @@
         }, 160);
       }
 
-      function captureCurrentFrame() {
-        if (!state.stream || !el.liveVideo.videoWidth) return;
-        const canvas = el.hiddenCanvas;
-        const vw = el.liveVideo.videoWidth;
-        const vh = el.liveVideo.videoHeight;
-        const maxSide = 820;
-        let w = vw, h = vh;
-        if (w > maxSide || h > maxSide) {
-          if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
-          else { w = Math.round((w * maxSide) / h); h = maxSide; }
+      async function triggerSelfieFlash() {
+        // Försök även aktivera torch om drivrutinen tillåter det
+        let torchTrack = null;
+        if (state.stream) {
+          const track = state.stream.getVideoTracks()[0];
+          const caps = track && track.getCapabilities ? track.getCapabilities() : {};
+          if (caps && caps.torch) {
+            try {
+              await track.applyConstraints({ advanced: [{ torch: true }] });
+              torchTrack = track;
+            } catch (_) {}
+          }
         }
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.translate(w, 0);
-        ctx.scale(-1, 1);
-        ctx.drawImage(el.liveVideo, 0, 0, w, h);
-        ctx.restore();
 
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.86);
-        handleCapturedPhoto(dataUrl);
+        // Snapchat/TikTok-metod: intensiv skärmblixt som lyser upp ansiktet framför selfiekameran
+        el.screenFlashOverlay.classList.add('flash-pop');
+        await new Promise((r) => setTimeout(r, 220));
+        el.screenFlashOverlay.classList.remove('flash-pop');
+
+        if (torchTrack) {
+          try { await torchTrack.applyConstraints({ advanced: [{ torch: false }] }); } catch (_) {}
+        }
+      }
+
+      async function captureCurrentFrame() {
+        if (state.isCapturing || !state.stream || !el.liveVideo.videoWidth) return;
+        state.isCapturing = true;
+
+        try {
+          if (state.flashOn) {
+            await triggerSelfieFlash();
+          }
+
+          const canvas = el.hiddenCanvas;
+          const vw = el.liveVideo.videoWidth;
+          const vh = el.liveVideo.videoHeight;
+          const maxSide = 960;
+          let w = vw, h = vh;
+          if (w > maxSide || h > maxSide) {
+            if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
+            else { w = Math.round((w * maxSide) / h); h = maxSide; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.save();
+          ctx.translate(w, 0);
+          ctx.scale(-1, 1);
+          ctx.drawImage(el.liveVideo, 0, 0, w, h);
+          ctx.restore();
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+          handleCapturedPhoto(dataUrl);
+        } finally {
+          state.isCapturing = false;
+        }
       }
 
       function handleGalleryUpload(e) {
@@ -814,7 +895,7 @@
         reader.onload = (ev) => {
           const img = new Image();
           img.onload = () => {
-            const maxSide = 820;
+            const maxSide = 960;
             let w = img.width, h = img.height;
             if (w > maxSide || h > maxSide) {
               if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
@@ -824,7 +905,7 @@
             canvas.width = w;
             canvas.height = h;
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-            handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.86));
+            handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
           };
           img.src = ev.target.result;
         };
@@ -1180,7 +1261,6 @@ Svara ENDAST med giltig JSON i exakt detta format:
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
-      // Event listeners
       el.startScanFlowBtn.addEventListener('click', openCameraFlow);
       el.quickDemoStartBtn.addEventListener('click', makeDemoPair);
       el.shutterBtn.addEventListener('click', captureCurrentFrame);
@@ -1204,7 +1284,6 @@ Svara ENDAST med giltig JSON i exakt detta format:
         renderCompactRoutine();
       });
 
-      // Gemini Modal
       const openModal = () => {
         el.geminiKeyInput.value = state.gemini.apiKey;
         el.geminiModelInput.value = state.gemini.model;
