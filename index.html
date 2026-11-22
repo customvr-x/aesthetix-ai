@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#07070c" />
+  <meta name="theme-color" content="#050509" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Aesthetix AI" />
-  <title>AESTHETIX AI — Biometrisk Analys &amp; PSL</title>
+  <title>AESTHETIX AI — Strict PSL Scanner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,16 +15,13 @@
       theme: {
         extend: {
           colors: {
-            void: '#07070c',
-            surface: '#0e0f17',
-            card: '#131520',
-            accent: '#8b5cf6',
-            cyanGlow: '#06b6d4',
-            emeraldGlow: '#10b981'
+            void: '#050509',
+            surface: '#0d0e16',
+            card: '#131522'
           },
           fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Inter', 'Segoe UI', 'Roboto', 'sans-serif'],
-            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Inter', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'monospace']
           }
         }
       }
@@ -36,223 +33,242 @@
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     html, body {
-      background-color: #07070c;
+      height: 100dvh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #050509;
       color: #f4f4f8;
       -webkit-tap-highlight-color: transparent;
-      overflow-x: hidden;
+      user-select: none;
     }
-    body {
+    .screen {
+      position: fixed;
+      inset: 0;
       padding-top: var(--safe-top);
-      padding-bottom: calc(var(--safe-bottom) + 28px);
-      background-image:
-        radial-gradient(circle at 18% -5%, rgba(139, 92, 246, 0.16), transparent 44%),
-        radial-gradient(circle at 86% 8%, rgba(6, 182, 212, 0.11), transparent 42%);
+      padding-bottom: var(--safe-bottom);
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
-    .glass-panel {
-      background: rgba(19, 21, 32, 0.86);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .screen.hidden-screen {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.985);
     }
-    @keyframes scanSweep {
-      0% { top: 8%; opacity: 0.15; }
-      50% { top: 90%; opacity: 1; }
-      100% { top: 8%; opacity: 0.15; }
+    @keyframes laserSweep {
+      0% { top: 14%; opacity: 0.2; }
+      50% { top: 84%; opacity: 1; }
+      100% { top: 14%; opacity: 0.2; }
     }
-    .scan-laser {
-      animation: scanSweep 2.4s ease-in-out infinite;
-      box-shadow: 0 0 18px rgba(6, 182, 212, 0.9), 0 0 36px rgba(139, 92, 246, 0.55);
-    }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    .laser-line {
+      animation: laserSweep 1.8s ease-in-out infinite;
+      box-shadow: 0 0 22px rgba(6, 182, 212, 0.95), 0 0 42px rgba(139, 92, 246, 0.7);
     }
   </style>
 </head>
-<body class="min-h-screen antialiased selection:bg-violet-500/30 selection:text-violet-200">
-  <div id="app" class="max-w-xl mx-auto px-4 pt-3 pb-10 space-y-5">
+<body>
 
+  <!-- =========================================================
+       SKÄRM 1: HELSKÄRM START
+  ========================================================== -->
+  <section id="screenStart" class="screen justify-between px-6 py-6 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
     <!-- Topprad -->
-    <header class="flex items-center justify-between gap-2 pt-1">
-      <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 p-[1px] shrink-0">
-          <div class="w-full h-full rounded-[15px] bg-[#0c0d14] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">
-            AX
-          </div>
+    <div class="flex items-center justify-between pt-1">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px]">
+          <div class="w-full h-full rounded-[11px] bg-[#080910] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">AX</div>
         </div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-1.5">
-            <h1 class="text-sm sm:text-base font-bold tracking-tight text-white truncate">AESTHETIX AI</h1>
-            <span class="px-1.5 py-0.5 text-[10px] font-mono uppercase rounded bg-violet-500/15 text-violet-300 border border-violet-500/30">2-VINKEL</span>
-          </div>
-          <p class="text-[11px] text-zinc-400 truncate">PSL-rankning • Framsida + 90° Profil • Gemini AI</p>
-        </div>
+        <span class="font-bold tracking-wider text-sm text-white">AESTHETIX AI</span>
       </div>
+      <button id="openGeminiBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-mono bg-white/10 hover:bg-white/15 text-violet-200 border border-violet-400/30 active:scale-95 transition">
+        <span id="geminiStatusDot" class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>Gemini AI
+      </button>
+    </div>
 
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button id="openGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-violet-500/15 hover:bg-violet-500/25 text-violet-200 border border-violet-500/30 transition active:scale-95">
-          Gemini AI
-        </button>
-        <button id="openIpaBtn" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition active:scale-95">
-          iOS / .IPA
-        </button>
-      </div>
-    </header>
-
-    <!-- Stegväljare: 1. Framsida & 2. Sidoprofil (90°) -->
-    <section class="glass-panel rounded-3xl p-4 space-y-3.5 shadow-2xl shadow-black/40">
-      <div class="flex items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] font-mono uppercase tracking-wider text-cyan-400">Tvåstegs-skanning</span>
-          <h2 id="stepTitle" class="text-base font-semibold text-white">Steg 1 av 2: Ta eller ladda upp Framsida</h2>
-        </div>
-        <span id="geminiBadge" class="px-2 py-1 rounded-lg text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
-          Lokal + Gemini redo
+    <!-- Mitten: Hero & Skanner-ikon -->
+    <div class="flex flex-col items-center text-center space-y-5 my-auto">
+      <div class="relative w-36 h-44 rounded-[36px] border border-cyan-400/35 bg-white/[0.03] flex items-center justify-center shadow-[0_0_50px_rgba(139,92,246,0.2)]">
+        <svg viewBox="0 0 120 150" class="w-24 h-32 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.6">
+          <ellipse cx="60" cy="74" rx="34" ry="48" stroke-dasharray="5 3" />
+          <line x1="36" y1="64" x2="52" y2="64" />
+          <line x1="68" y1="64" x2="84" y2="64" />
+          <line x1="60" y1="20" x2="60" y2="130" stroke-opacity="0.35" stroke-dasharray="2 3" />
+          <path d="M36 96 Q60 116 84 96" stroke-opacity="0.65" />
+        </svg>
+        <span class="absolute -bottom-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-[#0d0e16] text-violet-300 border border-violet-500/40">
+          Strict PSL Engine
         </span>
       </div>
 
-      <!-- Två fotokort -->
-      <div class="grid grid-cols-2 gap-3">
-        <!-- Kort 1: Framsida -->
-        <div id="cardFront" class="rounded-2xl p-2.5 bg-surface border transition cursor-pointer border-violet-500/60 ring-1 ring-violet-500/30">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[11px] font-semibold text-white">1. Framsida</span>
-            <span id="statusFront" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-200">Aktiv</span>
-          </div>
-          <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-black/70 border border-white/10 flex items-center justify-center">
-            <img id="thumbFront" alt="Framsida" class="hidden w-full h-full object-cover" />
-            <div id="placeholderFront" class="flex flex-col items-center justify-center text-center p-2">
-              <svg viewBox="0 0 120 150" class="w-16 h-20 text-zinc-500 mb-1" fill="none" stroke="currentColor" stroke-width="1.5">
-                <ellipse cx="60" cy="74" rx="34" ry="46" stroke-dasharray="4 3" />
-                <line x1="38" y1="66" x2="52" y2="66" />
-                <line x1="68" y1="66" x2="82" y2="66" />
-                <line x1="60" y1="22" x2="60" y2="128" stroke-opacity="0.35" stroke-dasharray="2 3" />
-              </svg>
-              <span class="text-[11px] text-zinc-400">Rakt framifrån</span>
-            </div>
-          </div>
-          <div class="mt-2 flex items-center justify-between gap-1.5">
-            <button id="selectFrontBtn" type="button" class="flex-1 py-1.5 rounded-lg text-[11px] font-medium bg-white/10 hover:bg-white/15 text-white transition">
-              Välj steg
-            </button>
-            <button id="retakeFrontBtn" type="button" class="hidden px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 border border-amber-500/30 transition">
-              Ta om
-            </button>
-          </div>
-        </div>
+      <div class="space-y-2 max-w-xs">
+        <h1 class="text-3xl font-black tracking-tight text-white leading-tight">
+          Biometrisk<br/><span class="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-300 bg-clip-text text-transparent">Ansiktsanalys</span>
+        </h1>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          2-vinkels AI-skanning (Framsida + 90° Profil). Brutalt ärlig PSL-rank från <strong class="text-zinc-200">Sub-3</strong> till <strong class="text-amber-300">True Adam</strong>.
+        </p>
+      </div>
+    </div>
 
-        <!-- Kort 2: Sidoprofil 90° -->
-        <div id="cardProfile" class="rounded-2xl p-2.5 bg-surface border transition cursor-pointer border-white/10">
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="text-[11px] font-semibold text-white">2. Sidoprofil 90°</span>
-            <span id="statusProfile" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-zinc-400">Väntar</span>
-          </div>
-          <div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-black/70 border border-white/10 flex items-center justify-center">
-            <img id="thumbProfile" alt="Sidoprofil 90 grader" class="hidden w-full h-full object-cover" />
-            <div id="placeholderProfile" class="flex flex-col items-center justify-center text-center p-2">
-              <svg viewBox="0 0 120 150" class="w-16 h-20 text-zinc-500 mb-1" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M44 28 C66 26, 82 40, 82 62 L92 76 L81 82 C83 90, 81 97, 76 102 C82 108, 79 118, 66 122 C54 125, 44 118, 40 105" stroke-dasharray="4 3" />
-                <line x1="20" y1="76" x2="100" y2="76" stroke-opacity="0.3" stroke-dasharray="2 3" />
-              </svg>
-              <span class="text-[11px] text-zinc-400">90° från sidan</span>
-            </div>
-          </div>
-          <div class="mt-2 flex items-center justify-between gap-1.5">
-            <button id="selectProfileBtn" type="button" class="flex-1 py-1.5 rounded-lg text-[11px] font-medium bg-white/10 hover:bg-white/15 text-white transition">
-              Välj steg
-            </button>
-            <button id="retakeProfileBtn" type="button" class="hidden px-2.5 py-1.5 rounded-lg text-[11px] font-medium bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 border border-amber-500/30 transition">
-              Ta om
-            </button>
-          </div>
-        </div>
+    <!-- Botten: Starta Skanning -->
+    <div class="space-y-2.5 pb-2">
+      <button id="startScanFlowBtn" type="button" class="w-full py-4 rounded-2xl text-base font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_10px_35px_rgba(139,92,246,0.4)] active:scale-[0.98] transition">
+        STARTA SKANNING
+      </button>
+      <div class="flex items-center justify-center gap-4 text-[11px] text-zinc-400">
+        <button id="quickDemoStartBtn" type="button" class="underline hover:text-white transition">Testa Demo (2 vinklar)</button>
+        <span>•</span>
+        <span>Kräver kameratillstånd</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SKÄRM 2: HELSKÄRMSKAMERA MED DYNAMISK HUVUDRAM
+  ========================================================== -->
+  <section id="screenCamera" class="screen hidden-screen bg-black">
+    <!-- Live Video (speglad som iOS selfie-kamera) -->
+    <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-cover scale-x-[-1]"></video>
+
+    <!-- Fallback-bakgrund om kamera nekas -->
+    <div id="cameraFallbackBg" class="hidden absolute inset-0 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
+      <p class="text-sm text-zinc-300 max-w-xs">Kameran kunde inte startas automatiskt. Tillåt kamera i iOS Safari eller välj bilder från kamerarullen nedan.</p>
+      <label class="px-5 py-3 rounded-2xl text-xs font-bold bg-violet-600 text-white cursor-pointer active:scale-95">
+        Välj bild för <span id="fallbackStepLabel">1. Framsida</span>
+        <input id="fallbackFileInput" type="file" accept="image/*" class="hidden" />
+      </label>
+    </div>
+
+    <!-- Mörk vinjett + Dynamisk Auto-Anpassad Huvudram -->
+    <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <!-- Dynamisk ram som flyttar och skalar sig efter ansiktet i realtid -->
+      <div id="dynamicHeadFrame" class="relative w-64 h-80 transition-all duration-150 ease-out flex items-center justify-center">
+        <!-- SVG Front-ram -->
+        <svg id="frameFrontSvg" viewBox="0 0 240 310" class="w-full h-full text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.55)]" fill="none" stroke="currentColor" stroke-width="2.2">
+          <ellipse cx="120" cy="155" rx="84" ry="118" stroke-dasharray="10 6" />
+          <!-- Hörnfästen -->
+          <path d="M24 55 L24 25 L54 25" stroke-width="3" />
+          <path d="M216 55 L216 25 L186 25" stroke-width="3" />
+          <path d="M24 255 L24 285 L54 285" stroke-width="3" />
+          <path d="M216 255 L216 285 L186 285" stroke-width="3" />
+          <!-- Ögon- och symmetrilinje -->
+          <line x1="72" y1="136" x2="104" y2="136" stroke-opacity="0.8" />
+          <line x1="136" y1="136" x2="168" y2="136" stroke-opacity="0.8" />
+          <line x1="120" y1="30" x2="120" y2="280" stroke-opacity="0.3" stroke-dasharray="3 4" />
+        </svg>
+
+        <!-- SVG 90° Sidoprofil-ram -->
+        <svg id="frameProfileSvg" viewBox="0 0 240 310" class="hidden w-full h-full text-violet-300 drop-shadow-[0_0_12px_rgba(139,92,246,0.65)]" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M78 44 C128 40, 162 72, 162 118 L186 148 L161 162 C165 178, 160 194, 148 206 C162 218, 155 240, 128 248 C102 255, 78 240, 70 212" stroke-dasharray="10 6" />
+          <path d="M24 55 L24 25 L54 25" stroke-width="3" />
+          <path d="M216 55 L216 25 L186 25" stroke-width="3" />
+          <path d="M24 255 L24 285 L54 285" stroke-width="3" />
+          <path d="M216 255 L216 285 L186 285" stroke-width="3" />
+          <!-- Frankfort-linje & E-line -->
+          <line x1="34" y1="154" x2="206" y2="154" stroke-opacity="0.35" stroke-dasharray="3 4" />
+          <line x1="186" y1="148" x2="152" y2="232" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Laser-skanning när AI analyserar -->
+    <div id="analyzingOverlay" class="hidden absolute inset-0 z-30 bg-black/75 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+      <div class="laser-line absolute left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-cyan-300 to-transparent"></div>
+      <div class="w-14 h-14 rounded-2xl border-2 border-cyan-400 border-t-transparent animate-spin mb-4"></div>
+      <h3 id="analyzingTitle" class="text-lg font-extrabold text-white">Analyserar 2 vinklar...</h3>
+      <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">Mäter gonialvinkel, canthal tilt, symmetri &amp; PSL</p>
+    </div>
+
+    <!-- Topp-HUD i kameran -->
+    <div class="relative z-20 flex items-center justify-between px-4 pt-3">
+      <button id="cancelCameraBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md text-white border border-white/15 active:scale-95">
+        ✕ Avbryt
+      </button>
+
+      <!-- Steg-indikator 1 / 2 -->
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15">
+        <span id="pillStep1" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black">1. Framsida</span>
+        <span id="pillStep2" class="px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400">2. Profil 90°</span>
       </div>
 
-      <!-- Kameravy / Skannerområde -->
-      <div class="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center">
-        <video id="cameraVideo" autoplay playsinline muted class="hidden w-full h-full object-cover scale-x-[-1]"></video>
-        <img id="activePreviewImg" alt="Aktiv förhandsvisning" class="hidden w-full h-full object-cover" />
+      <label class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 backdrop-blur-md text-zinc-200 border border-white/15 cursor-pointer active:scale-95">
+        Bild
+        <input id="cameraGalleryInput" type="file" accept="image/*" class="hidden" />
+      </label>
+    </div>
 
-        <!-- Guide-overlay -->
-        <div id="guideOverlay" class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <svg id="guideFrontSvg" viewBox="0 0 240 300" class="w-44 h-56 sm:w-52 sm:h-64 text-cyan-300/75" fill="none" stroke="currentColor" stroke-width="1.6">
-            <ellipse cx="120" cy="148" rx="68" ry="94" stroke-dasharray="6 4" />
-            <line x1="78" y1="132" x2="104" y2="132" />
-            <line x1="136" y1="132" x2="162" y2="132" />
-            <line x1="120" y1="36" x2="120" y2="262" stroke-opacity="0.35" stroke-dasharray="3 4" />
-          </svg>
-          <svg id="guideProfileSvg" viewBox="0 0 240 300" class="hidden w-44 h-56 sm:w-52 sm:h-64 text-violet-300/80" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M84 52 C126 48, 156 74, 156 116 L178 144 L155 156 C158 172, 154 186, 144 196 C156 208, 150 228, 126 236 C104 242, 84 228, 76 204" stroke-dasharray="6 4" />
-            <line x1="36" y1="152" x2="204" y2="152" stroke-opacity="0.35" stroke-dasharray="3 4" />
-          </svg>
-          <span id="guideHint" class="mt-1 px-3 py-1 rounded-full text-[11px] font-medium bg-black/65 text-zinc-200 border border-white/10">
-            Håll huvudet rakt i ovalen (neutralt uttryck, bra ljus)
-          </span>
-        </div>
+    <!-- Live Head-Guidance Banner -->
+    <div class="relative z-20 mt-3 px-4 flex justify-center">
+      <div id="liveGuidanceBanner" class="px-4 py-2 rounded-2xl bg-black/70 backdrop-blur-md border border-cyan-400/40 text-center max-w-sm shadow-lg">
+        <p id="guidanceMainText" class="text-xs sm:text-sm font-bold text-white">Steg 1: Titta rakt in i kameran</p>
+        <p id="guidanceSubText" class="text-[11px] text-cyan-300 mt-0.5">Anpassar huvudramen automatiskt...</p>
+      </div>
+    </div>
 
-        <!-- Laserlinje under skanning -->
-        <div id="scanLaser" class="hidden scan-laser absolute left-4 right-4 h-[2px] bg-gradient-to-r from-transparent via-cyan-300 to-transparent z-10"></div>
-
-        <!-- Statusbadge uppe till vänster i skannern -->
-        <div id="scannerBadge" class="hidden absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[11px] font-mono bg-black/70 text-cyan-300 border border-cyan-400/30">
-          Analyserar...
-        </div>
+    <!-- Botten-HUD: Miniatyrer + Stor Avtryckarknapp -->
+    <div class="relative z-20 mt-auto px-6 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/90 via-black/50 to-transparent">
+      <!-- Miniatyr Framsida -->
+      <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
+        <img id="camThumbFront" alt="Front" class="hidden w-full h-full object-cover" />
+        <span id="camThumbFrontTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">1.<br/>FRONT</span>
       </div>
 
-      <!-- Kontroller för aktivt steg -->
-      <div class="grid grid-cols-3 gap-2">
-        <button id="toggleCameraBtn" type="button" class="py-2.5 px-3 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 transition active:scale-95">
-          Starta kamera
-        </button>
-        <button id="capturePhotoBtn" type="button" class="py-2.5 px-3 rounded-xl text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/35 transition active:scale-95">
-          Ta foto
-        </button>
-        <label class="py-2.5 px-3 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 transition active:scale-95 text-center cursor-pointer">
-          Ladda upp
-          <input id="fileInput" type="file" accept="image/*" class="hidden" />
-        </label>
-      </div>
+      <!-- Stor iOS Shutter-knapp -->
+      <button id="shutterBtn" type="button" aria-label="Ta bild" class="w-20 h-20 rounded-full p-1.5 border-4 border-white/90 bg-white/10 active:scale-90 transition flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.25)]">
+        <div id="shutterInner" class="w-full h-full rounded-full bg-white transition"></div>
+      </button>
 
-      <!-- Huvudknappar: 2-stegs analys & Snabb demo -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-        <button id="runScanBtn" type="button" class="sm:col-span-2 py-3 px-4 rounded-2xl text-sm font-bold bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 hover:brightness-110 text-white shadow-lg shadow-violet-600/25 transition active:scale-[0.99]">
-          Kör 2-stegs Biometrisk Analys
-        </button>
-        <button id="demoScanBtn" type="button" class="py-3 px-4 rounded-2xl text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200 border border-emerald-500/30 transition active:scale-[0.99]">
-          Snabb demo (2 vinklar)
-        </button>
+      <!-- Miniatyr Profil -->
+      <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
+        <img id="camThumbProfile" alt="Profil" class="hidden w-full h-full object-cover" />
+        <span id="camThumbProfileTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">2.<br/>90°</span>
       </div>
-      <p id="scanFeedback" class="text-xs text-zinc-400 min-h-[18px]">
-        Ta eller ladda upp både Framsida och Sidoprofil (90°), eller klicka på <span class="text-emerald-300 font-medium">Snabb demo (2 vinklar)</span>.
-      </p>
-    </section>
+    </div>
+  </section>
 
-    <!-- Analysresultat & PSL-Rank -->
-    <section id="resultsSection" class="hidden glass-panel rounded-3xl p-4 sm:p-5 space-y-4 shadow-2xl shadow-black/40">
-      <div class="flex flex-wrap items-start justify-between gap-3 border-b border-white/10 pb-3.5">
+
+  <!-- =========================================================
+       SKÄRM 3: HELSKÄRMSANALYS (UTAN ATT SCROLLA NER)
+  ========================================================== -->
+  <section id="screenResults" class="screen hidden-screen justify-between px-4 py-3 bg-[#06070c]">
+    <!-- Topprad -->
+    <div class="flex items-center justify-between gap-2">
+      <button id="rescanBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/10 active:scale-95">
+        ↻ Ny skanning
+      </button>
+      <span id="resSourceTag" class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-violet-500/15 text-violet-200 border border-violet-500/30 truncate">
+        Strict PSL AI
+      </span>
+      <button id="resGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-mono bg-white/5 text-zinc-300 border border-white/10 active:scale-95">
+        AI-nyckel
+      </button>
+    </div>
+
+    <!-- Rank-kort (Alltid synligt) -->
+    <div class="rounded-3xl p-3.5 bg-card border border-white/10 space-y-2.5 shadow-xl">
+      <div class="flex items-center justify-between gap-2">
         <div>
-          <div class="flex items-center gap-2">
-            <span class="text-[11px] font-mono uppercase tracking-wider text-violet-300">PSL Biometrisk Rapport</span>
-            <span id="analysisSourceBadge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Lokal Canvas</span>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Din Strikt Kalibrerade Rank</span>
+          <div class="flex items-baseline gap-2">
+            <h2 id="resRankName" class="text-3xl font-black tracking-tight text-white">MTN</h2>
+            <span id="resPslScore" class="font-mono text-sm font-bold text-cyan-300">4.7 PSL</span>
           </div>
-          <div class="mt-1 flex items-baseline gap-2.5">
-            <h2 id="rankTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">MTN</h2>
-            <span id="pslScoreText" class="font-mono text-sm text-cyan-300">PSL 4.8 / 8.0</span>
-          </div>
-          <p id="potentialText" class="text-xs text-emerald-300 mt-0.5 font-medium">Potential: HTN–Chadlite (5.9 PSL med konsekvent softmaxing)</p>
+          <p id="resPotential" class="text-[11px] text-emerald-300 font-medium">Max potential: HTN (5.5 PSL)</p>
         </div>
-        <div class="text-right">
-          <span class="text-[10px] font-mono uppercase text-zinc-400 block">Helhetsbetyg</span>
-          <span id="overallTenText" class="text-xl font-bold font-mono text-white">6.2<span class="text-xs text-zinc-400">/10</span></span>
+
+        <!-- De 2 tagna bilderna -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <img id="resImgFront" alt="Framsida" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
+          <img id="resImgProfile" alt="Profil" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
         </div>
       </div>
 
-      <!-- PSL-skala (Sub-3 till True Adam) -->
-      <div class="space-y-1.5">
-        <div class="flex justify-between text-[10px] font-mono text-zinc-400">
+      <!-- PSL-mätare: Sub-3 till True Adam -->
+      <div class="space-y-1">
+        <div class="flex justify-between text-[9px] font-mono text-zinc-400">
           <span>Sub-3</span>
           <span>Sub-5</span>
           <span>LTN</span>
@@ -260,1116 +276,843 @@
           <span>HTN</span>
           <span>Chadlite</span>
           <span>Chad</span>
-          <span class="text-amber-300 font-semibold">True Adam</span>
+          <span class="text-amber-300 font-bold">True Adam</span>
         </div>
         <div class="grid grid-cols-8 gap-1">
-          <div data-psl-idx="0" class="psl-seg h-2.5 rounded-l-md bg-white/10 transition"></div>
-          <div data-psl-idx="1" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="2" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="3" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="4" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="5" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="6" class="psl-seg h-2.5 bg-white/10 transition"></div>
-          <div data-psl-idx="7" class="psl-seg h-2.5 rounded-r-md bg-white/10 transition"></div>
+          <div class="psl-bar h-2 rounded-l bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 bg-white/10"></div>
+          <div class="psl-bar h-2 rounded-r bg-white/10"></div>
         </div>
       </div>
 
-      <!-- Nyckelvärden: Gonialvinkel, E-line, Symmetri -->
-      <div class="grid grid-cols-3 gap-2.5">
-        <div class="rounded-2xl p-3 bg-surface border border-white/10">
-          <span class="text-[10px] font-mono uppercase text-zinc-400 block">Gonialvinkel (90°)</span>
-          <span id="gonialVal" class="text-sm sm:text-base font-bold font-mono text-white">121°</span>
-          <span class="text-[10px] text-zinc-400 block">Ideal ~115°–125°</span>
+      <!-- 3 Nyckelmått på en rad -->
+      <div class="grid grid-cols-3 gap-2 pt-0.5 text-center">
+        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
+          <span class="text-[9px] font-mono text-zinc-400 block">GONIAL (90°)</span>
+          <span id="resGonial" class="text-xs font-bold font-mono text-white">123°</span>
         </div>
-        <div class="rounded-2xl p-3 bg-surface border border-white/10">
-          <span class="text-[10px] font-mono uppercase text-zinc-400 block">E-Line Profil</span>
-          <span id="elineVal" class="text-sm sm:text-base font-bold font-mono text-cyan-300">Balanserad</span>
-          <span class="text-[10px] text-zinc-400 block">Läpp- till hakprojektion</span>
+        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
+          <span class="text-[9px] font-mono text-zinc-400 block">E-LINE PROFIL</span>
+          <span id="resEline" class="text-xs font-bold font-mono text-cyan-300">Neutral</span>
         </div>
-        <div class="rounded-2xl p-3 bg-surface border border-white/10">
-          <span class="text-[10px] font-mono uppercase text-zinc-400 block">Frontsymmetri</span>
-          <span id="symVal" class="text-sm sm:text-base font-bold font-mono text-emerald-300">91%</span>
-          <span class="text-[10px] text-zinc-400 block">Bilateral balans</span>
+        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
+          <span class="text-[9px] font-mono text-zinc-400 block">SYMMETRI</span>
+          <span id="resSymmetry" class="text-xs font-bold font-mono text-emerald-300">89%</span>
         </div>
-      </div>
-
-      <!-- Delbetyg (0-10) -->
-      <div id="metricsGrid" class="space-y-2.5"></div>
-
-      <!-- Sammanfattning & Vad du kan träna på -->
-      <div class="rounded-2xl p-3.5 bg-surface/90 border border-white/10 space-y-2">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-300">Analys &amp; Fokusområden att träna på</h3>
-        <p id="summaryText" class="text-xs sm:text-sm text-zinc-200 leading-relaxed"></p>
-        <ul id="focusList" class="space-y-1.5 text-xs text-zinc-300 pt-1"></ul>
-      </div>
-
-      <!-- Fråga Gemini AI-coach direkt i resultatet -->
-      <div class="rounded-2xl p-3.5 bg-violet-950/25 border border-violet-500/30 space-y-2.5">
-        <div class="flex items-center justify-between gap-2">
-          <span class="text-xs font-bold text-violet-200">Fråga Gemini AI om din profil &amp; rutin</span>
-          <span class="text-[10px] font-mono text-violet-300/80">2-vinkel kontext</span>
-        </div>
-        <div class="flex gap-2">
-          <input id="coachInput" type="text" placeholder="T.ex. Vad bör jag prioritera första 30 dagarna?" class="flex-1 px-3 py-2 rounded-xl text-xs bg-black/50 text-white placeholder-zinc-500 border border-white/10 focus:outline-none focus:border-violet-400" />
-          <button id="askCoachBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-violet-600 hover:bg-violet-500 text-white transition shrink-0">
-            Fråga
-          </button>
-        </div>
-        <p id="coachReply" class="text-xs text-zinc-200 leading-relaxed whitespace-pre-line hidden"></p>
-      </div>
-    </section>
-
-    <!-- Prioriterad Daglig Rutin (Softmaxing & Hållning) -->
-    <section class="glass-panel rounded-3xl p-4 sm:p-5 space-y-3.5 shadow-2xl shadow-black/40">
-      <div class="flex items-center justify-between gap-2">
-        <div>
-          <span class="text-[11px] font-mono uppercase tracking-wider text-emerald-300">Daglig Rutin</span>
-          <h2 class="text-base font-semibold text-white">Prioriterad Softmaxing &amp; Hållning</h2>
-        </div>
-        <div class="text-right">
-          <span id="streakBadge" class="inline-block px-2.5 py-1 rounded-xl text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-            Streak: 0 dgr
-          </span>
-          <span id="routineProgressText" class="block text-[10px] font-mono text-zinc-400 mt-0.5">0 / 5 klara</span>
-        </div>
-      </div>
-
-      <div id="routineList" class="space-y-2"></div>
-
-      <div class="flex items-center justify-between pt-1">
-        <span class="text-[11px] text-zinc-400">Sparad lokalt i din webbläsare (localStorage).</span>
-        <button id="resetRoutineBtn" type="button" class="text-[11px] font-medium text-zinc-400 hover:text-white underline transition">
-          Nollställ idag
-        </button>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Modal: Gemini AI-inställningar -->
-  <div id="geminiModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-3">
-    <div class="w-full max-w-md rounded-3xl bg-card border border-white/15 p-5 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-base font-bold text-white">Gemini AI-koppling</h3>
-          <p class="text-xs text-zinc-400">Använder Google Gemini REST API för 2-bildsanalys</p>
-        </div>
-        <button id="closeGeminiBtn" type="button" class="w-8 h-8 rounded-full bg-white/10 text-zinc-300 hover:text-white flex items-center justify-center">✕</button>
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="block text-xs font-medium text-zinc-300 mb-1">Gemini API-nyckel</label>
-          <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/10 focus:outline-none focus:border-violet-400" />
-        </div>
-
-        <div>
-          <label class="block text-xs font-medium text-zinc-300 mb-1">Modell</label>
-          <select id="geminiModelSelect" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/10 focus:outline-none focus:border-violet-400">
-            <option value="gemini-2.5-flash">gemini-2.5-flash (Rekommenderad, snabb &amp; multimodal)</option>
-            <option value="gemini-2.5-pro">gemini-2.5-pro (Djupare resonemang)</option>
-          </select>
-        </div>
-
-        <div class="flex items-center justify-between rounded-xl p-3 bg-surface border border-white/10">
-          <div>
-            <span class="text-xs font-medium text-white block">Använd Gemini vid skanning</span>
-            <span class="text-[11px] text-zinc-400">Faller automatiskt tillbaka på lokal Canvas om nyckel saknas</span>
-          </div>
-          <input id="useGeminiToggle" type="checkbox" checked class="w-4 h-4 accent-violet-500 rounded" />
-        </div>
-
-        <div class="rounded-xl p-3 bg-amber-500/10 border border-amber-500/25 text-[11px] text-amber-200 leading-relaxed">
-          <strong>Säkerhetsnotis:</strong> Nyckeln sparas lokalt i <code>localStorage</code> för egen testning. Vid publik drift eller `.ipa`-release för flera användare bör du proxy-anropa Gemini via en egen backendserver så nyckeln inte exponeras i klienten.
-        </div>
-      </div>
-
-      <div class="flex gap-2 pt-1">
-        <button id="clearGeminiKeyBtn" type="button" class="px-3.5 py-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10">
-          Rensa nyckel
-        </button>
-        <button id="saveGeminiBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition">
-          Spara inställningar
-        </button>
       </div>
     </div>
-  </div>
 
-  <!-- Modal: iOS & .IPA-guide -->
-  <div id="ipaModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-3">
-    <div class="w-full max-w-md max-h-[85vh] overflow-y-auto rounded-3xl bg-card border border-white/15 p-5 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-base font-bold text-white">iOS Hemskärm &amp; .IPA-guide</h3>
-          <p class="text-xs text-zinc-400">Så kör du appen på iPhone eller paketerar den till .ipa</p>
-        </div>
-        <button id="closeIpaBtn" type="button" class="w-8 h-8 rounded-full bg-white/10 text-zinc-300 hover:text-white flex items-center justify-center">✕</button>
-      </div>
-
-      <div class="space-y-3 text-xs text-zinc-300 leading-relaxed">
-        <div class="rounded-2xl p-3.5 bg-surface border border-white/10 space-y-1.5">
-          <h4 class="font-bold text-cyan-300">1. Direkt på iPhone via Safari (PWA)</h4>
-          <p>Öppna sidan över <strong>HTTPS</strong> i Safari på iPhone, tryck på <strong>Dela</strong> och välj <strong>Lägg till på hemskärmen</strong>. (HTTPS krävs för att kameran ska fungera i iOS.)</p>
-        </div>
-
-        <div class="rounded-2xl p-3.5 bg-surface border border-white/10 space-y-1.5">
-          <h4 class="font-bold text-violet-300">2. Paketera till .IPA med Capacitor &amp; Xcode (Mac)</h4>
-          <pre class="p-2.5 rounded-xl bg-black/70 text-[11px] font-mono text-zinc-200 overflow-x-auto">mkdir -p aesthetix-ios/www
-cp index.html aesthetix-ios/www/
-cd aesthetix-ios
-npm init -y
-npm install @capacitor/core @capacitor/cli @capacitor/ios
-npx cap init "Aesthetix AI" "com.example.aesthetix" --web-dir www
-npx cap add ios
-npx cap sync ios
-npx cap open ios</pre>
-          <p>Lägg till <code>NSCameraUsageDescription</code> i <code>Info.plist</code> i Xcode, välj ditt Apple Developer-konto under <em>Signing &amp; Capabilities</em>, kör <strong>Product → Archive</strong> och exportera <strong>.ipa</strong> via <em>Distribute App</em>.</p>
-        </div>
-      </div>
-
-      <button id="closeIpaFooterBtn" type="button" class="w-full py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white transition">
-        Stäng guide
+    <!-- Kompakta flikar så allt ryms utan scroll -->
+    <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-surface border border-white/10">
+      <button id="tabMetricsBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition">
+        Delbetyg &amp; Dom
+      </button>
+      <button id="tabTrainBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition">
+        Träna på &amp; Rutin
       </button>
     </div>
+
+    <!-- Vy A: Delbetyg & Hård AI-dom -->
+    <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-2">
+      <div id="resMetricsList" class="space-y-1.5"></div>
+      <div class="rounded-2xl p-2.5 bg-surface border border-white/10">
+        <p id="resVerdictText" class="text-[11px] text-zinc-200 leading-snug"></p>
+      </div>
+    </div>
+
+    <!-- Vy B: Vad du ska träna på + Daglig checklista -->
+    <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-2">
+      <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/25 space-y-1">
+        <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Högst prioritet att fixa:</span>
+        <ul id="resWeaknessesList" class="space-y-1 text-[11px] text-zinc-200 leading-snug"></ul>
+      </div>
+
+      <div id="compactRoutineList" class="space-y-1.5"></div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       MODAL: GEMINI API-NYCKEL
+  ========================================================== -->
+  <div id="geminiModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-3xl bg-card border border-white/15 p-5 space-y-3.5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Koppla Gemini AI</h3>
+        <button id="closeGeminiModalBtn" type="button" class="w-7 h-7 rounded-full bg-white/10 text-zinc-300 text-xs">✕</button>
+      </div>
+      <p class="text-xs text-zinc-400 leading-relaxed">
+        Klistra in din Gemini API-nyckel från Google AI Studio för riktig multimodal AI-analys av båda bilderna.
+      </p>
+      <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
+      <select id="geminiModelInput" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
+        <option value="gemini-2.5-flash">gemini-2.5-flash (Snabbast)</option>
+        <option value="gemini-2.5-pro">gemini-2.5-pro (Mest noggrann)</option>
+      </select>
+      <div class="flex gap-2 pt-1">
+        <button id="clearGeminiBtn" type="button" class="px-3 py-2.5 rounded-xl text-xs bg-white/5 text-zinc-300 border border-white/10">Rensa</button>
+        <button id="saveGeminiBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-violet-600 text-white">Spara nyckel</button>
+      </div>
+    </div>
   </div>
 
-  <canvas id="workCanvas" class="hidden"></canvas>
+  <canvas id="hiddenCanvas" class="hidden"></canvas>
+  <canvas id="trackCanvas" class="hidden"></canvas>
 
   <script>
     (function () {
-      const STORAGE_KEYS = {
-        gemini: 'aesthetix_gemini_cfg_v1',
-        routine: 'aesthetix_routine_v1',
-        lastScan: 'aesthetix_last_scan_v1'
-      };
+      const STORAGE_GEMINI = 'aesthetix_strict_gemini_v2';
+      const STORAGE_ROUTINE = 'aesthetix_strict_routine_v2';
 
-      const PSL_TIERS = [
-        { name: 'Sub-3', minPsl: 1.0, maxPsl: 2.4, color: 'bg-rose-500' },
-        { name: 'Sub-5', minPsl: 2.5, maxPsl: 3.4, color: 'bg-orange-500' },
-        { name: 'LTN', minPsl: 3.5, maxPsl: 4.3, color: 'bg-amber-500' },
-        { name: 'MTN', minPsl: 4.4, maxPsl: 5.2, color: 'bg-yellow-400' },
-        { name: 'HTN', minPsl: 5.3, maxPsl: 6.0, color: 'bg-cyan-400' },
-        { name: 'Chadlite', minPsl: 6.1, maxPsl: 6.8, color: 'bg-sky-400' },
-        { name: 'Chad', minPsl: 6.9, maxPsl: 7.5, color: 'bg-violet-500' },
-        { name: 'True Adam', minPsl: 7.6, maxPsl: 8.0, color: 'bg-gradient-to-r from-amber-300 via-fuchsia-400 to-cyan-300' }
+      // Strikt PSL-skala: Sub-3 upp till True Adam (8.0 är extremt sällsynt)
+      const PSL_LEVELS = [
+        { name: 'Sub-3', min: 1.0, max: 2.4, color: 'bg-rose-600' },
+        { name: 'Sub-5', min: 2.5, max: 3.4, color: 'bg-orange-500' },
+        { name: 'LTN', min: 3.5, max: 4.3, color: 'bg-amber-500' },
+        { name: 'MTN', min: 4.4, max: 5.2, color: 'bg-yellow-400' },
+        { name: 'HTN', min: 5.3, max: 6.0, color: 'bg-cyan-400' },
+        { name: 'Chadlite', min: 6.1, max: 6.8, color: 'bg-sky-400' },
+        { name: 'Chad', min: 6.9, max: 7.5, color: 'bg-violet-500' },
+        { name: 'True Adam', min: 7.6, max: 8.0, color: 'bg-gradient-to-r from-amber-300 via-fuchsia-400 to-cyan-300' }
       ];
 
-      const DEFAULT_ROUTINE = [
-        { id: 'posture', title: 'Hållning & nackjustering (chin tucks + rak rygg)', tag: 'Profil & Hållning', done: false },
-        { id: 'hydration', title: 'Hydrering & elektrolyter + minskat salt/socker kvällstid', tag: 'Depuffing', done: false },
-        { id: 'skincare', title: 'Rengöring, fuktkräm & SPF dagtid', tag: 'Hudkvalitet', done: false },
-        { id: 'sleep', title: '7.5–8.5h sömn på rygg/sidoläge med ren kudde', tag: 'Återhämtning', done: false },
-        { id: 'grooming', title: 'Ögonbryn, hårlinje & läppvård (grooming)', tag: 'Softmaxing', done: false }
+      const ROUTINE_ITEMS = [
+        { id: 'bf', text: 'Sänk kroppsfett (10–14%) & minska salt för skarpare käklinje', done: false },
+        { id: 'posture', text: 'Chin tucks & rak hållning (förbättrar gonialvinkel & E-line)', done: false },
+        { id: 'skin', text: 'Hudvård: Rengöring, fuktkräm, retinol/niacinamid & SPF', done: false },
+        { id: 'brows', text: 'Grooming: Forma ögonbryn, frisyr efter ansiktsform & sömn 8h', done: false }
       ];
 
       const state = {
-        activeStep: 'front', // 'front' | 'profile'
-        photos: {
-          front: null,
-          profile: null
-        },
-        cameraStream: null,
-        lastReport: null,
-        gemini: {
-          apiKey: '',
-          model: 'gemini-2.5-flash',
-          enabled: true
-        },
-        routine: {
-          dateKey: getTodayKey(),
-          streak: 0,
-          lastCompletedDate: null,
-          items: DEFAULT_ROUTINE.map((item) => ({ ...item }))
-        }
+        step: 'front', // 'front' | 'profile'
+        photos: { front: null, profile: null },
+        stream: null,
+        trackTimer: null,
+        gemini: { apiKey: '', model: 'gemini-2.5-flash' },
+        routine: ROUTINE_ITEMS.map((r) => ({ ...r }))
       };
 
       const el = {
-        stepTitle: document.getElementById('stepTitle'),
-        geminiBadge: document.getElementById('geminiBadge'),
-        cardFront: document.getElementById('cardFront'),
-        cardProfile: document.getElementById('cardProfile'),
-        statusFront: document.getElementById('statusFront'),
-        statusProfile: document.getElementById('statusProfile'),
-        thumbFront: document.getElementById('thumbFront'),
-        thumbProfile: document.getElementById('thumbProfile'),
-        placeholderFront: document.getElementById('placeholderFront'),
-        placeholderProfile: document.getElementById('placeholderProfile'),
-        selectFrontBtn: document.getElementById('selectFrontBtn'),
-        selectProfileBtn: document.getElementById('selectProfileBtn'),
-        retakeFrontBtn: document.getElementById('retakeFrontBtn'),
-        retakeProfileBtn: document.getElementById('retakeProfileBtn'),
-        cameraVideo: document.getElementById('cameraVideo'),
-        activePreviewImg: document.getElementById('activePreviewImg'),
-        guideOverlay: document.getElementById('guideOverlay'),
-        guideFrontSvg: document.getElementById('guideFrontSvg'),
-        guideProfileSvg: document.getElementById('guideProfileSvg'),
-        guideHint: document.getElementById('guideHint'),
-        scanLaser: document.getElementById('scanLaser'),
-        scannerBadge: document.getElementById('scannerBadge'),
-        toggleCameraBtn: document.getElementById('toggleCameraBtn'),
-        capturePhotoBtn: document.getElementById('capturePhotoBtn'),
-        fileInput: document.getElementById('fileInput'),
-        runScanBtn: document.getElementById('runScanBtn'),
-        demoScanBtn: document.getElementById('demoScanBtn'),
-        scanFeedback: document.getElementById('scanFeedback'),
-        resultsSection: document.getElementById('resultsSection'),
-        analysisSourceBadge: document.getElementById('analysisSourceBadge'),
-        rankTitle: document.getElementById('rankTitle'),
-        pslScoreText: document.getElementById('pslScoreText'),
-        potentialText: document.getElementById('potentialText'),
-        overallTenText: document.getElementById('overallTenText'),
-        gonialVal: document.getElementById('gonialVal'),
-        elineVal: document.getElementById('elineVal'),
-        symVal: document.getElementById('symVal'),
-        metricsGrid: document.getElementById('metricsGrid'),
-        summaryText: document.getElementById('summaryText'),
-        focusList: document.getElementById('focusList'),
-        coachInput: document.getElementById('coachInput'),
-        askCoachBtn: document.getElementById('askCoachBtn'),
-        coachReply: document.getElementById('coachReply'),
-        streakBadge: document.getElementById('streakBadge'),
-        routineProgressText: document.getElementById('routineProgressText'),
-        routineList: document.getElementById('routineList'),
-        resetRoutineBtn: document.getElementById('resetRoutineBtn'),
-        workCanvas: document.getElementById('workCanvas'),
-        // Modaler
-        geminiModal: document.getElementById('geminiModal'),
+        screenStart: document.getElementById('screenStart'),
+        screenCamera: document.getElementById('screenCamera'),
+        screenResults: document.getElementById('screenResults'),
+        startScanFlowBtn: document.getElementById('startScanFlowBtn'),
+        quickDemoStartBtn: document.getElementById('quickDemoStartBtn'),
         openGeminiBtn: document.getElementById('openGeminiBtn'),
-        closeGeminiBtn: document.getElementById('closeGeminiBtn'),
+        resGeminiBtn: document.getElementById('resGeminiBtn'),
+        geminiStatusDot: document.getElementById('geminiStatusDot'),
+        liveVideo: document.getElementById('liveVideo'),
+        cameraFallbackBg: document.getElementById('cameraFallbackBg'),
+        fallbackStepLabel: document.getElementById('fallbackStepLabel'),
+        fallbackFileInput: document.getElementById('fallbackFileInput'),
+        cameraGalleryInput: document.getElementById('cameraGalleryInput'),
+        dynamicHeadFrame: document.getElementById('dynamicHeadFrame'),
+        frameFrontSvg: document.getElementById('frameFrontSvg'),
+        frameProfileSvg: document.getElementById('frameProfileSvg'),
+        pillStep1: document.getElementById('pillStep1'),
+        pillStep2: document.getElementById('pillStep2'),
+        guidanceMainText: document.getElementById('guidanceMainText'),
+        guidanceSubText: document.getElementById('guidanceSubText'),
+        camThumbFront: document.getElementById('camThumbFront'),
+        camThumbFrontTxt: document.getElementById('camThumbFrontTxt'),
+        camThumbProfile: document.getElementById('camThumbProfile'),
+        camThumbProfileTxt: document.getElementById('camThumbProfileTxt'),
+        shutterBtn: document.getElementById('shutterBtn'),
+        cancelCameraBtn: document.getElementById('cancelCameraBtn'),
+        analyzingOverlay: document.getElementById('analyzingOverlay'),
+        analyzingTitle: document.getElementById('analyzingTitle'),
+        analyzingSub: document.getElementById('analyzingSub'),
+        rescanBtn: document.getElementById('rescanBtn'),
+        resSourceTag: document.getElementById('resSourceTag'),
+        resRankName: document.getElementById('resRankName'),
+        resPslScore: document.getElementById('resPslScore'),
+        resPotential: document.getElementById('resPotential'),
+        resImgFront: document.getElementById('resImgFront'),
+        resImgProfile: document.getElementById('resImgProfile'),
+        resGonial: document.getElementById('resGonial'),
+        resEline: document.getElementById('resEline'),
+        resSymmetry: document.getElementById('resSymmetry'),
+        tabMetricsBtn: document.getElementById('tabMetricsBtn'),
+        tabTrainBtn: document.getElementById('tabTrainBtn'),
+        panelMetrics: document.getElementById('panelMetrics'),
+        panelTrain: document.getElementById('panelTrain'),
+        resMetricsList: document.getElementById('resMetricsList'),
+        resVerdictText: document.getElementById('resVerdictText'),
+        resWeaknessesList: document.getElementById('resWeaknessesList'),
+        compactRoutineList: document.getElementById('compactRoutineList'),
+        geminiModal: document.getElementById('geminiModal'),
+        closeGeminiModalBtn: document.getElementById('closeGeminiModalBtn'),
         geminiKeyInput: document.getElementById('geminiKeyInput'),
-        geminiModelSelect: document.getElementById('geminiModelSelect'),
-        useGeminiToggle: document.getElementById('useGeminiToggle'),
-        clearGeminiKeyBtn: document.getElementById('clearGeminiKeyBtn'),
+        geminiModelInput: document.getElementById('geminiModelInput'),
+        clearGeminiBtn: document.getElementById('clearGeminiBtn'),
         saveGeminiBtn: document.getElementById('saveGeminiBtn'),
-        ipaModal: document.getElementById('ipaModal'),
-        openIpaBtn: document.getElementById('openIpaBtn'),
-        closeIpaBtn: document.getElementById('closeIpaBtn'),
-        closeIpaFooterBtn: document.getElementById('closeIpaFooterBtn')
+        hiddenCanvas: document.getElementById('hiddenCanvas'),
+        trackCanvas: document.getElementById('trackCanvas')
       };
 
-      function getTodayKey() {
-        const d = new Date();
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
       }
 
-      function getYesterdayKey() {
-        const d = new Date(Date.now() - 86400000);
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      function showScreen(name) {
+        el.screenStart.classList.toggle('hidden-screen', name !== 'start');
+        el.screenCamera.classList.toggle('hidden-screen', name !== 'camera');
+        el.screenResults.classList.toggle('hidden-screen', name !== 'results');
       }
 
-      function clamp(val, min, max) {
-        return Math.max(min, Math.min(max, val));
-      }
-
-      function loadSavedState() {
+      function loadConfig() {
         try {
-          const rawGemini = localStorage.getItem(STORAGE_KEYS.gemini);
-          if (rawGemini) {
-            const parsed = JSON.parse(rawGemini);
-            state.gemini = {
-              apiKey: typeof parsed.apiKey === 'string' ? parsed.apiKey : '',
-              model: typeof parsed.model === 'string' ? parsed.model : 'gemini-2.5-flash',
-              enabled: parsed.enabled !== false
-            };
+          const g = JSON.parse(localStorage.getItem(STORAGE_GEMINI) || 'null');
+          if (g && typeof g.apiKey === 'string') {
+            state.gemini.apiKey = g.apiKey;
+            state.gemini.model = g.model || 'gemini-2.5-flash';
           }
         } catch (_) {}
-
         try {
-          const rawRoutine = localStorage.getItem(STORAGE_KEYS.routine);
-          if (rawRoutine) {
-            const parsed = JSON.parse(rawRoutine);
-            const today = getTodayKey();
-            state.routine.streak = Number(parsed.streak) || 0;
-            state.routine.lastCompletedDate = parsed.lastCompletedDate || null;
-            if (parsed.dateKey === today && Array.isArray(parsed.items)) {
-              state.routine.dateKey = today;
-              state.routine.items = DEFAULT_ROUTINE.map((def) => {
-                const found = parsed.items.find((x) => x.id === def.id);
-                return { ...def, done: Boolean(found && found.done) };
-              });
-            } else {
-              state.routine.dateKey = today;
-              state.routine.items = DEFAULT_ROUTINE.map((item) => ({ ...item }));
-            }
+          const r = JSON.parse(localStorage.getItem(STORAGE_ROUTINE) || 'null');
+          if (Array.isArray(r) && r.length) {
+            state.routine = ROUTINE_ITEMS.map((item) => {
+              const saved = r.find((x) => x.id === item.id);
+              return { ...item, done: Boolean(saved && saved.done) };
+            });
           }
         } catch (_) {}
+        updateGeminiDot();
+      }
 
+      function updateGeminiDot() {
+        const active = Boolean(state.gemini.apiKey.trim());
+        el.geminiStatusDot.className = `inline-block w-2 h-2 rounded-full mr-1.5 ${active ? 'bg-emerald-400' : 'bg-amber-400'}`;
+      }
+
+      // =========================================================
+      // KAMERA & REAL-TIME AUTO-ANPASSNING AV HUVUDRAM
+      // =========================================================
+      async function openCameraFlow() {
+        state.step = 'front';
+        state.photos = { front: null, profile: null };
+        updateCameraStepUI();
+        showScreen('camera');
+        el.cameraFallbackBg.classList.add('hidden');
+        el.liveVideo.classList.remove('hidden');
+
+        // Frågar iOS / webbläsaren direkt om kamerabehörighet
         try {
-          const rawScan = localStorage.getItem(STORAGE_KEYS.lastScan);
-          if (rawScan) {
-            const parsedScan = JSON.parse(rawScan);
-            if (parsedScan && parsedScan.rank && Array.isArray(parsedScan.metrics)) {
-              state.lastReport = parsedScan;
-              renderReport(parsedScan);
-            }
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error('Ingen kamera-API');
           }
-        } catch (_) {}
-
-        syncGeminiBadge();
-      }
-
-      function saveRoutineState() {
-        try {
-          localStorage.setItem(STORAGE_KEYS.routine, JSON.stringify(state.routine));
-        } catch (_) {}
-      }
-
-      function syncGeminiBadge() {
-        if (state.gemini.enabled && state.gemini.apiKey.trim()) {
-          el.geminiBadge.textContent = `Gemini aktiv (${state.gemini.model})`;
-          el.geminiBadge.className = 'px-2 py-1 rounded-lg text-[10px] font-mono bg-violet-500/20 text-violet-200 border border-violet-400/40';
-        } else {
-          el.geminiBadge.textContent = 'Lokal + Gemini redo';
-          el.geminiBadge.className = 'px-2 py-1 rounded-lg text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/25';
-        }
-      }
-
-      function setStep(step) {
-        state.activeStep = step;
-        const isFront = step === 'front';
-
-        el.stepTitle.textContent = isFront
-          ? 'Steg 1 av 2: Ta eller ladda upp Framsida'
-          : 'Steg 2 av 2: Ta eller ladda upp Sidoprofil (90°)';
-
-        el.cardFront.className = `rounded-2xl p-2.5 bg-surface border transition cursor-pointer ${
-          isFront ? 'border-violet-500/70 ring-1 ring-violet-500/35' : 'border-white/10 hover:border-white/25'
-        }`;
-        el.cardProfile.className = `rounded-2xl p-2.5 bg-surface border transition cursor-pointer ${
-          !isFront ? 'border-cyan-400/70 ring-1 ring-cyan-400/35' : 'border-white/10 hover:border-white/25'
-        }`;
-
-        el.guideFrontSvg.classList.toggle('hidden', !isFront);
-        el.guideProfileSvg.classList.toggle('hidden', isFront);
-        el.guideHint.textContent = isFront
-          ? 'Håll huvudet rakt i ovalen (neutralt uttryck, bra ljus)'
-          : 'Vrid huvudet 90° åt sidan så käklinje, näsa och haka syns tydligt';
-
-        syncPreviewStage();
-      }
-
-      function syncPreviewStage() {
-        const currentPhoto = state.photos[state.activeStep];
-        if (state.cameraStream) {
-          el.cameraVideo.classList.remove('hidden');
-          el.activePreviewImg.classList.add('hidden');
-        } else if (currentPhoto) {
-          el.cameraVideo.classList.add('hidden');
-          el.activePreviewImg.src = currentPhoto;
-          el.activePreviewImg.classList.remove('hidden');
-        } else {
-          el.cameraVideo.classList.add('hidden');
-          el.activePreviewImg.classList.add('hidden');
-        }
-      }
-
-      function syncPhotoCards() {
-        const hasFront = Boolean(state.photos.front);
-        const hasProfile = Boolean(state.photos.profile);
-
-        if (hasFront) {
-          el.thumbFront.src = state.photos.front;
-          el.thumbFront.classList.remove('hidden');
-          el.placeholderFront.classList.add('hidden');
-          el.retakeFrontBtn.classList.remove('hidden');
-          el.statusFront.textContent = 'Klar';
-          el.statusFront.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300';
-        } else {
-          el.thumbFront.removeAttribute('src');
-          el.thumbFront.classList.add('hidden');
-          el.placeholderFront.classList.remove('hidden');
-          el.retakeFrontBtn.classList.add('hidden');
-          el.statusFront.textContent = state.activeStep === 'front' ? 'Aktiv' : 'Saknas';
-          el.statusFront.className = state.activeStep === 'front'
-            ? 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-200'
-            : 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-zinc-400';
-        }
-
-        if (hasProfile) {
-          el.thumbProfile.src = state.photos.profile;
-          el.thumbProfile.classList.remove('hidden');
-          el.placeholderProfile.classList.add('hidden');
-          el.retakeProfileBtn.classList.remove('hidden');
-          el.statusProfile.textContent = 'Klar';
-          el.statusProfile.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300';
-        } else {
-          el.thumbProfile.removeAttribute('src');
-          el.thumbProfile.classList.add('hidden');
-          el.placeholderProfile.classList.remove('hidden');
-          el.retakeProfileBtn.classList.add('hidden');
-          el.statusProfile.textContent = state.activeStep === 'profile' ? 'Aktiv' : 'Väntar';
-          el.statusProfile.className = state.activeStep === 'profile'
-            ? 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-200'
-            : 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-zinc-400';
-        }
-
-        syncPreviewStage();
-      }
-
-      function assignPhotoToStep(step, dataUrl) {
-        state.photos[step] = dataUrl;
-        syncPhotoCards();
-
-        if (step === 'front' && !state.photos.profile) {
-          setStep('profile');
-          el.scanFeedback.innerHTML = 'Framsida sparad! Växlade automatiskt till <span class="text-cyan-300 font-medium">Steg 2: Sidoprofil (90°)</span>.';
-        } else if (state.photos.front && state.photos.profile) {
-          el.scanFeedback.innerHTML = 'Båda vinklarna klara! Klicka på <span class="text-violet-300 font-semibold">Kör 2-stegs Biometrisk Analys</span>.';
-        } else {
-          el.scanFeedback.textContent = `${step === 'front' ? 'Framsida' : 'Sidoprofil (90°)'} uppdaterad.`;
-        }
-      }
-
-      function retakeStep(step) {
-        state.photos[step] = null;
-        setStep(step);
-        syncPhotoCards();
-        el.scanFeedback.textContent = `Tar om ${step === 'front' ? 'Framsida' : 'Sidoprofil (90°)'}.`;
-      }
-
-      async function startCamera() {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          el.scanFeedback.textContent = 'Kameran stöds inte i denna webbläsare eller kräver HTTPS. Använd "Ladda upp" eller "Snabb demo".';
-          return;
-        }
-        try {
-          stopCamera();
+          stopCameraStream();
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: 'user', width: { ideal: 1080 }, height: { ideal: 1440 } },
+            video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 1920 } },
             audio: false
           });
-          state.cameraStream = stream;
-          el.cameraVideo.srcObject = stream;
-          el.toggleCameraBtn.textContent = 'Stoppa kamera';
-          syncPreviewStage();
-          el.scanFeedback.textContent = 'Kamera aktiv. Rikta ansiktet efter guiden och klicka "Ta foto".';
+          state.stream = stream;
+          el.liveVideo.srcObject = stream;
+          await el.liveVideo.play();
+          startAutoHeadTracking();
         } catch (err) {
-          el.scanFeedback.textContent = 'Kunde inte öppna kameran (kontrollera kamerabehörighet och HTTPS). Du kan alltid ladda upp bild eller köra demo.';
+          el.liveVideo.classList.add('hidden');
+          el.cameraFallbackBg.classList.remove('hidden');
+          el.guidanceMainText.textContent = 'Kamera nekad eller kräver HTTPS';
+          el.guidanceSubText.textContent = 'Välj bild från kamerarullen nedan';
         }
       }
 
-      function stopCamera() {
-        if (state.cameraStream) {
-          state.cameraStream.getTracks().forEach((t) => t.stop());
-          state.cameraStream = null;
+      function stopCameraStream() {
+        if (state.trackTimer) {
+          clearInterval(state.trackTimer);
+          state.trackTimer = null;
         }
-        el.cameraVideo.srcObject = null;
-        el.toggleCameraBtn.textContent = 'Starta kamera';
-        syncPreviewStage();
+        if (state.stream) {
+          state.stream.getTracks().forEach((t) => t.stop());
+          state.stream = null;
+        }
+        el.liveVideo.srcObject = null;
       }
 
-      function capturePhoto() {
-        if (!state.cameraStream || !el.cameraVideo.videoWidth) {
-          el.scanFeedback.textContent = 'Starta kameran först eller välj "Ladda upp".';
-          return;
+      function updateCameraStepUI() {
+        const isFront = state.step === 'front';
+        el.pillStep1.className = isFront
+          ? 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black'
+          : 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300';
+        el.pillStep2.className = !isFront
+          ? 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-violet-500 text-white'
+          : 'px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400';
+
+        el.frameFrontSvg.classList.toggle('hidden', !isFront);
+        el.frameProfileSvg.classList.toggle('hidden', isFront);
+        el.fallbackStepLabel.textContent = isFront ? '1. Framsida' : '2. Sidoprofil 90°';
+
+        if (isFront) {
+          el.guidanceMainText.textContent = 'Steg 1: Titta rakt in i kameran';
+          el.guidanceSubText.textContent = 'Neutralt uttryck • Håll huvudet i ramen';
+        } else {
+          el.guidanceMainText.textContent = 'Steg 2: Vrid huvudet 90° åt sidan';
+          el.guidanceSubText.textContent = 'Visa käklinje, näsa och haka i profil';
         }
-        const canvas = el.workCanvas;
-        const w = el.cameraVideo.videoWidth;
-        const h = el.cameraVideo.videoHeight;
+
+        if (state.photos.front) {
+          el.camThumbFront.src = state.photos.front;
+          el.camThumbFront.classList.remove('hidden');
+          el.camThumbFrontTxt.classList.add('hidden');
+        } else {
+          el.camThumbFront.classList.add('hidden');
+          el.camThumbFrontTxt.classList.remove('hidden');
+        }
+
+        if (state.photos.profile) {
+          el.camThumbProfile.src = state.photos.profile;
+          el.camThumbProfile.classList.remove('hidden');
+          el.camThumbProfileTxt.classList.add('hidden');
+        } else {
+          el.camThumbProfile.classList.add('hidden');
+          el.camThumbProfileTxt.classList.remove('hidden');
+        }
+      }
+
+      // Känner av ansiktets position & storlek i realtid så att huvudramen anpassas automatiskt
+      function startAutoHeadTracking() {
+        const canvas = el.trackCanvas;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const W = 80;
+        const H = 100;
+        canvas.width = W;
+        canvas.height = H;
+
+        const hasFaceDetector = 'FaceDetector' in window;
+        const detector = hasFaceDetector ? new window.FaceDetector({ fastMode: true, maxDetectedFaces: 1 }) : null;
+
+        state.trackTimer = setInterval(async () => {
+          if (!state.stream || !el.liveVideo.videoWidth) return;
+
+          let normX = 0.5;
+          let normY = 0.46;
+          let normScale = 1.0;
+          let faceFound = false;
+
+          if (detector) {
+            try {
+              const faces = await detector.detect(el.liveVideo);
+              if (faces && faces.length > 0) {
+                const box = faces[0].boundingBox;
+                const vw = el.liveVideo.videoWidth;
+                const vh = el.liveVideo.videoHeight;
+                // Speglad X eftersom videon är scale-x-[-1]
+                normX = 1 - (box.x + box.width * 0.5) / vw;
+                normY = (box.y + box.height * 0.48) / vh;
+                normScale = clamp((box.width / vw) * 2.15, 0.78, 1.35);
+                faceFound = true;
+              }
+            } catch (_) {}
+          }
+
+          if (!faceFound) {
+            // Hudtons- & kontrastbaserad tyngdpunktsspårning för iOS Safari
+            ctx.save();
+            ctx.translate(W, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(el.liveVideo, 0, 0, W, H);
+            ctx.restore();
+
+            const imgData = ctx.getImageData(0, 0, W, H).data;
+            let sumX = 0;
+            let sumY = 0;
+            let count = 0;
+            let minX = W, maxX = 0, minY = H, maxY = 0;
+
+            for (let y = 12; y < H - 12; y++) {
+              for (let x = 10; x < W - 10; x++) {
+                const i = (y * W + x) * 4;
+                const r = imgData[i], g = imgData[i + 1], b = imgData[i + 2];
+                // Enkel hudtonsdetektering i YCbCr/RGB
+                const isSkin = r > 75 && g > 40 && b > 25 && r > g && r > b && Math.abs(r - g) > 12;
+                if (isSkin) {
+                  sumX += x;
+                  sumY += y;
+                  count++;
+                  if (x < minX) minX = x;
+                  if (x > maxX) maxX = x;
+                  if (y < minY) minY = y;
+                  if (y > maxY) maxY = y;
+                }
+              }
+            }
+
+            if (count > 140) {
+              normX = (sumX / count) / W;
+              normY = (sumY / count) / H;
+              const spanW = (maxX - minX) / W;
+              normScale = clamp(spanW * 1.85, 0.82, 1.28);
+              faceFound = true;
+            }
+          }
+
+          // Flytta och skala huvudramen mjukt så den omsluter användarens huvud
+          const offsetX = clamp((normX - 0.5) * 140, -65, 65);
+          const offsetY = clamp((normY - 0.47) * 160, -70, 70);
+          el.dynamicHeadFrame.style.transform = `translate(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px) scale(${normScale.toFixed(2)})`;
+
+          // Live-guidning beroende på avstånd, vinkel och centrering
+          if (!faceFound) {
+            el.guidanceSubText.textContent = 'Placera ansiktet i bra ljus framför kameran';
+            el.frameFrontSvg.classList.replace('text-emerald-400', 'text-cyan-300');
+          } else if (normScale < 0.84) {
+            el.guidanceSubText.textContent = 'Flytta kameran lite närmare ansiktet';
+          } else if (normScale > 1.24) {
+            el.guidanceSubText.textContent = 'Håll kameran lite längre bort';
+          } else if (Math.abs(normX - 0.5) > 0.16) {
+            el.guidanceSubText.textContent = normX < 0.5 ? 'Centrera huvudet lite åt höger' : 'Centrera huvudet lite åt vänster';
+          } else {
+            el.guidanceSubText.textContent = state.step === 'front'
+              ? '✓ Perfekt position — tryck på knappen för Framsida'
+              : '✓ Perfekt 90° vinkel — tryck för att starta AI-analys';
+            el.frameFrontSvg.classList.replace('text-cyan-300', 'text-emerald-400');
+          }
+        }, 160);
+      }
+
+      function captureCurrentFrame() {
+        if (!state.stream || !el.liveVideo.videoWidth) return;
+        const canvas = el.hiddenCanvas;
+        const vw = el.liveVideo.videoWidth;
+        const vh = el.liveVideo.videoHeight;
+        // Skala ner lagom för snabb Gemini API-uppladdning
+        const maxSide = 820;
+        let w = vw, h = vh;
+        if (w > maxSide || h > maxSide) {
+          if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
+          else { w = Math.round((w * maxSide) / h); h = maxSide; }
+        }
         canvas.width = w;
         canvas.height = h;
         const ctx = canvas.getContext('2d');
         ctx.save();
         ctx.translate(w, 0);
         ctx.scale(-1, 1);
-        ctx.drawImage(el.cameraVideo, 0, 0, w, h);
+        ctx.drawImage(el.liveVideo, 0, 0, w, h);
         ctx.restore();
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
-        assignPhotoToStep(state.activeStep, dataUrl);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.86);
+        handleCapturedPhoto(dataUrl);
       }
 
-      function handleFileUpload(event) {
-        const file = event.target.files && event.target.files[0];
+      function handleGalleryUpload(e) {
+        const file = e.target.files && e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = (ev) => {
           const img = new Image();
           img.onload = () => {
-            const maxDim = 900;
-            let w = img.width;
-            let h = img.height;
-            if (w > maxDim || h > maxDim) {
-              if (w >= h) {
-                h = Math.round((h * maxDim) / w);
-                w = maxDim;
-              } else {
-                w = Math.round((w * maxDim) / h);
-                h = maxDim;
-              }
+            const maxSide = 820;
+            let w = img.width, h = img.height;
+            if (w > maxSide || h > maxSide) {
+              if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
+              else { w = Math.round((w * maxSide) / h); h = maxSide; }
             }
-            const canvas = el.workCanvas;
+            const canvas = el.hiddenCanvas;
             canvas.width = w;
             canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
-            assignPhotoToStep(state.activeStep, canvas.toDataURL('image/jpeg', 0.86));
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.86));
           };
-          img.src = e.target.result;
+          img.src = ev.target.result;
         };
         reader.readAsDataURL(file);
-        event.target.value = '';
+        e.target.value = '';
       }
 
-      function createDemoImage(mode) {
-        const canvas = el.workCanvas;
-        canvas.width = 480;
-        canvas.height = 600;
-        const ctx = canvas.getContext('2d');
-
-        const grad = ctx.createLinearGradient(0, 0, 480, 600);
-        if (mode === 'front') {
-          grad.addColorStop(0, '#171929');
-          grad.addColorStop(1, '#0b0c14');
+      function handleCapturedPhoto(dataUrl) {
+        if (state.step === 'front') {
+          state.photos.front = dataUrl;
+          state.step = 'profile';
+          updateCameraStepUI();
         } else {
-          grad.addColorStop(0, '#131d2b');
-          grad.addColorStop(1, '#090b12');
+          state.photos.profile = dataUrl;
+          updateCameraStepUI();
+          runFullAnalysis(false);
         }
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 480, 600);
-
-        // Mjuk glow bakom ansiktet
-        const aura = ctx.createRadialGradient(240, 290, 20, 240, 290, 210);
-        aura.addColorStop(0, mode === 'front' ? 'rgba(139,92,246,0.28)' : 'rgba(6,182,212,0.28)');
-        aura.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = aura;
-        ctx.fillRect(0, 0, 480, 600);
-
-        ctx.strokeStyle = 'rgba(226, 232, 240, 0.35)';
-        ctx.lineWidth = 2;
-        if (mode === 'front') {
-          ctx.beginPath();
-          ctx.ellipse(240, 290, 112, 154, 0, 0, Math.PI * 2);
-          ctx.stroke();
-
-          ctx.fillStyle = 'rgba(148, 163, 184, 0.25)';
-          ctx.beginPath();
-          ctx.ellipse(198, 265, 22, 10, -0.08, 0, Math.PI * 2);
-          ctx.ellipse(282, 265, 22, 10, 0.08, 0, Math.PI * 2);
-          ctx.fill();
-        } else {
-          ctx.beginPath();
-          ctx.moveTo(185, 130);
-          ctx.quadraticCurveTo(295, 125, 305, 235);
-          ctx.lineTo(342, 285);
-          ctx.lineTo(302, 305);
-          ctx.quadraticCurveTo(308, 355, 285, 385);
-          ctx.quadraticCurveTo(305, 415, 265, 430);
-          ctx.quadraticCurveTo(215, 440, 195, 395);
-          ctx.stroke();
-        }
-
-        ctx.fillStyle = 'rgba(255,255,255,0.65)';
-        ctx.font = '600 15px monospace';
-        ctx.fillText(mode === 'front' ? 'DEMO • FRAMSIDA' : 'DEMO • SIDOPROFIL 90°', 24, 38);
-
-        return canvas.toDataURL('image/jpeg', 0.85);
       }
 
-      function runDemoScan() {
-        stopCamera();
-        const frontDemo = createDemoImage('front');
-        const profileDemo = createDemoImage('profile');
-        state.photos.front = frontDemo;
-        state.photos.profile = profileDemo;
-        syncPhotoCards();
-        executeAnalysis({ isDemo: true });
+      // =========================================================
+      // STRIKT PSL-BEDÖMNING (MYCKET HÅRDARE KALIBRERING)
+      // =========================================================
+      function mapStrictPsl(psl) {
+        const val = clamp(Number(psl) || 4.2, 1.0, 8.0);
+        let idx = PSL_LEVELS.findIndex((t) => val >= t.min && val <= t.max);
+        if (idx === -1) idx = val < 2.5 ? 0 : PSL_LEVELS.length - 1;
+        return { idx, tier: PSL_LEVELS[idx], psl: Number(val.toFixed(1)) };
       }
 
-      function analyzeImagePixels(dataUrl) {
+      function extractImageBiometrics(dataUrl) {
         return new Promise((resolve) => {
           const img = new Image();
           img.onload = () => {
-            const sampleW = 96;
-            const sampleH = 120;
-            const canvas = el.workCanvas;
-            canvas.width = sampleW;
-            canvas.height = sampleH;
+            const W = 90, H = 112;
+            const canvas = el.hiddenCanvas;
+            canvas.width = W;
+            canvas.height = H;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, sampleW, sampleH);
-            const { data } = ctx.getImageData(0, 0, sampleW, sampleH);
+            ctx.drawImage(img, 0, 0, W, H);
+            const { data } = ctx.getImageData(0, 0, W, H);
 
-            let lumSum = 0;
-            let lumSqSum = 0;
-            let edgeSum = 0;
-            let symDiffSum = 0;
-            let symCount = 0;
+            const lum = new Float32Array(W * H);
+            let sum = 0, sqSum = 0, edges = 0, symDiff = 0, symN = 0;
             let hash = 2166136261;
 
-            const lumGrid = new Float32Array(sampleW * sampleH);
-
-            for (let y = 0; y < sampleH; y++) {
-              for (let x = 0; x < sampleW; x++) {
-                const idx = (y * sampleW + x) * 4;
-                const r = data[idx];
-                const g = data[idx + 1];
-                const b = data[idx + 2];
-                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-                lumGrid[y * sampleW + x] = lum;
-                lumSum += lum;
-                lumSqSum += lum * lum;
-
-                if ((x + y) % 7 === 0) {
-                  hash ^= (r ^ (g << 4) ^ (b << 8));
-                  hash = Math.imul(hash, 16777619);
-                }
+            for (let i = 0; i < W * H; i++) {
+              const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
+              const l = 0.299 * r + 0.587 * g + 0.114 * b;
+              lum[i] = l;
+              sum += l;
+              sqSum += l * l;
+              if (i % 11 === 0) {
+                hash ^= (r ^ (g << 3) ^ (b << 7));
+                hash = Math.imul(hash, 16777619);
               }
             }
 
-            for (let y = 1; y < sampleH - 1; y++) {
-              for (let x = 1; x < sampleW - 1; x++) {
-                const i = y * sampleW + x;
-                const gx = Math.abs(lumGrid[i + 1] - lumGrid[i - 1]);
-                const gy = Math.abs(lumGrid[i + sampleW] - lumGrid[i - sampleW]);
-                edgeSum += (gx + gy) * 0.5;
+            // Central ansiktsregion (undvik bakgrundsbrus)
+            for (let y = 20; y < H - 18; y++) {
+              for (let x = 20; x < W - 20; x++) {
+                const idx = y * W + x;
+                edges += (Math.abs(lum[idx + 1] - lum[idx - 1]) + Math.abs(lum[idx + W] - lum[idx - W])) * 0.5;
               }
             }
 
-            const halfW = Math.floor(sampleW / 2);
-            for (let y = Math.floor(sampleH * 0.18); y < Math.floor(sampleH * 0.85); y++) {
-              for (let x = 4; x < halfW - 2; x++) {
-                const leftLum = lumGrid[y * sampleW + x];
-                const rightLum = lumGrid[y * sampleW + (sampleW - 1 - x)];
-                symDiffSum += Math.abs(leftLum - rightLum);
-                symCount++;
+            const half = Math.floor(W / 2);
+            for (let y = 22; y < H - 18; y++) {
+              for (let x = 18; x < half - 1; x++) {
+                symDiff += Math.abs(lum[y * W + x] - lum[y * W + (W - 1 - x)]);
+                symN++;
               }
             }
 
-            const totalPx = sampleW * sampleH;
-            const meanLum = lumSum / totalPx;
-            const contrast = Math.sqrt(Math.max(0, lumSqSum / totalPx - meanLum * meanLum));
-            const edgeDensity = edgeSum / ((sampleW - 2) * (sampleH - 2));
-            const symDelta = symCount ? symDiffSum / symCount : 25;
+            const mean = sum / (W * H);
+            const std = Math.sqrt(Math.max(0, sqSum / (W * H) - mean * mean));
+            const edgeAvg = edges / ((W - 40) * (H - 38));
+            const symDelta = symN ? symDiff / symN : 28;
 
             resolve({
-              brightnessScore: clamp(10 - Math.abs(meanLum - 135) / 14, 3.5, 9.5),
-              contrastScore: clamp(4.2 + contrast / 12, 3.8, 9.4),
-              sharpnessScore: clamp(4.0 + edgeDensity / 4.2, 3.8, 9.5),
-              symmetryPct: Math.round(clamp(97 - symDelta * 0.9, 74, 98)),
-              seed: (hash >>> 0) % 10000
+              // Hårdare normalisering: medel ligger runt 4.3-5.2/10 istället för 7-8/10
+              definition: clamp(2.8 + edgeAvg / 5.8, 2.5, 8.2),
+              boneContrast: clamp(3.0 + std / 16.5, 2.5, 8.3),
+              symmetryPct: Math.round(clamp(95 - symDelta * 1.15, 68, 96)),
+              lighting: clamp(8.5 - Math.abs(mean - 130) / 14, 3.0, 8.5),
+              seed: (hash >>> 0) % 1000
             });
           };
           img.src = dataUrl;
         });
       }
 
-      function mapPslTier(pslScore) {
-        const clampedPsl = clamp(pslScore, 1.0, 8.0);
-        let idx = PSL_TIERS.findIndex((t) => clampedPsl >= t.minPsl && clampedPsl <= t.maxPsl);
-        if (idx === -1) {
-          idx = clampedPsl < 2.5 ? 0 : PSL_TIERS.length - 1;
-        }
-        return { index: idx, tier: PSL_TIERS[idx], psl: Number(clampedPsl.toFixed(1)) };
-      }
+      function computeStrictLocalReport(frontBio, profileBio, isDemo) {
+        const s = ((frontBio.seed * 17 + profileBio.seed) % 1000) / 1000;
+        const micro = (s - 0.5) * 0.7;
 
-      function buildLocalReport(frontMetrics, profileMetrics, isDemo) {
-        const combinedSeed = ((frontMetrics.seed * 31 + profileMetrics.seed) % 1000) / 1000;
-        const nudge = (combinedSeed - 0.5) * 1.1;
+        // Strikt PSL-kurva: MTN (4.4–5.2 PSL) är normalvärde; över 6.0 PSL kräver toppvärden
+        const jawline = Number(clamp(profileBio.definition * 0.55 + profileBio.boneContrast * 0.45 + micro, 2.6, 8.4).toFixed(1));
+        const cheekbones = Number(clamp(frontBio.boneContrast * 0.55 + frontBio.definition * 0.45 + micro * 0.8, 2.8, 8.3).toFixed(1));
+        const eyeArea = Number(clamp(frontBio.definition * 0.5 + (frontBio.symmetryPct / 12) * 0.5 + micro * 0.6, 2.8, 8.2).toFixed(1));
+        const symmetryScore = Number(clamp((frontBio.symmetryPct - 52) / 5.2, 2.5, 8.6).toFixed(1));
+        const skin = Number(clamp(frontBio.lighting * 0.6 + (8.2 - Math.abs(frontBio.definition - 5.4) * 0.5) * 0.4, 2.8, 8.4).toFixed(1));
 
-        const jawline = Number(clamp((profileMetrics.sharpnessScore * 0.55 + profileMetrics.contrastScore * 0.45) + nudge * 0.5, 3.5, 9.4).toFixed(1));
-        const cheekbones = Number(clamp((frontMetrics.contrastScore * 0.5 + frontMetrics.sharpnessScore * 0.5) + nudge * 0.4, 3.8, 9.3).toFixed(1));
-        const eyeArea = Number(clamp((frontMetrics.sharpnessScore * 0.45 + frontMetrics.brightnessScore * 0.35 + (frontMetrics.symmetryPct / 10) * 0.2) + nudge * 0.3, 3.8, 9.2).toFixed(1));
-        const symmetryScore = Number(clamp((frontMetrics.symmetryPct / 10) * 0.8 + profileMetrics.brightnessScore * 0.2, 4.0, 9.6).toFixed(1));
-        const skinQuality = Number(clamp((frontMetrics.brightnessScore * 0.55 + (10 - Math.abs(frontMetrics.sharpnessScore - 6.2) * 0.4) * 0.45) + nudge * 0.3, 3.8, 9.4).toFixed(1));
+        const weightedTen = jawline * 0.28 + eyeArea * 0.25 + cheekbones * 0.20 + symmetryScore * 0.15 + skin * 0.12;
+        // Mappa hårt till PSL (1.0 - 8.0) så genomsnitt hamnar runt LTN/MTN (3.8 - 5.1 PSL)
+        const strictPsl = clamp(1.35 + weightedTen * 0.66, 1.5, 7.6);
+        const mapped = mapStrictPsl(strictPsl);
+        const maxPotPsl = clamp(mapped.psl + 0.75, 2.5, 7.8);
+        const maxPotTier = mapStrictPsl(maxPotPsl).tier;
 
-        const avgTen = Number(((jawline + cheekbones + eyeArea + symmetryScore + skinQuality) / 5).toFixed(1));
-        const rawPsl = 1.6 + avgTen * 0.72;
-        const tierInfo = mapPslTier(rawPsl);
-        const potentialPsl = Number(clamp(tierInfo.psl + 0.9, 2.5, 8.0).toFixed(1));
-        const potentialTier = mapPslTier(potentialPsl).tier;
-
-        const gonialAngle = Math.round(clamp(124 - (jawline - 5.5) * 2.2 + (combinedSeed - 0.5) * 4, 112, 134));
-        const elineLabel = profileMetrics.sharpnessScore >= 6.4 ? 'Skarp & balanserad' : profileMetrics.sharpnessScore >= 5.2 ? 'Balanserad' : 'Behöver definition';
+        const gonial = Math.round(clamp(129 - (jawline - 4.5) * 2.6 + (s - 0.5) * 3, 114, 138));
+        const eline = jawline >= 6.2 ? 'Skarp projektion' : jawline >= 4.7 ? 'Neutral / lätt mjuk' : 'Tillbakadragen';
 
         const metrics = [
-          { name: 'Käklinje & Projektion (90°)', score: jawline, tip: 'Käklinjens vinkel, underkäkens renhet och hakans projektion i sidoprofil.' },
-          { name: 'Kindben & Zygomatisk bredd', score: cheekbones, tip: 'Kindbenens framträdande och ljusreflektion i trekvarts-/frontläge.' },
-          { name: 'Ögonområde & Brow/Canthal', score: eyeArea, tip: 'Ögonbrynsram, ögonlocksspänning och utvilat intryck i frontvyn.' },
-          { name: 'Bilateral Symmetri', score: symmetryScore, tip: 'Balans mellan höger och vänster ansiktshalva i framsidesbilden.' },
-          { name: 'Hudkvalitet & Lyster', score: skinQuality, tip: 'Jämn hudton, textur och låg svullnad (depuffing).' }
+          { name: 'Käklinje & Gonial (90°)', score: jawline, fix: 'Sänk kroppsfett, minska vätskeansamling & träna nackhållning.' },
+          { name: 'Ögonområde & Canthal Tilt', score: eyeArea, fix: 'Tjockare/mörkare ögonbryn, 8h sömn & minska mörka ringar.' },
+          { name: 'Kindben & Maxilla', score: cheekbones, fix: 'Lägre bf% ger skarpare skuggning under zygomaticus.' },
+          { name: 'Bilateral Symmetri', score: symmetryScore, fix: 'Sov på rygg, tugga jämnt på båda sidor & anpassa frisyr.' },
+          { name: 'Hudkvalitet & Lyster', score: skin, fix: 'Daglig rengöring, fukt, retinol/niacinamid & solskydd.' }
         ];
 
-        const sortedLowest = [...metrics].sort((a, b) => a.score - b.score).slice(0, 3);
-        const focusItems = sortedLowest.map((m) => `<strong>${m.name} (${m.score}/10):</strong> ${m.tip}`);
+        const weakest = [...metrics].sort((a, b) => a.score - b.score).slice(0, 3);
 
         return {
-          source: isDemo ? 'Lokal Demo (2 vinklar)' : 'Lokal Pixelanalys (2 vinklar)',
-          rank: tierInfo.tier.name,
-          rankIndex: tierInfo.index,
-          psl: tierInfo.psl,
-          potentialLabel: `Potential: ${potentialTier.name} (${potentialPsl} PSL med konsekvent softmaxing)`,
-          overallTen: avgTen,
-          gonialAngle: `${gonialAngle}°`,
-          elineLabel,
-          symmetryPct: `${frontMetrics.symmetryPct}%`,
+          source: isDemo ? 'Demo • Strict PSL' : 'Biometrisk Pixelmotor (Strict)',
+          rank: mapped.tier.name,
+          rankIdx: mapped.idx,
+          psl: mapped.psl,
+          potential: `Realistisk maxpotential: ${maxPotTier.name} (${maxPotPsl.toFixed(1)} PSL)`,
+          gonial: `${gonial}°`,
+          eline,
+          symmetry: `${frontBio.symmetryPct}%`,
           metrics,
-          summary: `Kombinerad 2-stegsbedömning av framsida och 90° sidoprofil placerar dig på ${tierInfo.tier.name} (${tierInfo.psl} PSL). Störst kortsiktig effekt kommer från ${sortedLowest[0].name.toLowerCase()} samt daglig hållning och vätskebalans.`,
-          focusItems
+          verdict: `Strikt bedömning av framsida och 90° sidoprofil ger ${mapped.tier.name} (${mapped.psl} PSL). Största flaskhalsarna just nu är ${weakest[0].name.toLowerCase()} (${weakest[0].score}/10) och ${weakest[1].name.toLowerCase()} (${weakest[1].score}/10).`,
+          weaknesses: weakest.map((w) => `<strong>${w.name} (${w.score}/10):</strong> ${w.fix}`)
         };
       }
 
-      async function analyzeWithGemini(frontDataUrl, profileDataUrl) {
-        const apiKey = state.gemini.apiKey.trim();
+      async function callStrictGeminiAI(frontUrl, profileUrl) {
+        const key = state.gemini.apiKey.trim();
         const model = state.gemini.model || 'gemini-2.5-flash';
-        const frontBase64 = frontDataUrl.split(',')[1];
-        const profileBase64 = profileDataUrl.split(',')[1];
+        const frontB64 = frontUrl.split(',')[1];
+        const profB64 = profileUrl.split(',')[1];
 
-        const promptText = `Du är en saklig biometrisk och estetisk analysassistent på svenska.
-Analysera de två bifogade bilderna:
-1) Första bilden: FRAMSIDA (frontvy).
-2) Andra bilden: SIDOPROFIL (90 graders sidovy).
+        const strictPrompt = `Du är en extremt strikt, objektiv biometrisk PSL-bedömare på svenska.
+Analysera de 2 bilderna noggrant:
+Bild 1: FRAMSIDA (symmetri, IPD, canthal tilt, ögonbrynsram, kindben, hudkvalitet, ansiktsbredd/fWHR).
+Bild 2: SIDOPROFIL 90° (käklinjens skärpa, gonialvinkel, hakans projektion, Ricketts E-line, maxillaprojektion).
 
-Bedöm ansiktsproportioner, symmetri, ögonområde, kindben, hudkvalitet samt i 90°-profilen käklinje, gonialvinkel och läpp/hak-balans i förhållande till Ricketts E-line.
-Rangordna enligt skalan: Sub-3, Sub-5, LTN, MTN, HTN, Chadlite, Chad, True Adam (med PSL-värde mellan 1.0 och 8.0).
+VIKTIG KALIBRERING (VAR HÅRD OCH ÄRLIG — DELA INTE UT HÖGA BETYG LÄTTVINDIGT):
+- Sub-3 (1.0–2.4 PSL): Kraftiga avvikelser/asymmetri.
+- Sub-5 (2.5–3.4 PSL): Tydligt under medel.
+- LTN (3.5–4.3 PSL): Något under medel (mjuk käklinje, svag ögonram eller sämre hud).
+- MTN (4.4–5.2 PSL): Normalt genomsnitt (hit hör majoriteten av vanliga personer).
+- HTN (5.3–6.0 PSL): Tydligt över medel, skarp benstruktur och bra harmoni (topp 10–15%).
+- Chadlite (6.1–6.8 PSL): Mycket sällsynt, stark käklinje, positiva ögonvinklar och hög dimorfism (topp 2–4%).
+- Chad (6.9–7.5 PSL): Modellnivå (topp 0.5%).
+- True Adam (7.6–8.0 PSL): Praktiskt taget ouppnåelig perfektion.
 
 Svara ENDAST med giltig JSON i exakt detta format:
 {
   "rank": "MTN",
-  "psl": 4.8,
-  "potentialLabel": "Potential: HTN (5.6 PSL med rutiner)",
-  "overallTen": 6.3,
-  "gonialAngle": "121°",
-  "elineLabel": "Balanserad",
-  "symmetryPct": "91%",
+  "psl": 4.6,
+  "potential": "Realistisk maxpotential: HTN (5.5 PSL)",
+  "gonial": "124°",
+  "eline": "Neutral / lätt mjuk",
+  "symmetry": "88%",
   "metrics": [
-    { "name": "Käklinje & Projektion (90°)", "score": 6.4, "tip": "Konkret tips på svenska" },
-    { "name": "Kindben & Zygomatisk bredd", "score": 6.5, "tip": "Konkret tips på svenska" },
-    { "name": "Ögonområde & Brow/Canthal", "score": 6.2, "tip": "Konkret tips på svenska" },
-    { "name": "Bilateral Symmetri", "score": 6.6, "tip": "Konkret tips på svenska" },
-    { "name": "Hudkvalitet & Lyster", "score": 6.0, "tip": "Konkret tips på svenska" }
+    { "name": "Käklinje & Gonial (90°)", "score": 4.8, "fix": "Konkret åtgärd på svenska" },
+    { "name": "Ögonområde & Canthal Tilt", "score": 4.9, "fix": "Konkret åtgärd på svenska" },
+    { "name": "Kindben & Maxilla", "score": 4.6, "fix": "Konkret åtgärd på svenska" },
+    { "name": "Bilateral Symmetri", "score": 5.1, "fix": "Konkret åtgärd på svenska" },
+    { "name": "Hudkvalitet & Lyster", "score": 4.7, "fix": "Konkret åtgärd på svenska" }
   ],
-  "summary": "Kort sammanfattning på svenska.",
-  "focusItems": [
-    "<strong>Punkt 1:</strong> Detalj på svenska",
-    "<strong>Punkt 2:</strong> Detalj på svenska",
-    "<strong>Punkt 3:</strong> Detalj på svenska"
+  "verdict": "Ärlig, konkret analys på 2 meningar om styrkor och exakt vad som drar ner betyget.",
+  "weaknesses": [
+    "<strong>Svaghet 1:</strong> Exakt vad som bör tränas/förbättras",
+    "<strong>Svaghet 2:</strong> Exakt vad som bör tränas/förbättras",
+    "<strong>Svaghet 3:</strong> Exakt vad som bör tränas/förbättras"
   ]
 }`;
 
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-        const response = await fetch(endpoint, {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+        const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  { text: promptText },
-                  { inlineData: { mimeType: 'image/jpeg', data: frontBase64 } },
-                  { inlineData: { mimeType: 'image/jpeg', data: profileBase64 } }
-                ]
-              }
-            ],
+            contents: [{
+              parts: [
+                { text: strictPrompt },
+                { inlineData: { mimeType: 'image/jpeg', data: frontB64 } },
+                { inlineData: { mimeType: 'image/jpeg', data: profB64 } }
+              ]
+            }],
             generationConfig: {
-              temperature: 0.35,
+              temperature: 0.25,
               responseMimeType: 'application/json'
             }
           })
         });
 
-        if (!response.ok) {
-          throw new Error(`Gemini HTTP ${response.status}`);
-        }
-
-        const data = await response.json();
-        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        const cleaned = rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
-        const parsed = JSON.parse(cleaned);
-        const pslNum = clamp(Number(parsed.psl) || 4.5, 1.0, 8.0);
-        const tierInfo = mapPslTier(pslNum);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        const text = json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const parsed = JSON.parse(text.replace(/^```json\s*/i, '').replace(/```$/i, '').trim());
+        const mapped = mapStrictPsl(parsed.psl);
 
         return {
           source: `Gemini AI (${model})`,
-          rank: parsed.rank || tierInfo.tier.name,
-          rankIndex: tierInfo.index,
-          psl: Number(pslNum.toFixed(1)),
-          potentialLabel: parsed.potentialLabel || `Potential: ${mapPslTier(clamp(pslNum + 0.8, 1, 8)).tier.name}`,
-          overallTen: Number(clamp(Number(parsed.overallTen) || 6.0, 1.0, 10.0).toFixed(1)),
-          gonialAngle: parsed.gonialAngle || '122°',
-          elineLabel: parsed.elineLabel || 'Balanserad',
-          symmetryPct: parsed.symmetryPct || '90%',
-          metrics: Array.isArray(parsed.metrics) && parsed.metrics.length ? parsed.metrics.slice(0, 5) : [],
-          summary: parsed.summary || 'Analys slutförd med Gemini AI.',
-          focusItems: Array.isArray(parsed.focusItems) && parsed.focusItems.length ? parsed.focusItems : []
+          rank: parsed.rank || mapped.tier.name,
+          rankIdx: mapped.idx,
+          psl: mapped.psl,
+          potential: parsed.potential || `Max potential: ${mapStrictPsl(mapped.psl + 0.8).tier.name}`,
+          gonial: parsed.gonial || '124°',
+          eline: parsed.eline || 'Neutral',
+          symmetry: parsed.symmetry || '89%',
+          metrics: Array.isArray(parsed.metrics) ? parsed.metrics.slice(0, 5) : [],
+          verdict: parsed.verdict || '',
+          weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses.slice(0, 3) : []
         };
       }
 
-      async function executeAnalysis({ isDemo = false } = {}) {
-        if (!state.photos.front || !state.photos.profile) {
-          el.scanFeedback.innerHTML = 'Du behöver både <span class="text-white font-medium">Framsida</span> och <span class="text-white font-medium">Sidoprofil (90°)</span> innan analysen körs.';
-          return;
-        }
-
-        el.runScanBtn.disabled = true;
-        el.demoScanBtn.disabled = true;
-        el.scanLaser.classList.remove('hidden');
-        el.scannerBadge.classList.remove('hidden');
-        el.scannerBadge.textContent = 'Läser av framsida + 90° profil...';
+      async function runFullAnalysis(isDemo) {
+        el.analyzingOverlay.classList.remove('hidden');
+        el.analyzingTitle.textContent = state.gemini.apiKey.trim() && !isDemo
+          ? 'Gemini AI analyserar 2 vinklar...'
+          : 'Kör strikt biometrisk analys...';
 
         try {
-          const [frontPx, profilePx] = await Promise.all([
-            analyzeImagePixels(state.photos.front),
-            analyzeImagePixels(state.photos.profile)
+          const [fBio, pBio] = await Promise.all([
+            extractImageBiometrics(state.photos.front),
+            extractImageBiometrics(state.photos.profile)
           ]);
 
           let report = null;
-          if (!isDemo && state.gemini.enabled && state.gemini.apiKey.trim()) {
-            el.scannerBadge.textContent = 'Skickar 2 vinklar till Gemini AI...';
+          if (!isDemo && state.gemini.apiKey.trim()) {
             try {
-              const gemReport = await analyzeWithGemini(state.photos.front, state.photos.profile);
-              if (gemReport.metrics.length) {
-                report = gemReport;
-              }
-            } catch (gemErr) {
-              report = buildLocalReport(frontPx, profilePx, false);
-              report.source = 'Lokal Fallback (Gemini otillgänglig)';
+              const aiRep = await callStrictGeminiAI(state.photos.front, state.photos.profile);
+              if (aiRep.metrics.length) report = aiRep;
+            } catch (_) {
+              report = computeStrictLocalReport(fBio, pBio, false);
+              report.source = 'Lokal Fallback (Kontrollera AI-nyckel)';
             }
           }
 
           if (!report) {
-            report = buildLocalReport(frontPx, profilePx, isDemo);
+            report = computeStrictLocalReport(fBio, pBio, isDemo);
           }
 
-          state.lastReport = report;
-          try {
-            localStorage.setItem(STORAGE_KEYS.lastScan, JSON.stringify(report));
-          } catch (_) {}
-
-          renderReport(report);
-          el.scanFeedback.textContent = `Analys klar: ${report.rank} (${report.psl} PSL) via ${report.source}.`;
+          stopCameraStream();
+          renderResultsScreen(report);
+          showScreen('results');
         } finally {
-          el.scanLaser.classList.add('hidden');
-          el.scannerBadge.classList.add('hidden');
-          el.runScanBtn.disabled = false;
-          el.demoScanBtn.disabled = false;
+          el.analyzingOverlay.classList.add('hidden');
         }
       }
 
-      function renderReport(report) {
-        el.resultsSection.classList.remove('hidden');
-        el.analysisSourceBadge.textContent = report.source;
-        el.rankTitle.textContent = report.rank;
-        el.pslScoreText.textContent = `PSL ${Number(report.psl).toFixed(1)} / 8.0`;
-        el.potentialText.textContent = report.potentialLabel;
-        el.overallTenText.innerHTML = `${Number(report.overallTen).toFixed(1)}<span class="text-xs text-zinc-400">/10</span>`;
-        el.gonialVal.textContent = report.gonialAngle;
-        el.elineVal.textContent = report.elineLabel;
-        el.symVal.textContent = report.symmetryPct;
-        el.summaryText.textContent = report.summary;
+      function renderResultsScreen(rep) {
+        el.resSourceTag.textContent = rep.source;
+        el.resRankName.textContent = rep.rank;
+        el.resPslScore.textContent = `${rep.psl.toFixed(1)} PSL`;
+        el.resPotential.textContent = rep.potential;
+        el.resImgFront.src = state.photos.front;
+        el.resImgProfile.src = state.photos.profile;
+        el.resGonial.textContent = rep.gonial;
+        el.resEline.textContent = rep.eline;
+        el.resSymmetry.textContent = rep.symmetry;
+        el.resVerdictText.textContent = rep.verdict;
 
-        const activeIdx = typeof report.rankIndex === 'number' ? report.rankIndex : mapPslTier(report.psl).index;
-        document.querySelectorAll('.psl-seg').forEach((seg, idx) => {
-          const tierColor = PSL_TIERS[idx]?.color || 'bg-cyan-400';
-          seg.className = `psl-seg h-2.5 ${idx === 0 ? 'rounded-l-md' : ''} ${idx === 7 ? 'rounded-r-md' : ''} transition ${
-            idx <= activeIdx ? `${tierColor} opacity-100` : 'bg-white/10 opacity-45'
+        document.querySelectorAll('.psl-bar').forEach((bar, i) => {
+          const col = PSL_LEVELS[i]?.color || 'bg-cyan-400';
+          bar.className = `psl-bar h-2 ${i === 0 ? 'rounded-l' : ''} ${i === 7 ? 'rounded-r' : ''} ${
+            i <= rep.rankIdx ? col : 'bg-white/10'
           }`;
         });
 
-        el.metricsGrid.innerHTML = report.metrics
-          .map((m) => {
-            const pct = clamp((Number(m.score) / 10) * 100, 8, 100);
-            return `
-              <div class="rounded-2xl p-3 bg-surface border border-white/10 space-y-1.5">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="font-semibold text-white">${escapeHtml(m.name)}</span>
-                  <span class="font-mono font-bold text-cyan-300">${Number(m.score).toFixed(1)}/10</span>
-                </div>
-                <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-400" style="width:${pct}%"></div>
-                </div>
-                <p class="text-[11px] text-zinc-400">${escapeHtml(m.tip)}</p>
+        el.resMetricsList.innerHTML = rep.metrics.map((m) => {
+          const sc = clamp(Number(m.score) || 4.5, 1, 10);
+          const pct = clamp(sc * 10, 10, 100);
+          return `
+            <div class="rounded-xl px-3 py-2 bg-surface border border-white/10">
+              <div class="flex justify-between text-xs mb-1">
+                <span class="font-semibold text-white">${escapeHtml(m.name)}</span>
+                <span class="font-mono font-bold text-cyan-300">${sc.toFixed(1)}/10</span>
               </div>
-            `;
-          })
-          .join('');
-
-        el.focusList.innerHTML = report.focusItems
-          .map((item) => `<li class="flex items-start gap-2"><span class="text-cyan-400 mt-0.5">•</span><span>${item}</span></li>`)
-          .join('');
-      }
-
-      function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      }
-
-      async function askGeminiCoach() {
-        const question = el.coachInput.value.trim();
-        if (!question) return;
-
-        el.coachReply.classList.remove('hidden');
-        el.coachReply.textContent = 'Tänker...';
-
-        const ctx = state.lastReport
-          ? `Aktuell profil: Rank ${state.lastReport.rank} (${state.lastReport.psl} PSL), gonialvinkel ${state.lastReport.gonialAngle}, E-line ${state.lastReport.elineLabel}, frontsymmetri ${state.lastReport.symmetryPct}.`
-          : 'Ingen skanning gjord ännu.';
-
-        if (state.gemini.enabled && state.gemini.apiKey.trim()) {
-          try {
-            const model = state.gemini.model || 'gemini-2.5-flash';
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(state.gemini.apiKey.trim())}`;
-            const res = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [
-                  {
-                    parts: [
-                      {
-                        text: `Du är en konkret, saklig tränings- och groomingcoach på svenska. ${ctx}\nFråga: ${question}\nSvara kort och punktvis med fokus på hållning, hudvård, sömn och grooming (ej medicinsk diagnos eller kirurgi).`
-                      }
-                    ]
-                  }
-                ]
-              })
-            });
-            if (!res.ok) throw new Error('API-fel');
-            const data = await res.json();
-            const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (replyText) {
-              el.coachReply.textContent = replyText.trim();
-              return;
-            }
-          } catch (_) {}
-        }
-
-        el.coachReply.textContent =
-          `${ctx}\n• Prioritera rak nack- och rygghållning (chin tucks) samt jämn sömn (7.5–8.5h) för tydligare profil och lägre morgonsvullnad.\n` +
-          `• Håll en enkel hudvårdsrutin (rengöring, fukt, SPF) och konsekvent grooming.\n` +
-          `• Lägg in din Gemini API-nyckel under knappen "Gemini AI" för personliga AI-svar direkt från Gemini.`;
-      }
-
-      function renderRoutine() {
-        const today = getTodayKey();
-        const doneCount = state.routine.items.filter((i) => i.done).length;
-        const totalCount = state.routine.items.length;
-
-        if (doneCount === totalCount && totalCount > 0 && state.routine.lastCompletedDate !== today) {
-          if (state.routine.lastCompletedDate === getYesterdayKey()) {
-            state.routine.streak += 1;
-          } else {
-            state.routine.streak = Math.max(1, state.routine.streak || 0) === 1 && state.routine.streak === 0 ? 1 : state.routine.streak + 1;
-          }
-          state.routine.lastCompletedDate = today;
-          saveRoutineState();
-        }
-
-        el.streakBadge.textContent = `Streak: ${state.routine.streak} dgr`;
-        el.routineProgressText.textContent = `${doneCount} / ${totalCount} klara`;
-
-        el.routineList.innerHTML = state.routine.items
-          .map(
-            (item) => `
-            <button type="button" data-routine-id="${item.id}" class="routine-item w-full text-left flex items-center justify-between gap-3 p-3 rounded-2xl border transition ${
-              item.done
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-zinc-300'
-                : 'bg-surface border-white/10 hover:border-white/20 text-white'
-            }">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="w-5 h-5 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                  item.done ? 'bg-emerald-500 text-black' : 'border border-white/25 text-transparent'
-                }">✓</span>
-                <span class="text-xs sm:text-sm ${item.done ? 'line-through text-zinc-400' : 'text-zinc-100'}">${escapeHtml(item.title)}</span>
+              <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-violet-500 to-cyan-400" style="width:${pct}%"></div>
               </div>
-              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-zinc-400 shrink-0">${escapeHtml(item.tag)}</span>
-            </button>
-          `
-          )
+            </div>
+          `;
+        }).join('');
+
+        el.resWeaknessesList.innerHTML = rep.weaknesses
+          .map((w) => `<li class="flex items-start gap-1.5"><span class="text-cyan-400">•</span><span>${w}</span></li>`)
           .join('');
+
+        renderCompactRoutine();
+        switchResultTab('metrics');
       }
 
-      // Eventlisteners
-      el.cardFront.addEventListener('click', () => setStep('front'));
-      el.selectFrontBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setStep('front');
-      });
-      el.retakeFrontBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        retakeStep('front');
-      });
+      function renderCompactRoutine() {
+        el.compactRoutineList.innerHTML = state.routine.map((r) => `
+          <button type="button" data-rid="${r.id}" class="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs transition ${
+            r.done ? 'bg-emerald-500/15 border-emerald-500/35 text-zinc-400 line-through' : 'bg-surface border-white/10 text-zinc-100'
+          }">
+            <span class="w-4 h-4 rounded flex items-center justify-center text-[10px] font-bold shrink-0 ${
+              r.done ? 'bg-emerald-500 text-black' : 'border border-white/30 text-transparent'
+            }">✓</span>
+            <span class="truncate">${escapeHtml(r.text)}</span>
+          </button>
+        `).join('');
+      }
 
-      el.cardProfile.addEventListener('click', () => setStep('profile'));
-      el.selectProfileBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        setStep('profile');
-      });
-      el.retakeProfileBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        retakeStep('profile');
-      });
+      function switchResultTab(tab) {
+        const isMetrics = tab === 'metrics';
+        el.panelMetrics.classList.toggle('hidden', !isMetrics);
+        el.panelTrain.classList.toggle('hidden', isMetrics);
+        el.tabMetricsBtn.className = isMetrics
+          ? 'py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition'
+          : 'py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition';
+        el.tabTrainBtn.className = !isMetrics
+          ? 'py-1.5 rounded-xl text-xs font-bold bg-cyan-600 text-white transition'
+          : 'py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition';
+      }
 
-      el.toggleCameraBtn.addEventListener('click', () => {
-        if (state.cameraStream) {
-          stopCamera();
-        } else {
-          startCamera();
-        }
-      });
+      function makeDemoPair() {
+        const make = (label) => {
+          const c = el.hiddenCanvas;
+          c.width = 400; c.height = 520;
+          const ctx = c.getContext('2d');
+          ctx.fillStyle = '#10121d';
+          ctx.fillRect(0, 0, 400, 520);
+          ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.ellipse(200, 250, 95, 130, 0, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = 'bold 14px monospace';
+          ctx.fillText(label, 20, 34);
+          return c.toDataURL('image/jpeg', 0.8);
+        };
+        state.photos.front = make('DEMO FRAMSIDA');
+        state.photos.profile = make('DEMO 90° PROFIL');
+        runFullAnalysis(true);
+      }
 
-      el.capturePhotoBtn.addEventListener('click', capturePhoto);
-      el.fileInput.addEventListener('change', handleFileUpload);
-      el.runScanBtn.addEventListener('click', () => executeAnalysis({ isDemo: false }));
-      el.demoScanBtn.addEventListener('click', runDemoScan);
-      el.askCoachBtn.addEventListener('click', askGeminiCoach);
-      el.coachInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') askGeminiCoach();
-      });
+      function escapeHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
 
-      el.routineList.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-routine-id]');
+      // Event listeners
+      el.startScanFlowBtn.addEventListener('click', openCameraFlow);
+      el.quickDemoStartBtn.addEventListener('click', makeDemoPair);
+      el.shutterBtn.addEventListener('click', captureCurrentFrame);
+      el.fallbackFileInput.addEventListener('change', handleGalleryUpload);
+      el.cameraGalleryInput.addEventListener('change', handleGalleryUpload);
+      el.cancelCameraBtn.addEventListener('click', () => {
+        stopCameraStream();
+        showScreen('start');
+      });
+      el.rescanBtn.addEventListener('click', openCameraFlow);
+      el.tabMetricsBtn.addEventListener('click', () => switchResultTab('metrics'));
+      el.tabTrainBtn.addEventListener('click', () => switchResultTab('train'));
+
+      el.compactRoutineList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-rid]');
         if (!btn) return;
-        const id = btn.getAttribute('data-routine-id');
-        const target = state.routine.items.find((x) => x.id === id);
-        if (!target) return;
-        target.done = !target.done;
-        saveRoutineState();
-        renderRoutine();
+        const item = state.routine.find((x) => x.id === btn.getAttribute('data-rid'));
+        if (!item) return;
+        item.done = !item.done;
+        try { localStorage.setItem(STORAGE_ROUTINE, JSON.stringify(state.routine)); } catch (_) {}
+        renderCompactRoutine();
       });
 
-      el.resetRoutineBtn.addEventListener('click', () => {
-        state.routine.items = DEFAULT_ROUTINE.map((item) => ({ ...item }));
-        saveRoutineState();
-        renderRoutine();
-      });
-
-      // Gemini modal
-      el.openGeminiBtn.addEventListener('click', () => {
+      // Gemini Modal
+      const openModal = () => {
         el.geminiKeyInput.value = state.gemini.apiKey;
-        el.geminiModelSelect.value = state.gemini.model;
-        el.useGeminiToggle.checked = state.gemini.enabled;
+        el.geminiModelInput.value = state.gemini.model;
         el.geminiModal.classList.remove('hidden');
-      });
-      el.closeGeminiBtn.addEventListener('click', () => el.geminiModal.classList.add('hidden'));
-      el.clearGeminiKeyBtn.addEventListener('click', () => {
-        el.geminiKeyInput.value = '';
-      });
+      };
+      el.openGeminiBtn.addEventListener('click', openModal);
+      el.resGeminiBtn.addEventListener('click', openModal);
+      el.closeGeminiModalBtn.addEventListener('click', () => el.geminiModal.classList.add('hidden'));
+      el.clearGeminiBtn.addEventListener('click', () => { el.geminiKeyInput.value = ''; });
       el.saveGeminiBtn.addEventListener('click', () => {
         state.gemini.apiKey = el.geminiKeyInput.value.trim();
-        state.gemini.model = el.geminiModelSelect.value;
-        state.gemini.enabled = el.useGeminiToggle.checked;
-        try {
-          localStorage.setItem(STORAGE_KEYS.gemini, JSON.stringify(state.gemini));
-        } catch (_) {}
-        syncGeminiBadge();
+        state.gemini.model = el.geminiModelInput.value;
+        try { localStorage.setItem(STORAGE_GEMINI, JSON.stringify(state.gemini)); } catch (_) {}
+        updateGeminiDot();
         el.geminiModal.classList.add('hidden');
-        el.scanFeedback.textContent = 'Gemini AI-inställningar sparade.';
       });
 
-      // iOS / .IPA modal
-      el.openIpaBtn.addEventListener('click', () => el.ipaModal.classList.remove('hidden'));
-      el.closeIpaBtn.addEventListener('click', () => el.ipaModal.classList.add('hidden'));
-      el.closeIpaFooterBtn.addEventListener('click', () => el.ipaModal.classList.add('hidden'));
-
-      window.addEventListener('beforeunload', stopCamera);
-
-      // Init
-      loadSavedState();
-      setStep('front');
-      syncPhotoCards();
-      renderRoutine();
+      window.addEventListener('beforeunload', stopCameraStream);
+      loadConfig();
     })();
   </script>
 </body>
