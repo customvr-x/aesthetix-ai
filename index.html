@@ -41,7 +41,6 @@
       background-color: #050509;
       color: #f4f4f8;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
     }
     .screen {
       position: fixed;
@@ -71,20 +70,78 @@
 <body>
 
   <!-- =========================================================
+       SKÄRM 0: LOGIN (ANVÄNDARNAMN + LÖSENORD: bradar)
+  ========================================================== -->
+  <section id="screenLogin" class="screen justify-between px-6 py-8 bg-[radial-gradient(circle_at_50%_18%,rgba(139,92,246,0.24),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
+    <div class="flex items-center justify-center pt-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px]">
+          <div class="w-full h-full rounded-[15px] bg-[#080910] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">AX</div>
+        </div>
+        <span class="font-bold tracking-wider text-base text-white">AESTHETIX AI</span>
+      </div>
+    </div>
+
+    <form id="loginForm" class="my-auto w-full max-w-sm mx-auto rounded-3xl p-6 bg-card/90 border border-white/10 shadow-2xl space-y-4">
+      <div class="text-center space-y-1">
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-violet-500/15 text-violet-300 border border-violet-500/30">
+          Privat Åtkomst
+        </span>
+        <h1 class="text-2xl font-black text-white pt-1">Logga in</h1>
+        <p class="text-xs text-zinc-400">Ange ditt användarnamn och lösenord för att starta</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label for="loginUsername" class="block text-[11px] font-mono uppercase text-zinc-400 mb-1">Användarnamn</label>
+          <input id="loginUsername" type="text" required autocomplete="username" placeholder="Skriv ditt namn..." class="w-full px-3.5 py-3 rounded-xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div>
+          <label for="loginPassword" class="block text-[11px] font-mono uppercase text-zinc-400 mb-1">Lösenord</label>
+          <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="••••••" class="w-full px-3.5 py-3 rounded-xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-violet-400" />
+        </div>
+      </div>
+
+      <p id="loginError" class="hidden text-xs text-rose-400 font-medium text-center">
+        Fel lösenord eller saknat användarnamn. Försök igen.
+      </p>
+
+      <button type="submit" class="w-full py-3.5 rounded-2xl text-sm font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_8px_28px_rgba(139,92,246,0.38)] active:scale-[0.98] transition">
+        LOGGA IN
+      </button>
+    </form>
+
+    <div class="text-center text-[11px] font-mono text-zinc-500 pb-2">
+      AESTHETIX AI • STRICT PSL ENGINE
+    </div>
+  </section>
+
+
+  <!-- =========================================================
        SKÄRM 1: HELSKÄRM START
   ========================================================== -->
-  <section id="screenStart" class="screen justify-between px-6 py-6 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
+  <section id="screenStart" class="screen hidden-screen justify-between px-6 py-6 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
     <!-- Topprad -->
-    <div class="flex items-center justify-between pt-1">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px]">
+    <div class="flex items-center justify-between pt-1 gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px] shrink-0">
           <div class="w-full h-full rounded-[11px] bg-[#080910] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">AX</div>
         </div>
-        <span class="font-bold tracking-wider text-sm text-white">AESTHETIX AI</span>
+        <div class="min-w-0">
+          <span class="font-bold tracking-wider text-sm text-white block leading-none">AESTHETIX AI</span>
+          <span id="welcomeUserTag" class="text-[11px] font-mono text-cyan-300 truncate block mt-0.5">@användare</span>
+        </div>
       </div>
-      <button id="openGeminiBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-mono bg-white/10 hover:bg-white/15 text-violet-200 border border-violet-400/30 active:scale-95 transition">
-        <span id="geminiStatusDot" class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>Gemini AI
-      </button>
+
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="openGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono bg-white/10 hover:bg-white/15 text-violet-200 border border-violet-400/30 active:scale-95 transition">
+          <span id="geminiStatusDot" class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span>Gemini AI
+        </button>
+        <button id="logoutBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono bg-white/5 hover:bg-white/10 text-zinc-400 border border-white/10 active:scale-95 transition">
+          Logga ut
+        </button>
+      </div>
     </div>
 
     <!-- Mitten: Hero & Skanner-ikon -->
@@ -120,7 +177,7 @@
       <div class="flex items-center justify-center gap-4 text-[11px] text-zinc-400">
         <button id="quickDemoStartBtn" type="button" class="underline hover:text-white transition">Testa Demo (2 vinklar)</button>
         <span>•</span>
-        <span>Kräver kameratillstånd</span>
+        <span>Gemini AI redo</span>
       </div>
     </div>
   </section>
@@ -130,10 +187,8 @@
        SKÄRM 2: HELSKÄRMSKAMERA MED DYNAMISK HUVUDRAM
   ========================================================== -->
   <section id="screenCamera" class="screen hidden-screen bg-black">
-    <!-- Live Video (speglad som iOS selfie-kamera) -->
     <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-cover scale-x-[-1]"></video>
 
-    <!-- Fallback-bakgrund om kamera nekas -->
     <div id="cameraFallbackBg" class="hidden absolute inset-0 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
       <p class="text-sm text-zinc-300 max-w-xs">Kameran kunde inte startas automatiskt. Tillåt kamera i iOS Safari eller välj bilder från kamerarullen nedan.</p>
       <label class="px-5 py-3 rounded-2xl text-xs font-bold bg-violet-600 text-white cursor-pointer active:scale-95">
@@ -142,32 +197,26 @@
       </label>
     </div>
 
-    <!-- Mörk vinjett + Dynamisk Auto-Anpassad Huvudram -->
+    <!-- Dynamisk Auto-Anpassad Huvudram -->
     <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
-      <!-- Dynamisk ram som flyttar och skalar sig efter ansiktet i realtid -->
       <div id="dynamicHeadFrame" class="relative w-64 h-80 transition-all duration-150 ease-out flex items-center justify-center">
-        <!-- SVG Front-ram -->
         <svg id="frameFrontSvg" viewBox="0 0 240 310" class="w-full h-full text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.55)]" fill="none" stroke="currentColor" stroke-width="2.2">
           <ellipse cx="120" cy="155" rx="84" ry="118" stroke-dasharray="10 6" />
-          <!-- Hörnfästen -->
           <path d="M24 55 L24 25 L54 25" stroke-width="3" />
           <path d="M216 55 L216 25 L186 25" stroke-width="3" />
           <path d="M24 255 L24 285 L54 285" stroke-width="3" />
           <path d="M216 255 L216 285 L186 285" stroke-width="3" />
-          <!-- Ögon- och symmetrilinje -->
           <line x1="72" y1="136" x2="104" y2="136" stroke-opacity="0.8" />
           <line x1="136" y1="136" x2="168" y2="136" stroke-opacity="0.8" />
           <line x1="120" y1="30" x2="120" y2="280" stroke-opacity="0.3" stroke-dasharray="3 4" />
         </svg>
 
-        <!-- SVG 90° Sidoprofil-ram -->
         <svg id="frameProfileSvg" viewBox="0 0 240 310" class="hidden w-full h-full text-violet-300 drop-shadow-[0_0_12px_rgba(139,92,246,0.65)]" fill="none" stroke="currentColor" stroke-width="2.2">
           <path d="M78 44 C128 40, 162 72, 162 118 L186 148 L161 162 C165 178, 160 194, 148 206 C162 218, 155 240, 128 248 C102 255, 78 240, 70 212" stroke-dasharray="10 6" />
           <path d="M24 55 L24 25 L54 25" stroke-width="3" />
           <path d="M216 55 L216 25 L186 25" stroke-width="3" />
           <path d="M24 255 L24 285 L54 285" stroke-width="3" />
           <path d="M216 255 L216 285 L186 285" stroke-width="3" />
-          <!-- Frankfort-linje & E-line -->
           <line x1="34" y1="154" x2="206" y2="154" stroke-opacity="0.35" stroke-dasharray="3 4" />
           <line x1="186" y1="148" x2="152" y2="232" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3" />
         </svg>
@@ -188,7 +237,6 @@
         ✕ Avbryt
       </button>
 
-      <!-- Steg-indikator 1 / 2 -->
       <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15">
         <span id="pillStep1" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black">1. Framsida</span>
         <span id="pillStep2" class="px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400">2. Profil 90°</span>
@@ -208,20 +256,17 @@
       </div>
     </div>
 
-    <!-- Botten-HUD: Miniatyrer + Stor Avtryckarknapp -->
+    <!-- Botten-HUD -->
     <div class="relative z-20 mt-auto px-6 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/90 via-black/50 to-transparent">
-      <!-- Miniatyr Framsida -->
       <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
         <img id="camThumbFront" alt="Front" class="hidden w-full h-full object-cover" />
         <span id="camThumbFrontTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">1.<br/>FRONT</span>
       </div>
 
-      <!-- Stor iOS Shutter-knapp -->
       <button id="shutterBtn" type="button" aria-label="Ta bild" class="w-20 h-20 rounded-full p-1.5 border-4 border-white/90 bg-white/10 active:scale-90 transition flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.25)]">
         <div id="shutterInner" class="w-full h-full rounded-full bg-white transition"></div>
       </button>
 
-      <!-- Miniatyr Profil -->
       <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
         <img id="camThumbProfile" alt="Profil" class="hidden w-full h-full object-cover" />
         <span id="camThumbProfileTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">2.<br/>90°</span>
@@ -240,18 +285,18 @@
         ↻ Ny skanning
       </button>
       <span id="resSourceTag" class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-violet-500/15 text-violet-200 border border-violet-500/30 truncate">
-        Strict PSL AI
+        Gemini AI
       </span>
       <button id="resGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-mono bg-white/5 text-zinc-300 border border-white/10 active:scale-95">
         AI-nyckel
       </button>
     </div>
 
-    <!-- Rank-kort (Alltid synligt) -->
+    <!-- Rank-kort -->
     <div class="rounded-3xl p-3.5 bg-card border border-white/10 space-y-2.5 shadow-xl">
       <div class="flex items-center justify-between gap-2">
         <div>
-          <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Din Strikt Kalibrerade Rank</span>
+          <span id="resUserHeader" class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Strikt Kalibrerad Rank</span>
           <div class="flex items-baseline gap-2">
             <h2 id="resRankName" class="text-3xl font-black tracking-tight text-white">MTN</h2>
             <span id="resPslScore" class="font-mono text-sm font-bold text-cyan-300">4.7 PSL</span>
@@ -259,14 +304,13 @@
           <p id="resPotential" class="text-[11px] text-emerald-300 font-medium">Max potential: HTN (5.5 PSL)</p>
         </div>
 
-        <!-- De 2 tagna bilderna -->
         <div class="flex items-center gap-1.5 shrink-0">
           <img id="resImgFront" alt="Framsida" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
           <img id="resImgProfile" alt="Profil" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
         </div>
       </div>
 
-      <!-- PSL-mätare: Sub-3 till True Adam -->
+      <!-- PSL-mätare -->
       <div class="space-y-1">
         <div class="flex justify-between text-[9px] font-mono text-zinc-400">
           <span>Sub-3</span>
@@ -290,7 +334,7 @@
         </div>
       </div>
 
-      <!-- 3 Nyckelmått på en rad -->
+      <!-- 3 Nyckelmått -->
       <div class="grid grid-cols-3 gap-2 pt-0.5 text-center">
         <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
           <span class="text-[9px] font-mono text-zinc-400 block">GONIAL (90°)</span>
@@ -307,7 +351,7 @@
       </div>
     </div>
 
-    <!-- Kompakta flikar så allt ryms utan scroll -->
+    <!-- Flikar -->
     <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-surface border border-white/10">
       <button id="tabMetricsBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition">
         Delbetyg &amp; Dom
@@ -317,7 +361,7 @@
       </button>
     </div>
 
-    <!-- Vy A: Delbetyg & Hård AI-dom -->
+    <!-- Vy A: Delbetyg -->
     <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-2">
       <div id="resMetricsList" class="space-y-1.5"></div>
       <div class="rounded-2xl p-2.5 bg-surface border border-white/10">
@@ -325,7 +369,7 @@
       </div>
     </div>
 
-    <!-- Vy B: Vad du ska träna på + Daglig checklista -->
+    <!-- Vy B: Träna på -->
     <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-2">
       <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/25 space-y-1">
         <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Högst prioritet att fixa:</span>
@@ -343,11 +387,11 @@
   <div id="geminiModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="w-full max-w-sm rounded-3xl bg-card border border-white/15 p-5 space-y-3.5 shadow-2xl">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-white">Koppla Gemini AI</h3>
+        <h3 class="text-base font-bold text-white">Gemini AI-nyckel</h3>
         <button id="closeGeminiModalBtn" type="button" class="w-7 h-7 rounded-full bg-white/10 text-zinc-300 text-xs">✕</button>
       </div>
       <p class="text-xs text-zinc-400 leading-relaxed">
-        Klistra in din Gemini API-nyckel från Google AI Studio för riktig multimodal AI-analys av båda bilderna.
+        Din API-nyckel är redan förifylld för alla användare. Du kan byta den här vid behov.
       </p>
       <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
       <select id="geminiModelInput" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
@@ -355,8 +399,8 @@
         <option value="gemini-2.5-pro">gemini-2.5-pro (Mest noggrann)</option>
       </select>
       <div class="flex gap-2 pt-1">
-        <button id="clearGeminiBtn" type="button" class="px-3 py-2.5 rounded-xl text-xs bg-white/5 text-zinc-300 border border-white/10">Rensa</button>
-        <button id="saveGeminiBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-violet-600 text-white">Spara nyckel</button>
+        <button id="resetDefaultKeyBtn" type="button" class="px-3 py-2.5 rounded-xl text-xs bg-white/5 text-zinc-300 border border-white/10">Standardnyckel</button>
+        <button id="saveGeminiBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-violet-600 text-white">Spara</button>
       </div>
     </div>
   </div>
@@ -366,10 +410,12 @@
 
   <script>
     (function () {
-      const STORAGE_GEMINI = 'aesthetix_strict_gemini_v2';
-      const STORAGE_ROUTINE = 'aesthetix_strict_routine_v2';
+      const APP_PASSWORD = 'bradar';
+      const DEFAULT_GEMINI_KEY = 'AQ.Ab8RN6JadGBmNKfESpjeL3JJBXeqpZIGwWT8Jota5MjPynE-uQ';
+      const STORAGE_GEMINI = 'aesthetix_strict_gemini_v3';
+      const STORAGE_ROUTINE = 'aesthetix_strict_routine_v3';
+      const STORAGE_AUTH = 'aesthetix_user_session_v1';
 
-      // Strikt PSL-skala: Sub-3 upp till True Adam (8.0 är extremt sällsynt)
       const PSL_LEVELS = [
         { name: 'Sub-3', min: 1.0, max: 2.4, color: 'bg-rose-600' },
         { name: 'Sub-5', min: 2.5, max: 3.4, color: 'bg-orange-500' },
@@ -389,15 +435,23 @@
       ];
 
       const state = {
-        step: 'front', // 'front' | 'profile'
+        username: '',
+        step: 'front',
         photos: { front: null, profile: null },
         stream: null,
         trackTimer: null,
-        gemini: { apiKey: '', model: 'gemini-2.5-flash' },
+        gemini: { apiKey: DEFAULT_GEMINI_KEY, model: 'gemini-2.5-flash' },
         routine: ROUTINE_ITEMS.map((r) => ({ ...r }))
       };
 
       const el = {
+        screenLogin: document.getElementById('screenLogin'),
+        loginForm: document.getElementById('loginForm'),
+        loginUsername: document.getElementById('loginUsername'),
+        loginPassword: document.getElementById('loginPassword'),
+        loginError: document.getElementById('loginError'),
+        welcomeUserTag: document.getElementById('welcomeUserTag'),
+        logoutBtn: document.getElementById('logoutBtn'),
         screenStart: document.getElementById('screenStart'),
         screenCamera: document.getElementById('screenCamera'),
         screenResults: document.getElementById('screenResults'),
@@ -429,6 +483,7 @@
         analyzingSub: document.getElementById('analyzingSub'),
         rescanBtn: document.getElementById('rescanBtn'),
         resSourceTag: document.getElementById('resSourceTag'),
+        resUserHeader: document.getElementById('resUserHeader'),
         resRankName: document.getElementById('resRankName'),
         resPslScore: document.getElementById('resPslScore'),
         resPotential: document.getElementById('resPotential'),
@@ -449,7 +504,7 @@
         closeGeminiModalBtn: document.getElementById('closeGeminiModalBtn'),
         geminiKeyInput: document.getElementById('geminiKeyInput'),
         geminiModelInput: document.getElementById('geminiModelInput'),
-        clearGeminiBtn: document.getElementById('clearGeminiBtn'),
+        resetDefaultKeyBtn: document.getElementById('resetDefaultKeyBtn'),
         saveGeminiBtn: document.getElementById('saveGeminiBtn'),
         hiddenCanvas: document.getElementById('hiddenCanvas'),
         trackCanvas: document.getElementById('trackCanvas')
@@ -460,19 +515,35 @@
       }
 
       function showScreen(name) {
+        el.screenLogin.classList.toggle('hidden-screen', name !== 'login');
         el.screenStart.classList.toggle('hidden-screen', name !== 'start');
         el.screenCamera.classList.toggle('hidden-screen', name !== 'camera');
         el.screenResults.classList.toggle('hidden-screen', name !== 'results');
       }
 
+      function setLoggedInUser(username) {
+        state.username = username.trim();
+        el.welcomeUserTag.textContent = `@${state.username}`;
+        el.resUserHeader.textContent = `${state.username.toUpperCase()} • STRIKT RANK`;
+        try {
+          localStorage.setItem(STORAGE_AUTH, JSON.stringify({ username: state.username }));
+        } catch (_) {}
+        showScreen('start');
+      }
+
       function loadConfig() {
         try {
           const g = JSON.parse(localStorage.getItem(STORAGE_GEMINI) || 'null');
-          if (g && typeof g.apiKey === 'string') {
-            state.gemini.apiKey = g.apiKey;
+          if (g && typeof g.apiKey === 'string' && g.apiKey.trim()) {
+            state.gemini.apiKey = g.apiKey.trim();
             state.gemini.model = g.model || 'gemini-2.5-flash';
+          } else {
+            state.gemini.apiKey = DEFAULT_GEMINI_KEY;
           }
-        } catch (_) {}
+        } catch (_) {
+          state.gemini.apiKey = DEFAULT_GEMINI_KEY;
+        }
+
         try {
           const r = JSON.parse(localStorage.getItem(STORAGE_ROUTINE) || 'null');
           if (Array.isArray(r) && r.length) {
@@ -482,13 +553,56 @@
             });
           }
         } catch (_) {}
+
         updateGeminiDot();
+
+        try {
+          const auth = JSON.parse(localStorage.getItem(STORAGE_AUTH) || 'null');
+          if (auth && typeof auth.username === 'string' && auth.username.trim()) {
+            setLoggedInUser(auth.username);
+            return;
+          }
+        } catch (_) {}
+
+        showScreen('login');
       }
 
       function updateGeminiDot() {
         const active = Boolean(state.gemini.apiKey.trim());
         el.geminiStatusDot.className = `inline-block w-2 h-2 rounded-full mr-1.5 ${active ? 'bg-emerald-400' : 'bg-amber-400'}`;
       }
+
+      // =========================================================
+      // LOGIN HANTERING
+      // =========================================================
+      el.loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = el.loginUsername.value.trim();
+        const pass = el.loginPassword.value;
+
+        if (!user || pass !== APP_PASSWORD) {
+          el.loginError.classList.remove('hidden');
+          el.loginPassword.value = '';
+          el.loginPassword.focus();
+          return;
+        }
+
+        el.loginError.classList.add('hidden');
+        el.loginPassword.value = '';
+        setLoggedInUser(user);
+      });
+
+      el.logoutBtn.addEventListener('click', () => {
+        stopCameraStream();
+        state.username = '';
+        try {
+          localStorage.removeItem(STORAGE_AUTH);
+        } catch (_) {}
+        el.loginUsername.value = '';
+        el.loginPassword.value = '';
+        el.loginError.classList.add('hidden');
+        showScreen('login');
+      });
 
       // =========================================================
       // KAMERA & REAL-TIME AUTO-ANPASSNING AV HUVUDRAM
@@ -501,7 +615,6 @@
         el.cameraFallbackBg.classList.add('hidden');
         el.liveVideo.classList.remove('hidden');
 
-        // Frågar iOS / webbläsaren direkt om kamerabehörighet
         try {
           if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
             throw new Error('Ingen kamera-API');
@@ -575,7 +688,6 @@
         }
       }
 
-      // Känner av ansiktets position & storlek i realtid så att huvudramen anpassas automatiskt
       function startAutoHeadTracking() {
         const canvas = el.trackCanvas;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -602,7 +714,6 @@
                 const box = faces[0].boundingBox;
                 const vw = el.liveVideo.videoWidth;
                 const vh = el.liveVideo.videoHeight;
-                // Speglad X eftersom videon är scale-x-[-1]
                 normX = 1 - (box.x + box.width * 0.5) / vw;
                 normY = (box.y + box.height * 0.48) / vh;
                 normScale = clamp((box.width / vw) * 2.15, 0.78, 1.35);
@@ -612,7 +723,6 @@
           }
 
           if (!faceFound) {
-            // Hudtons- & kontrastbaserad tyngdpunktsspårning för iOS Safari
             ctx.save();
             ctx.translate(W, 0);
             ctx.scale(-1, 1);
@@ -629,7 +739,6 @@
               for (let x = 10; x < W - 10; x++) {
                 const i = (y * W + x) * 4;
                 const r = imgData[i], g = imgData[i + 1], b = imgData[i + 2];
-                // Enkel hudtonsdetektering i YCbCr/RGB
                 const isSkin = r > 75 && g > 40 && b > 25 && r > g && r > b && Math.abs(r - g) > 12;
                 if (isSkin) {
                   sumX += x;
@@ -652,12 +761,10 @@
             }
           }
 
-          // Flytta och skala huvudramen mjukt så den omsluter användarens huvud
           const offsetX = clamp((normX - 0.5) * 140, -65, 65);
           const offsetY = clamp((normY - 0.47) * 160, -70, 70);
           el.dynamicHeadFrame.style.transform = `translate(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px) scale(${normScale.toFixed(2)})`;
 
-          // Live-guidning beroende på avstånd, vinkel och centrering
           if (!faceFound) {
             el.guidanceSubText.textContent = 'Placera ansiktet i bra ljus framför kameran';
             el.frameFrontSvg.classList.replace('text-emerald-400', 'text-cyan-300');
@@ -681,7 +788,6 @@
         const canvas = el.hiddenCanvas;
         const vw = el.liveVideo.videoWidth;
         const vh = el.liveVideo.videoHeight;
-        // Skala ner lagom för snabb Gemini API-uppladdning
         const maxSide = 820;
         let w = vw, h = vh;
         if (w > maxSide || h > maxSide) {
@@ -739,7 +845,7 @@
       }
 
       // =========================================================
-      // STRIKT PSL-BEDÖMNING (MYCKET HÅRDARE KALIBRERING)
+      // STRIKT PSL-BEDÖMNING
       // =========================================================
       function mapStrictPsl(psl) {
         const val = clamp(Number(psl) || 4.2, 1.0, 8.0);
@@ -776,7 +882,6 @@
               }
             }
 
-            // Central ansiktsregion (undvik bakgrundsbrus)
             for (let y = 20; y < H - 18; y++) {
               for (let x = 20; x < W - 20; x++) {
                 const idx = y * W + x;
@@ -798,7 +903,6 @@
             const symDelta = symN ? symDiff / symN : 28;
 
             resolve({
-              // Hårdare normalisering: medel ligger runt 4.3-5.2/10 istället för 7-8/10
               definition: clamp(2.8 + edgeAvg / 5.8, 2.5, 8.2),
               boneContrast: clamp(3.0 + std / 16.5, 2.5, 8.3),
               symmetryPct: Math.round(clamp(95 - symDelta * 1.15, 68, 96)),
@@ -814,7 +918,6 @@
         const s = ((frontBio.seed * 17 + profileBio.seed) % 1000) / 1000;
         const micro = (s - 0.5) * 0.7;
 
-        // Strikt PSL-kurva: MTN (4.4–5.2 PSL) är normalvärde; över 6.0 PSL kräver toppvärden
         const jawline = Number(clamp(profileBio.definition * 0.55 + profileBio.boneContrast * 0.45 + micro, 2.6, 8.4).toFixed(1));
         const cheekbones = Number(clamp(frontBio.boneContrast * 0.55 + frontBio.definition * 0.45 + micro * 0.8, 2.8, 8.3).toFixed(1));
         const eyeArea = Number(clamp(frontBio.definition * 0.5 + (frontBio.symmetryPct / 12) * 0.5 + micro * 0.6, 2.8, 8.2).toFixed(1));
@@ -822,7 +925,6 @@
         const skin = Number(clamp(frontBio.lighting * 0.6 + (8.2 - Math.abs(frontBio.definition - 5.4) * 0.5) * 0.4, 2.8, 8.4).toFixed(1));
 
         const weightedTen = jawline * 0.28 + eyeArea * 0.25 + cheekbones * 0.20 + symmetryScore * 0.15 + skin * 0.12;
-        // Mappa hårt till PSL (1.0 - 8.0) så genomsnitt hamnar runt LTN/MTN (3.8 - 5.1 PSL)
         const strictPsl = clamp(1.35 + weightedTen * 0.66, 1.5, 7.6);
         const mapped = mapStrictPsl(strictPsl);
         const maxPotPsl = clamp(mapped.psl + 0.75, 2.5, 7.8);
@@ -900,10 +1002,19 @@ Svara ENDAST med giltig JSON i exakt detta format:
   ]
 }`;
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+        const isBearerToken = key.startsWith('AQ.') || key.startsWith('ya29.');
+        const url = isBearerToken
+          ? `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`
+          : `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
+
+        const headers = { 'Content-Type': 'application/json' };
+        if (isBearerToken) {
+          headers['Authorization'] = `Bearer ${key}`;
+        }
+
         const res = await fetch(url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           body: JSON.stringify({
             contents: [{
               parts: [
@@ -1102,9 +1213,11 @@ Svara ENDAST med giltig JSON i exakt detta format:
       el.openGeminiBtn.addEventListener('click', openModal);
       el.resGeminiBtn.addEventListener('click', openModal);
       el.closeGeminiModalBtn.addEventListener('click', () => el.geminiModal.classList.add('hidden'));
-      el.clearGeminiBtn.addEventListener('click', () => { el.geminiKeyInput.value = ''; });
+      el.resetDefaultKeyBtn.addEventListener('click', () => {
+        el.geminiKeyInput.value = DEFAULT_GEMINI_KEY;
+      });
       el.saveGeminiBtn.addEventListener('click', () => {
-        state.gemini.apiKey = el.geminiKeyInput.value.trim();
+        state.gemini.apiKey = el.geminiKeyInput.value.trim() || DEFAULT_GEMINI_KEY;
         state.gemini.model = el.geminiModelInput.value;
         try { localStorage.setItem(STORAGE_GEMINI, JSON.stringify(state.gemini)); } catch (_) {}
         updateGeminiDot();
