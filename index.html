@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="sv" class="dark">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#050509" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Aesthetix AI" />
-  <title>AESTHETIX AI — Strict PSL Scanner</title>
+  <meta name="apple-mobile-web-app-title" content="Aesthetix AI v4" />
+  <title>AESTHETIX AI v4 — Advanced PSL Scanner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -49,7 +49,7 @@
       padding-bottom: var(--safe-bottom);
       display: flex;
       flex-direction: column;
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.22s ease, transform 0.22s ease;
     }
     .screen.hidden-screen {
       opacity: 0;
@@ -62,104 +62,117 @@
       100% { top: 14%; opacity: 0.2; }
     }
     .laser-line {
-      animation: laserSweep 1.8s ease-in-out infinite;
-      box-shadow: 0 0 22px rgba(6, 182, 212, 0.95), 0 0 42px rgba(139, 92, 246, 0.7);
+      animation: laserSweep 1.7s ease-in-out infinite;
+      box-shadow: 0 0 24px rgba(6, 182, 212, 0.95), 0 0 46px rgba(139, 92, 246, 0.75);
     }
-    /* Snapchat/TikTok-inspirerat ringljus runt skärmen för selfiekameran */
-    .ringlight-active {
-      box-shadow: inset 0 0 85px 28px rgba(255, 252, 235, 0.78), inset 0 0 24px 6px rgba(255, 255, 255, 0.95);
+    /* Stronger TikTok/Snapchat-style selfie ring light */
+    .ringlight-strong {
+      box-shadow:
+        inset 0 0 115px 42px rgba(255, 253, 242, 0.94),
+        inset 0 0 36px 12px rgba(255, 255, 255, 1),
+        0 0 60px rgba(255, 255, 255, 0.35);
     }
-    /* Själva blixten som slår till när fotot tas */
     #screenFlashOverlay {
       opacity: 0;
       pointer-events: none;
       background: #ffffff;
-      transition: opacity 90ms ease-out;
+      transition: opacity 110ms ease-out;
     }
     #screenFlashOverlay.flash-pop {
-      opacity: 0.96;
-      transition: opacity 50ms ease-in;
+      opacity: 1;
+      transition: opacity 45ms ease-in;
     }
   </style>
 </head>
 <body>
 
   <!-- =========================================================
-       SKÄRM 0: LOGIN (ANVÄNDARNAMN + LÖSENORD: bradar)
+       SCREEN 0: LOGIN (USERNAME + PASSWORD: bradar)
   ========================================================== -->
-  <section id="screenLogin" class="screen justify-between px-6 py-8 bg-[radial-gradient(circle_at_50%_18%,rgba(139,92,246,0.24),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
-    <div class="flex items-center justify-center pt-2">
-      <div class="flex items-center gap-2.5">
+  <section id="screenLogin" class="screen justify-between px-5 py-6 bg-[radial-gradient(circle_at_50%_18%,rgba(139,92,246,0.24),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
+    <div class="flex items-center justify-between pt-1">
+      <div class="flex items-center gap-2">
         <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px]">
           <div class="w-full h-full rounded-[15px] bg-[#080910] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">AX</div>
         </div>
-        <span class="font-bold tracking-wider text-base text-white">AESTHETIX AI</span>
+        <span class="font-bold tracking-wider text-sm text-white">AESTHETIX AI</span>
       </div>
+      <span class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-400/35">
+        v4
+      </span>
     </div>
 
-    <form id="loginForm" class="my-auto w-full max-w-sm mx-auto rounded-3xl p-6 bg-card/90 border border-white/10 shadow-2xl space-y-4">
+    <form id="loginForm" class="my-auto w-full max-w-sm mx-auto rounded-3xl p-6 bg-card/95 border border-white/15 shadow-2xl space-y-4">
       <div class="text-center space-y-1">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-violet-500/15 text-violet-300 border border-violet-500/30">
-          Privat Åtkomst
+          Private Access • v4
         </span>
-        <h1 class="text-2xl font-black text-white pt-1">Logga in</h1>
-        <p class="text-xs text-zinc-400">Ange ditt användarnamn och lösenord för att starta</p>
+        <h1 class="text-2xl font-black text-white pt-1">Sign In</h1>
+        <p class="text-xs text-zinc-400">Enter your username and password to continue</p>
       </div>
 
       <div class="space-y-3">
         <div>
-          <label for="loginUsername" class="block text-[11px] font-mono uppercase text-zinc-400 mb-1">Användarnamn</label>
-          <input id="loginUsername" type="text" required autocomplete="username" placeholder="Skriv ditt namn..." class="w-full px-3.5 py-3 rounded-xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-cyan-400" />
+          <label for="loginUsername" class="block text-xs font-mono uppercase text-zinc-300 mb-1">Username</label>
+          <input id="loginUsername" type="text" required autocomplete="username" placeholder="Your username..." class="w-full px-4 py-3.5 rounded-2xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-cyan-400" />
         </div>
 
         <div>
-          <label for="loginPassword" class="block text-[11px] font-mono uppercase text-zinc-400 mb-1">Lösenord</label>
-          <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="••••••" class="w-full px-3.5 py-3 rounded-xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-violet-400" />
+          <label for="loginPassword" class="block text-xs font-mono uppercase text-zinc-300 mb-1">Password</label>
+          <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="••••••" class="w-full px-4 py-3.5 rounded-2xl text-sm bg-surface text-white placeholder-zinc-500 border border-white/15 focus:outline-none focus:border-violet-400" />
         </div>
       </div>
 
-      <p id="loginError" class="hidden text-xs text-rose-400 font-medium text-center">
-        Fel lösenord eller saknat användarnamn. Försök igen.
+      <p id="loginError" class="hidden text-xs text-rose-400 font-semibold text-center">
+        Invalid password or missing username. Try again.
       </p>
 
-      <button type="submit" class="w-full py-3.5 rounded-2xl text-sm font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_8px_28px_rgba(139,92,246,0.38)] active:scale-[0.98] transition">
-        LOGGA IN
+      <button type="submit" class="w-full py-4 rounded-2xl text-sm font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_8px_28px_rgba(139,92,246,0.4)] active:scale-[0.98] transition">
+        SIGN IN
       </button>
     </form>
 
-    <div class="text-center text-[11px] font-mono text-zinc-500 pb-2">
-      AESTHETIX AI • STRICT PSL ENGINE
+    <div class="text-center text-xs font-mono text-zinc-400 pb-1">
+      AESTHETIX AI • VERSION v4 • STRICT PSL ENGINE
     </div>
   </section>
 
 
   <!-- =========================================================
-       SKÄRM 1: HELSKÄRM START
+       SCREEN 1: FULLSCREEN START (v4)
   ========================================================== -->
-  <section id="screenStart" class="screen hidden-screen justify-between px-6 py-6 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
-    <div class="flex items-center justify-between pt-1 gap-2">
+  <section id="screenStart" class="screen hidden-screen justify-between px-5 py-5 bg-[radial-gradient(circle_at_50%_15%,rgba(139,92,246,0.22),transparent_55%),radial-gradient(circle_at_85%_85%,rgba(6,182,212,0.14),transparent_50%)]">
+    <!-- Top bar -->
+    <div class="flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 min-w-0">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px] shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 p-[1px] shrink-0">
           <div class="w-full h-full rounded-[11px] bg-[#080910] flex items-center justify-center font-mono text-xs font-bold text-cyan-300">AX</div>
         </div>
         <div class="min-w-0">
-          <span class="font-bold tracking-wider text-sm text-white block leading-none">AESTHETIX AI</span>
-          <span id="welcomeUserTag" class="text-[11px] font-mono text-cyan-300 truncate block mt-0.5">@användare</span>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold tracking-wider text-sm text-white leading-none">AESTHETIX AI</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-400/35">v4</span>
+          </div>
+          <span id="welcomeUserTag" class="text-xs font-mono text-violet-300 truncate block mt-0.5">@user</span>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5 shrink-0">
-        <button id="openGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono bg-white/10 hover:bg-white/15 text-violet-200 border border-violet-400/30 active:scale-95 transition">
-          <span id="geminiStatusDot" class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span>Gemini AI
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="openSavedBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white/10 hover:bg-white/15 text-cyan-200 border border-cyan-400/30 active:scale-95 transition">
+          Saved (<span id="savedCountBadge">0</span>)
         </button>
-        <button id="logoutBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono bg-white/5 hover:bg-white/10 text-zinc-400 border border-white/10 active:scale-95 transition">
-          Logga ut
+        <button id="openGeminiBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-white/10 hover:bg-white/15 text-violet-200 border border-violet-400/30 active:scale-95 transition">
+          <span id="geminiStatusDot" class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span>AI
+        </button>
+        <button id="logoutBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 active:scale-95 transition">
+          Out
         </button>
       </div>
     </div>
 
-    <div class="flex flex-col items-center text-center space-y-5 my-auto">
-      <div class="relative w-36 h-44 rounded-[36px] border border-cyan-400/35 bg-white/[0.03] flex items-center justify-center shadow-[0_0_50px_rgba(139,92,246,0.2)]">
+    <!-- Center hero -->
+    <div class="flex flex-col items-center text-center space-y-4 my-auto">
+      <div class="relative w-36 h-44 rounded-[36px] border border-cyan-400/40 bg-white/[0.03] flex items-center justify-center shadow-[0_0_50px_rgba(139,92,246,0.22)]">
         <svg viewBox="0 0 120 150" class="w-24 h-32 text-cyan-300" fill="none" stroke="currentColor" stroke-width="1.6">
           <ellipse cx="60" cy="74" rx="34" ry="48" stroke-dasharray="5 3" />
           <line x1="36" y1="64" x2="52" y2="64" />
@@ -167,171 +180,182 @@
           <line x1="60" y1="20" x2="60" y2="130" stroke-opacity="0.35" stroke-dasharray="2 3" />
           <path d="M36 96 Q60 116 84 96" stroke-opacity="0.65" />
         </svg>
-        <span class="absolute -bottom-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-[#0d0e16] text-violet-300 border border-violet-500/40">
-          Strict PSL Engine
+        <span class="absolute -bottom-2.5 px-3 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-widest bg-[#0d0e16] text-cyan-300 border border-cyan-500/40 font-bold">
+          v4 • Strict PSL
         </span>
       </div>
 
-      <div class="space-y-2 max-w-xs">
+      <div class="space-y-1.5 max-w-xs">
         <h1 class="text-3xl font-black tracking-tight text-white leading-tight">
-          Biometrisk<br/><span class="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-300 bg-clip-text text-transparent">Ansiktsanalys</span>
+          Biometric<br/><span class="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-300 bg-clip-text text-transparent">Face Scan v4</span>
         </h1>
         <p class="text-xs text-zinc-400 leading-relaxed">
-          2-vinkels AI-skanning (Framsida + 90° Profil). Brutalt ärlig PSL-rank från <strong class="text-zinc-200">Sub-3</strong> till <strong class="text-amber-300">True Adam</strong>.
+          2-angle scan (Front + 90° Profile) with fWHR, gonial &amp; E-line metrics from <strong class="text-zinc-200">Sub-3</strong> to <strong class="text-amber-300">True Adam</strong>.
         </p>
       </div>
     </div>
 
-    <div class="space-y-2.5 pb-2">
-      <button id="startScanFlowBtn" type="button" class="w-full py-4 rounded-2xl text-base font-extrabold tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_10px_35px_rgba(139,92,246,0.4)] active:scale-[0.98] transition">
-        STARTA SKANNING
+    <!-- Bottom large accessible buttons -->
+    <div class="space-y-2.5 pb-1">
+      <button id="startScanFlowBtn" type="button" class="w-full py-4 rounded-2xl text-base font-black tracking-wide bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-[0_10px_35px_rgba(139,92,246,0.45)] active:scale-[0.98] transition">
+        START SCAN
       </button>
-      <div class="flex items-center justify-center gap-4 text-[11px] text-zinc-400">
-        <button id="quickDemoStartBtn" type="button" class="underline hover:text-white transition">Testa Demo (2 vinklar)</button>
-        <span>•</span>
-        <span>Selfie Flash redo</span>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button id="quickDemoStartBtn" type="button" class="py-3 rounded-2xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/15 active:scale-[0.98] transition">
+          Demo Scan (2 Angles)
+        </button>
+        <button id="startSavedFromHomeBtn" type="button" class="py-3 rounded-2xl text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-200 border border-cyan-400/35 active:scale-[0.98] transition">
+          Saved Scans
+        </button>
       </div>
     </div>
   </section>
 
 
   <!-- =========================================================
-       SKÄRM 2: HELSKÄRMSKAMERA MED VIDVINKEL, RINGLJUS & BLIXT
+       SCREEN 2: FULLSCREEN CAMERA (WIDE + STRONG RINGLIGHT + FLASH)
   ========================================================== -->
   <section id="screenCamera" class="screen hidden-screen bg-black">
-    <!-- Vidvinklig live-video utan överdriven iOS-beskärning -->
     <video id="liveVideo" autoplay playsinline muted class="absolute inset-0 w-full h-full object-contain bg-black scale-x-[-1]"></video>
 
-    <!-- Snapchat/TikTok-liknande Ringljus-ram runt kanten -->
+    <!-- Strong TikTok/Snapchat-inspired selfie ring light -->
     <div id="ringLightLayer" class="pointer-events-none absolute inset-0 z-10 transition-all duration-200"></div>
 
-    <!-- Helskärmsblixt när fotot knäpps -->
+    <!-- Fullscreen flash pop on capture -->
     <div id="screenFlashOverlay" class="fixed inset-0 z-40"></div>
 
     <div id="cameraFallbackBg" class="hidden absolute inset-0 z-20 bg-[#080910] flex flex-col items-center justify-center p-6 text-center space-y-4">
-      <p class="text-sm text-zinc-300 max-w-xs">Kameran kunde inte startas automatiskt. Tillåt kamera i iOS Safari eller välj bilder från kamerarullen nedan.</p>
-      <label class="px-5 py-3 rounded-2xl text-xs font-bold bg-violet-600 text-white cursor-pointer active:scale-95">
-        Välj bild för <span id="fallbackStepLabel">1. Framsida</span>
+      <p class="text-sm text-zinc-300 max-w-xs">Camera unavailable or permission denied. Allow camera in Safari or pick photos below.</p>
+      <label class="px-5 py-3.5 rounded-2xl text-sm font-bold bg-violet-600 text-white cursor-pointer active:scale-95">
+        Pick Photo: <span id="fallbackStepLabel">1. Front</span>
         <input id="fallbackFileInput" type="file" accept="image/*" class="hidden" />
       </label>
     </div>
 
-    <!-- Dynamisk Auto-Anpassad Huvudram -->
+    <!-- Dynamic auto-adjusted head frame -->
     <div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
       <div id="dynamicHeadFrame" class="relative w-56 h-72 transition-all duration-150 ease-out flex items-center justify-center">
-        <svg id="frameFrontSvg" viewBox="0 0 240 310" class="w-full h-full text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.55)]" fill="none" stroke="currentColor" stroke-width="2.2">
+        <svg id="frameFrontSvg" viewBox="0 0 240 310" class="w-full h-full text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.6)]" fill="none" stroke="currentColor" stroke-width="2.4">
           <ellipse cx="120" cy="155" rx="84" ry="118" stroke-dasharray="10 6" />
-          <path d="M24 55 L24 25 L54 25" stroke-width="3" />
-          <path d="M216 55 L216 25 L186 25" stroke-width="3" />
-          <path d="M24 255 L24 285 L54 285" stroke-width="3" />
-          <path d="M216 255 L216 285 L186 285" stroke-width="3" />
-          <line x1="72" y1="136" x2="104" y2="136" stroke-opacity="0.8" />
-          <line x1="136" y1="136" x2="168" y2="136" stroke-opacity="0.8" />
-          <line x1="120" y1="30" x2="120" y2="280" stroke-opacity="0.3" stroke-dasharray="3 4" />
+          <path d="M24 55 L24 25 L54 25" stroke-width="3.2" />
+          <path d="M216 55 L216 25 L186 25" stroke-width="3.2" />
+          <path d="M24 255 L24 285 L54 285" stroke-width="3.2" />
+          <path d="M216 255 L216 285 L186 285" stroke-width="3.2" />
+          <line x1="72" y1="136" x2="104" y2="136" stroke-opacity="0.85" />
+          <line x1="136" y1="136" x2="168" y2="136" stroke-opacity="0.85" />
+          <line x1="120" y1="30" x2="120" y2="280" stroke-opacity="0.35" stroke-dasharray="3 4" />
         </svg>
 
-        <svg id="frameProfileSvg" viewBox="0 0 240 310" class="hidden w-full h-full text-violet-300 drop-shadow-[0_0_12px_rgba(139,92,246,0.65)]" fill="none" stroke="currentColor" stroke-width="2.2">
+        <svg id="frameProfileSvg" viewBox="0 0 240 310" class="hidden w-full h-full text-violet-300 drop-shadow-[0_0_12px_rgba(139,92,246,0.7)]" fill="none" stroke="currentColor" stroke-width="2.4">
           <path d="M78 44 C128 40, 162 72, 162 118 L186 148 L161 162 C165 178, 160 194, 148 206 C162 218, 155 240, 128 248 C102 255, 78 240, 70 212" stroke-dasharray="10 6" />
-          <path d="M24 55 L24 25 L54 25" stroke-width="3" />
-          <path d="M216 55 L216 25 L186 25" stroke-width="3" />
-          <path d="M24 255 L24 285 L54 285" stroke-width="3" />
-          <path d="M216 255 L216 285 L186 285" stroke-width="3" />
+          <path d="M24 55 L24 25 L54 25" stroke-width="3.2" />
+          <path d="M216 55 L216 25 L186 25" stroke-width="3.2" />
+          <path d="M24 255 L24 285 L54 285" stroke-width="3.2" />
+          <path d="M216 255 L216 285 L186 285" stroke-width="3.2" />
           <line x1="34" y1="154" x2="206" y2="154" stroke-opacity="0.35" stroke-dasharray="3 4" />
-          <line x1="186" y1="148" x2="152" y2="232" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3" />
+          <line x1="186" y1="148" x2="152" y2="232" stroke="#10b981" stroke-width="1.6" stroke-dasharray="4 3" />
         </svg>
       </div>
     </div>
 
-    <!-- Laser-skanning när AI analyserar -->
-    <div id="analyzingOverlay" class="hidden absolute inset-0 z-30 bg-black/75 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+    <!-- Analyzing laser overlay -->
+    <div id="analyzingOverlay" class="hidden absolute inset-0 z-30 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
       <div class="laser-line absolute left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-cyan-300 to-transparent"></div>
       <div class="w-14 h-14 rounded-2xl border-2 border-cyan-400 border-t-transparent animate-spin mb-4"></div>
-      <h3 id="analyzingTitle" class="text-lg font-extrabold text-white">Analyserar 2 vinklar...</h3>
-      <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">Mäter gonialvinkel, canthal tilt, symmetri &amp; PSL</p>
+      <h3 id="analyzingTitle" class="text-lg font-extrabold text-white">Running v4 Biometric Analysis...</h3>
+      <p id="analyzingSub" class="text-xs text-cyan-300 font-mono mt-1">fWHR • Gonial Angle • E-Line • Symmetry • PSL</p>
     </div>
 
-    <!-- Topp-HUD i kameran -->
+    <!-- Top camera HUD with large high-contrast controls -->
     <div class="relative z-20 flex items-center justify-between px-3.5 pt-3 gap-1.5">
-      <button id="cancelCameraBtn" type="button" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-black/65 backdrop-blur-md text-white border border-white/15 active:scale-95">
-        ✕ Avbryt
+      <button id="cancelCameraBtn" type="button" class="px-3.5 py-2 rounded-2xl text-xs font-bold bg-black/75 backdrop-blur-md text-white border border-white/20 active:scale-95">
+        ✕ Back
       </button>
 
-      <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/15">
-        <span id="pillStep1" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black">1. Front</span>
-        <span id="pillStep2" class="px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400">2. 90°</span>
+      <div class="flex items-center gap-1 px-2.5 py-1.5 rounded-2xl bg-black/75 backdrop-blur-md border border-white/20">
+        <span id="pillStep1" class="px-2.5 py-1 rounded-xl text-xs font-extrabold bg-cyan-400 text-black">1. Front</span>
+        <span id="pillStep2" class="px-2.5 py-1 rounded-xl text-xs font-extrabold text-zinc-400">2. 90°</span>
       </div>
 
       <div class="flex items-center gap-1.5">
-        <button id="flashToggleBtn" type="button" class="px-2.5 py-1.5 rounded-full text-xs font-mono font-bold bg-amber-400 text-black border border-amber-200 active:scale-95 transition">
-          ⚡ Blixt: PÅ
+        <button id="flashToggleBtn" type="button" class="px-3 py-2 rounded-2xl text-xs font-mono font-black bg-amber-300 text-black border border-amber-100 shadow-lg active:scale-95 transition">
+          ⚡ FLASH ON
         </button>
-        <label class="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-black/65 backdrop-blur-md text-zinc-200 border border-white/15 cursor-pointer active:scale-95">
-          Bild
+        <label class="px-3 py-2 rounded-2xl text-xs font-bold bg-black/75 backdrop-blur-md text-zinc-100 border border-white/20 cursor-pointer active:scale-95">
+          Photo
           <input id="cameraGalleryInput" type="file" accept="image/*" class="hidden" />
         </label>
       </div>
     </div>
 
-    <!-- Live Head-Guidance Banner -->
+    <!-- Live head-guidance banner -->
     <div class="relative z-20 mt-3 px-4 flex justify-center">
-      <div id="liveGuidanceBanner" class="px-4 py-2 rounded-2xl bg-black/70 backdrop-blur-md border border-cyan-400/40 text-center max-w-sm shadow-lg">
-        <p id="guidanceMainText" class="text-xs sm:text-sm font-bold text-white">Steg 1: Titta rakt in i kameran</p>
-        <p id="guidanceSubText" class="text-[11px] text-cyan-300 mt-0.5">Vidvinkel aktiv • Anpassar ram automatiskt...</p>
+      <div id="liveGuidanceBanner" class="px-4 py-2.5 rounded-2xl bg-black/75 backdrop-blur-md border border-cyan-400/45 text-center max-w-sm shadow-lg">
+        <p id="guidanceMainText" class="text-sm font-extrabold text-white">Step 1: Look straight into camera</p>
+        <p id="guidanceSubText" class="text-xs text-cyan-300 mt-0.5">Auto-fitting head frame...</p>
       </div>
     </div>
 
-    <!-- Botten-HUD -->
-    <div class="relative z-20 mt-auto px-6 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/90 via-black/50 to-transparent">
-      <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
-        <img id="camThumbFront" alt="Front" class="hidden w-full h-full object-cover" />
-        <span id="camThumbFrontTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">1.<br/>FRONT</span>
+    <!-- Bottom camera controls -->
+    <div class="relative z-20 mt-auto px-6 pb-6 pt-3 flex items-center justify-between bg-gradient-to-t from-black/95 via-black/60 to-transparent">
+      <div class="w-13 h-17 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
+        <img id="camThumbFront" alt="Front" class="hidden w-full h-full object-cover rounded-lg" />
+        <span id="camThumbFrontTxt" class="text-[10px] font-mono font-bold text-zinc-300 text-center leading-tight">1.<br/>FRONT</span>
       </div>
 
-      <button id="shutterBtn" type="button" aria-label="Ta bild" class="w-20 h-20 rounded-full p-1.5 border-4 border-white/90 bg-white/10 active:scale-90 transition flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.25)]">
+      <button id="shutterBtn" type="button" aria-label="Capture photo" class="w-22 h-22 rounded-full p-1.5 border-4 border-white bg-white/15 active:scale-90 transition flex items-center justify-center shadow-[0_0_35px_rgba(255,255,255,0.3)]">
         <div id="shutterInner" class="w-full h-full rounded-full bg-white transition"></div>
       </button>
 
-      <div class="w-12 h-16 rounded-xl overflow-hidden border border-white/25 bg-black/60 flex items-center justify-center">
-        <img id="camThumbProfile" alt="Profil" class="hidden w-full h-full object-cover" />
-        <span id="camThumbProfileTxt" class="text-[9px] font-mono text-zinc-400 text-center leading-tight">2.<br/>90°</span>
+      <div class="w-13 h-17 rounded-xl overflow-hidden border border-white/30 bg-black/70 flex items-center justify-center px-2 py-2">
+        <img id="camThumbProfile" alt="Profile" class="hidden w-full h-full object-cover rounded-lg" />
+        <span id="camThumbProfileTxt" class="text-[10px] font-mono font-bold text-zinc-300 text-center leading-tight">2.<br/>90°</span>
       </div>
     </div>
   </section>
 
 
   <!-- =========================================================
-       SKÄRM 3: HELSKÄRMSANALYS (UTAN ATT SCROLLA NER)
+       SCREEN 3: FULLSCREEN ANALYSIS (NO SCROLL)
   ========================================================== -->
   <section id="screenResults" class="screen hidden-screen justify-between px-4 py-3 bg-[#06070c]">
+    <!-- Top action bar with large buttons -->
     <div class="flex items-center justify-between gap-2">
-      <button id="rescanBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 text-white border border-white/10 active:scale-95">
-        ↻ Ny skanning
+      <button id="rescanBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-white/12 hover:bg-white/18 text-white border border-white/15 active:scale-95">
+        ↻ New Scan
       </button>
-      <span id="resSourceTag" class="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-violet-500/15 text-violet-200 border border-violet-500/30 truncate">
-        Gemini AI
-      </span>
-      <button id="resGeminiBtn" type="button" class="px-2.5 py-1.5 rounded-xl text-xs font-mono bg-white/5 text-zinc-300 border border-white/10 active:scale-95">
-        AI-nyckel
+
+      <button id="saveScanBtn" type="button" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition">
+        💾 Save Scan
+      </button>
+
+      <button id="resSavedListBtn" type="button" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-cyan-500/15 text-cyan-200 border border-cyan-400/35 active:scale-95">
+        Saved (<span id="resSavedCount">0</span>)
       </button>
     </div>
 
-    <div class="rounded-3xl p-3.5 bg-card border border-white/10 space-y-2.5 shadow-xl">
+    <!-- Rank & Advanced Biometrics Card -->
+    <div class="rounded-3xl p-3.5 bg-card border border-white/15 space-y-2 shadow-xl">
       <div class="flex items-center justify-between gap-2">
         <div>
-          <span id="resUserHeader" class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">Strikt Kalibrerad Rank</span>
-          <div class="flex items-baseline gap-2">
+          <div class="flex items-center gap-1.5">
+            <span id="resUserHeader" class="text-[10px] font-mono uppercase tracking-wider text-zinc-400">STRICT PSL</span>
+            <span id="resSourceTag" class="px-2 py-0.5 rounded text-[9px] font-mono bg-violet-500/20 text-violet-200 border border-violet-500/30 truncate max-w-[140px]">v4 AI</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-0.5">
             <h2 id="resRankName" class="text-3xl font-black tracking-tight text-white">MTN</h2>
             <span id="resPslScore" class="font-mono text-sm font-bold text-cyan-300">4.7 PSL</span>
           </div>
-          <p id="resPotential" class="text-[11px] text-emerald-300 font-medium">Max potential: HTN (5.5 PSL)</p>
+          <p id="resPotential" class="text-[11px] text-emerald-300 font-semibold">Ceiling: HTN (5.5 PSL)</p>
         </div>
 
         <div class="flex items-center gap-1.5 shrink-0">
-          <img id="resImgFront" alt="Framsida" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
-          <img id="resImgProfile" alt="Profil" class="w-11 h-14 rounded-xl object-cover border border-white/15" />
+          <img id="resImgFront" alt="Front" class="w-11 h-14 rounded-xl object-cover border border-white/20" />
+          <img id="resImgProfile" alt="Profile" class="w-11 h-14 rounded-xl object-cover border border-white/20" />
         </div>
       </div>
 
+      <!-- PSL Ladder: Sub-3 to True Adam -->
       <div class="space-y-1">
         <div class="flex justify-between text-[9px] font-mono text-zinc-400">
           <span>Sub-3</span>
@@ -355,69 +379,101 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-2 pt-0.5 text-center">
-        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
-          <span class="text-[9px] font-mono text-zinc-400 block">GONIAL (90°)</span>
-          <span id="resGonial" class="text-xs font-bold font-mono text-white">123°</span>
+      <!-- 4 Advanced Biometrics -->
+      <div class="grid grid-cols-4 gap-1.5 pt-0.5 text-center">
+        <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
+          <span class="text-[8px] font-mono text-zinc-400 block">GONIAL</span>
+          <span id="resGonial" class="text-xs font-bold font-mono text-white">124°</span>
         </div>
-        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
-          <span class="text-[9px] font-mono text-zinc-400 block">E-LINE PROFIL</span>
-          <span id="resEline" class="text-xs font-bold font-mono text-cyan-300">Neutral</span>
+        <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
+          <span class="text-[8px] font-mono text-zinc-400 block">E-LINE</span>
+          <span id="resEline" class="text-[11px] font-bold font-mono text-cyan-300 truncate block">Neutral</span>
         </div>
-        <div class="rounded-xl py-1.5 px-2 bg-surface border border-white/5">
-          <span class="text-[9px] font-mono text-zinc-400 block">SYMMETRI</span>
+        <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
+          <span class="text-[8px] font-mono text-zinc-400 block">fWHR</span>
+          <span id="resFwhr" class="text-xs font-bold font-mono text-violet-300">1.82</span>
+        </div>
+        <div class="rounded-xl py-1.5 px-1 bg-surface border border-white/10">
+          <span class="text-[8px] font-mono text-zinc-400 block">SYMMETRY</span>
           <span id="resSymmetry" class="text-xs font-bold font-mono text-emerald-300">89%</span>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-surface border border-white/10">
-      <button id="tabMetricsBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition">
-        Delbetyg &amp; Dom
+    <!-- Large Tabs -->
+    <div class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-surface border border-white/15">
+      <button id="tabMetricsBtn" type="button" class="py-2 rounded-xl text-xs font-extrabold bg-violet-600 text-white transition">
+        Scores &amp; Verdict
       </button>
-      <button id="tabTrainBtn" type="button" class="py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition">
-        Träna på &amp; Rutin
+      <button id="tabTrainBtn" type="button" class="py-2 rounded-xl text-xs font-extrabold text-zinc-300 hover:text-white transition">
+        Fixes &amp; Routine
       </button>
     </div>
 
-    <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-2">
-      <div id="resMetricsList" class="space-y-1.5"></div>
+    <!-- Panel A: Detailed Sub-scores + Verdict -->
+    <div id="panelMetrics" class="flex-1 min-h-0 flex flex-col justify-between gap-1.5">
+      <div id="resMetricsList" class="space-y-1"></div>
       <div class="rounded-2xl p-2.5 bg-surface border border-white/10">
         <p id="resVerdictText" class="text-[11px] text-zinc-200 leading-snug"></p>
       </div>
     </div>
 
-    <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-2">
-      <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/25 space-y-1">
-        <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Högst prioritet att fixa:</span>
+    <!-- Panel B: Priority Fixes + Daily Routine -->
+    <div id="panelTrain" class="hidden flex-1 min-h-0 flex flex-col justify-between gap-1.5">
+      <div class="rounded-2xl p-2.5 bg-surface border border-cyan-500/30 space-y-1">
+        <span class="text-[10px] font-mono uppercase text-cyan-300 font-bold">Top Areas to Improve:</span>
         <ul id="resWeaknessesList" class="space-y-1 text-[11px] text-zinc-200 leading-snug"></ul>
       </div>
 
-      <div id="compactRoutineList" class="space-y-1.5"></div>
+      <div id="compactRoutineList" class="space-y-1"></div>
     </div>
   </section>
 
 
   <!-- =========================================================
-       MODAL: GEMINI API-NYCKEL
+       MODAL: SAVED SCANS HISTORY
+  ========================================================== -->
+  <div id="savedModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md max-h-[82dvh] rounded-3xl bg-card border border-white/15 p-5 flex flex-col gap-3 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-extrabold text-white">Saved Scans (<span id="modalSavedCount">0</span>)</h3>
+        <button id="closeSavedModalBtn" type="button" class="w-9 h-9 rounded-full bg-white/10 text-white font-bold text-sm active:scale-95">✕</button>
+      </div>
+
+      <div id="savedScansList" class="flex-1 overflow-y-auto space-y-2 pr-0.5"></div>
+
+      <div class="flex gap-2 pt-1">
+        <button id="clearAllSavedBtn" type="button" class="px-4 py-3 rounded-2xl text-xs font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30 active:scale-95">
+          Clear All
+        </button>
+        <button id="doneSavedModalBtn" type="button" class="flex-1 py-3 rounded-2xl text-xs font-extrabold bg-violet-600 text-white active:scale-95">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       MODAL: GEMINI API KEY
   ========================================================== -->
   <div id="geminiModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="w-full max-w-sm rounded-3xl bg-card border border-white/15 p-5 space-y-3.5 shadow-2xl">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-white">Gemini AI-nyckel</h3>
-        <button id="closeGeminiModalBtn" type="button" class="w-7 h-7 rounded-full bg-white/10 text-zinc-300 text-xs">✕</button>
+        <h3 class="text-base font-extrabold text-white">Gemini AI Settings (v4)</h3>
+        <button id="closeGeminiModalBtn" type="button" class="w-9 h-9 rounded-full bg-white/10 text-white font-bold text-sm active:scale-95">✕</button>
       </div>
       <p class="text-xs text-zinc-400 leading-relaxed">
-        Din API-nyckel är redan förifylld för alla användare. Du kan byta den här vid behov.
+        Default API key is preloaded for all users. You can update it below anytime.
       </p>
-      <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
-      <select id="geminiModelInput" class="w-full px-3 py-2.5 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
-        <option value="gemini-2.5-flash">gemini-2.5-flash (Snabbast)</option>
-        <option value="gemini-2.5-pro">gemini-2.5-pro (Mest noggrann)</option>
+      <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
+      <select id="geminiModelInput" class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
+        <option value="gemini-2.5-flash">gemini-2.5-flash (Fast)</option>
+        <option value="gemini-2.5-pro">gemini-2.5-pro (Deepest)</option>
       </select>
       <div class="flex gap-2 pt-1">
-        <button id="resetDefaultKeyBtn" type="button" class="px-3 py-2.5 rounded-xl text-xs bg-white/5 text-zinc-300 border border-white/10">Standardnyckel</button>
-        <button id="saveGeminiBtn" type="button" class="flex-1 py-2.5 rounded-xl text-xs font-bold bg-violet-600 text-white">Spara</button>
+        <button id="resetDefaultKeyBtn" type="button" class="px-3.5 py-3 rounded-xl text-xs font-bold bg-white/10 text-zinc-200 border border-white/10 active:scale-95">Default</button>
+        <button id="saveGeminiBtn" type="button" class="flex-1 py-3 rounded-xl text-xs font-extrabold bg-violet-600 text-white active:scale-95">Save</button>
       </div>
     </div>
   </div>
@@ -427,11 +483,13 @@
 
   <script>
     (function () {
+      const APP_VERSION = 'v4';
       const APP_PASSWORD = 'bradar';
       const DEFAULT_GEMINI_KEY = 'AQ.Ab8RN6JadGBmNKfESpjeL3JJBXeqpZIGwWT8Jota5MjPynE-uQ';
-      const STORAGE_GEMINI = 'aesthetix_strict_gemini_v3';
-      const STORAGE_ROUTINE = 'aesthetix_strict_routine_v3';
-      const STORAGE_AUTH = 'aesthetix_user_session_v1';
+      const STORAGE_GEMINI = 'aesthetix_v4_gemini';
+      const STORAGE_ROUTINE = 'aesthetix_v4_routine';
+      const STORAGE_AUTH = 'aesthetix_v4_session';
+      const STORAGE_SAVED = 'aesthetix_v4_saved_scans';
 
       const PSL_LEVELS = [
         { name: 'Sub-3', min: 1.0, max: 2.4, color: 'bg-rose-600' },
@@ -445,10 +503,10 @@
       ];
 
       const ROUTINE_ITEMS = [
-        { id: 'bf', text: 'Sänk kroppsfett (10–14%) & minska salt för skarpare käklinje', done: false },
-        { id: 'posture', text: 'Chin tucks & rak hållning (förbättrar gonialvinkel & E-line)', done: false },
-        { id: 'skin', text: 'Hudvård: Rengöring, fuktkräm, retinol/niacinamid & SPF', done: false },
-        { id: 'brows', text: 'Grooming: Forma ögonbryn, frisyr efter ansiktsform & sömn 8h', done: false }
+        { id: 'bf', text: 'Lower body fat (10–14%) & cut excess sodium for sharper jaw', done: false },
+        { id: 'posture', text: 'Chin tucks & upright neck posture (gonial & E-line)', done: false },
+        { id: 'skin', text: 'Skincare: Cleanser, moisturizer, retinoid/niacinamide & SPF', done: false },
+        { id: 'groom', text: 'Eyebrows, hair framing for face shape & 8h sleep', done: false }
       ];
 
       const state = {
@@ -457,6 +515,8 @@
         flashOn: true,
         isCapturing: false,
         photos: { front: null, profile: null },
+        currentReport: null,
+        savedScans: [],
         stream: null,
         trackTimer: null,
         gemini: { apiKey: DEFAULT_GEMINI_KEY, model: 'gemini-2.5-flash' },
@@ -476,8 +536,12 @@
         screenResults: document.getElementById('screenResults'),
         startScanFlowBtn: document.getElementById('startScanFlowBtn'),
         quickDemoStartBtn: document.getElementById('quickDemoStartBtn'),
+        startSavedFromHomeBtn: document.getElementById('startSavedFromHomeBtn'),
+        openSavedBtn: document.getElementById('openSavedBtn'),
+        savedCountBadge: document.getElementById('savedCountBadge'),
+        resSavedCount: document.getElementById('resSavedCount'),
+        modalSavedCount: document.getElementById('modalSavedCount'),
         openGeminiBtn: document.getElementById('openGeminiBtn'),
-        resGeminiBtn: document.getElementById('resGeminiBtn'),
         geminiStatusDot: document.getElementById('geminiStatusDot'),
         liveVideo: document.getElementById('liveVideo'),
         ringLightLayer: document.getElementById('ringLightLayer'),
@@ -502,8 +566,9 @@
         cancelCameraBtn: document.getElementById('cancelCameraBtn'),
         analyzingOverlay: document.getElementById('analyzingOverlay'),
         analyzingTitle: document.getElementById('analyzingTitle'),
-        analyzingSub: document.getElementById('analyzingSub'),
         rescanBtn: document.getElementById('rescanBtn'),
+        saveScanBtn: document.getElementById('saveScanBtn'),
+        resSavedListBtn: document.getElementById('resSavedListBtn'),
         resSourceTag: document.getElementById('resSourceTag'),
         resUserHeader: document.getElementById('resUserHeader'),
         resRankName: document.getElementById('resRankName'),
@@ -513,6 +578,7 @@
         resImgProfile: document.getElementById('resImgProfile'),
         resGonial: document.getElementById('resGonial'),
         resEline: document.getElementById('resEline'),
+        resFwhr: document.getElementById('resFwhr'),
         resSymmetry: document.getElementById('resSymmetry'),
         tabMetricsBtn: document.getElementById('tabMetricsBtn'),
         tabTrainBtn: document.getElementById('tabTrainBtn'),
@@ -522,6 +588,11 @@
         resVerdictText: document.getElementById('resVerdictText'),
         resWeaknessesList: document.getElementById('resWeaknessesList'),
         compactRoutineList: document.getElementById('compactRoutineList'),
+        savedModal: document.getElementById('savedModal'),
+        closeSavedModalBtn: document.getElementById('closeSavedModalBtn'),
+        doneSavedModalBtn: document.getElementById('doneSavedModalBtn'),
+        clearAllSavedBtn: document.getElementById('clearAllSavedBtn'),
+        savedScansList: document.getElementById('savedScansList'),
         geminiModal: document.getElementById('geminiModal'),
         closeGeminiModalBtn: document.getElementById('closeGeminiModalBtn'),
         geminiKeyInput: document.getElementById('geminiKeyInput'),
@@ -543,10 +614,30 @@
         el.screenResults.classList.toggle('hidden-screen', name !== 'results');
       }
 
+      function updateSavedBadges() {
+        const n = state.savedScans.length;
+        el.savedCountBadge.textContent = String(n);
+        el.resSavedCount.textContent = String(n);
+        el.modalSavedCount.textContent = String(n);
+      }
+
+      function saveScansToStorage() {
+        try {
+          localStorage.setItem(STORAGE_SAVED, JSON.stringify(state.savedScans.slice(0, 20)));
+        } catch (_) {
+          // If quota exceeded, keep latest 6
+          try {
+            state.savedScans = state.savedScans.slice(0, 6);
+            localStorage.setItem(STORAGE_SAVED, JSON.stringify(state.savedScans));
+          } catch (_) {}
+        }
+        updateSavedBadges();
+      }
+
       function setLoggedInUser(username) {
         state.username = username.trim();
         el.welcomeUserTag.textContent = `@${state.username}`;
-        el.resUserHeader.textContent = `${state.username.toUpperCase()} • STRIKT RANK`;
+        el.resUserHeader.textContent = `${state.username.toUpperCase()} • ${APP_VERSION}`;
         try {
           localStorage.setItem(STORAGE_AUTH, JSON.stringify({ username: state.username }));
         } catch (_) {}
@@ -576,8 +667,14 @@
           }
         } catch (_) {}
 
+        try {
+          const s = JSON.parse(localStorage.getItem(STORAGE_SAVED) || '[]');
+          if (Array.isArray(s)) state.savedScans = s;
+        } catch (_) {}
+
         updateGeminiDot();
         updateFlashUI();
+        updateSavedBadges();
 
         try {
           const auth = JSON.parse(localStorage.getItem(STORAGE_AUTH) || 'null');
@@ -597,13 +694,13 @@
 
       function updateFlashUI() {
         if (state.flashOn) {
-          el.flashToggleBtn.textContent = '⚡ Blixt: PÅ';
-          el.flashToggleBtn.className = 'px-2.5 py-1.5 rounded-full text-xs font-mono font-bold bg-amber-400 text-black border border-amber-200 active:scale-95 transition';
-          el.ringLightLayer.classList.add('ringlight-active');
+          el.flashToggleBtn.textContent = '⚡ FLASH ON';
+          el.flashToggleBtn.className = 'px-3 py-2 rounded-2xl text-xs font-mono font-black bg-amber-300 text-black border border-amber-100 shadow-lg active:scale-95 transition';
+          el.ringLightLayer.classList.add('ringlight-strong');
         } else {
-          el.flashToggleBtn.textContent = '⚡ Blixt: AV';
-          el.flashToggleBtn.className = 'px-2.5 py-1.5 rounded-full text-xs font-mono font-semibold bg-black/65 text-zinc-300 border border-white/15 active:scale-95 transition';
-          el.ringLightLayer.classList.remove('ringlight-active');
+          el.flashToggleBtn.textContent = '⚡ FLASH OFF';
+          el.flashToggleBtn.className = 'px-3 py-2 rounded-2xl text-xs font-mono font-bold bg-black/75 text-zinc-300 border border-white/20 active:scale-95 transition';
+          el.ringLightLayer.classList.remove('ringlight-strong');
         }
       }
 
@@ -612,21 +709,17 @@
         updateFlashUI();
       });
 
-      // =========================================================
-      // LOGIN HANTERING
-      // =========================================================
+      // Login
       el.loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const user = el.loginUsername.value.trim();
         const pass = el.loginPassword.value;
-
         if (!user || pass !== APP_PASSWORD) {
           el.loginError.classList.remove('hidden');
           el.loginPassword.value = '';
           el.loginPassword.focus();
           return;
         }
-
         el.loginError.classList.add('hidden');
         el.loginPassword.value = '';
         setLoggedInUser(user);
@@ -635,18 +728,14 @@
       el.logoutBtn.addEventListener('click', () => {
         stopCameraStream();
         state.username = '';
-        try {
-          localStorage.removeItem(STORAGE_AUTH);
-        } catch (_) {}
+        try { localStorage.removeItem(STORAGE_AUTH); } catch (_) {}
         el.loginUsername.value = '';
         el.loginPassword.value = '';
         el.loginError.classList.add('hidden');
         showScreen('login');
       });
 
-      // =========================================================
-      // KAMERA (VIDVINKEL + SNAPCHAT/TIKTOK SELFIE-BLIXT)
-      // =========================================================
+      // Camera
       async function openCameraFlow() {
         state.step = 'front';
         state.isCapturing = false;
@@ -659,27 +748,22 @@
 
         try {
           if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            throw new Error('Ingen kamera-API');
+            throw new Error('No camera API');
           }
           stopCameraStream();
-          // 1920x1080 ger bredare vidvinkel än stående 1280x1920 på många mobilsensorer
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: 'user',
-              width: { ideal: 1920 },
-              height: { ideal: 1080 }
-            },
+            video: { facingMode: 'user', width: { ideal: 1920 }, height: { ideal: 1080 } },
             audio: false
           });
           state.stream = stream;
           el.liveVideo.srcObject = stream;
           await el.liveVideo.play();
           startAutoHeadTracking();
-        } catch (err) {
+        } catch (_) {
           el.liveVideo.classList.add('hidden');
           el.cameraFallbackBg.classList.remove('hidden');
-          el.guidanceMainText.textContent = 'Kamera nekad eller kräver HTTPS';
-          el.guidanceSubText.textContent = 'Välj bild från kamerarullen nedan';
+          el.guidanceMainText.textContent = 'Camera blocked or HTTPS required';
+          el.guidanceSubText.textContent = 'Select photos from gallery below';
         }
       }
 
@@ -698,22 +782,22 @@
       function updateCameraStepUI() {
         const isFront = state.step === 'front';
         el.pillStep1.className = isFront
-          ? 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500 text-black'
-          : 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300';
+          ? 'px-2.5 py-1 rounded-xl text-xs font-extrabold bg-cyan-400 text-black'
+          : 'px-2.5 py-1 rounded-xl text-xs font-extrabold bg-emerald-500/20 text-emerald-300';
         el.pillStep2.className = !isFront
-          ? 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-violet-500 text-white'
-          : 'px-2 py-0.5 rounded-full text-[11px] font-bold text-zinc-400';
+          ? 'px-2.5 py-1 rounded-xl text-xs font-extrabold bg-violet-500 text-white'
+          : 'px-2.5 py-1 rounded-xl text-xs font-extrabold text-zinc-400';
 
         el.frameFrontSvg.classList.toggle('hidden', !isFront);
         el.frameProfileSvg.classList.toggle('hidden', isFront);
-        el.fallbackStepLabel.textContent = isFront ? '1. Framsida' : '2. Sidoprofil 90°';
+        el.fallbackStepLabel.textContent = isFront ? '1. Front' : '2. 90° Profile';
 
         if (isFront) {
-          el.guidanceMainText.textContent = 'Steg 1: Titta rakt in i kameran';
-          el.guidanceSubText.textContent = 'Vidvinkel aktiv • Håll huvudet i ramen';
+          el.guidanceMainText.textContent = 'Step 1: Look straight into camera';
+          el.guidanceSubText.textContent = 'Wide lens active • Align head in frame';
         } else {
-          el.guidanceMainText.textContent = 'Steg 2: Vrid huvudet 90° åt sidan';
-          el.guidanceSubText.textContent = 'Visa käklinje, näsa och haka i profil';
+          el.guidanceMainText.textContent = 'Step 2: Turn head 90° sideways';
+          el.guidanceSubText.textContent = 'Show jawline, nose & chin in profile';
         }
 
         if (state.photos.front) {
@@ -738,10 +822,8 @@
       function startAutoHeadTracking() {
         const canvas = el.trackCanvas;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        const W = 80;
-        const H = 100;
-        canvas.width = W;
-        canvas.height = H;
+        const W = 80, H = 100;
+        canvas.width = W; canvas.height = H;
 
         const hasFaceDetector = 'FaceDetector' in window;
         const detector = hasFaceDetector ? new window.FaceDetector({ fastMode: true, maxDetectedFaces: 1 }) : null;
@@ -749,10 +831,7 @@
         state.trackTimer = setInterval(async () => {
           if (!state.stream || !el.liveVideo.videoWidth) return;
 
-          let normX = 0.5;
-          let normY = 0.46;
-          let normScale = 1.0;
-          let faceFound = false;
+          let normX = 0.5, normY = 0.46, normScale = 1.0, faceFound = false;
 
           if (detector) {
             try {
@@ -777,10 +856,7 @@
             ctx.restore();
 
             const imgData = ctx.getImageData(0, 0, W, H).data;
-            let sumX = 0;
-            let sumY = 0;
-            let count = 0;
-            let minX = W, maxX = 0, minY = H, maxY = 0;
+            let sumX = 0, sumY = 0, count = 0, minX = W, maxX = 0, minY = H, maxY = 0;
 
             for (let y = 12; y < H - 12; y++) {
               for (let x = 10; x < W - 10; x++) {
@@ -788,13 +864,9 @@
                 const r = imgData[i], g = imgData[i + 1], b = imgData[i + 2];
                 const isSkin = r > 75 && g > 40 && b > 25 && r > g && r > b && Math.abs(r - g) > 12;
                 if (isSkin) {
-                  sumX += x;
-                  sumY += y;
-                  count++;
-                  if (x < minX) minX = x;
-                  if (x > maxX) maxX = x;
-                  if (y < minY) minY = y;
-                  if (y > maxY) maxY = y;
+                  sumX += x; sumY += y; count++;
+                  if (x < minX) minX = x; if (x > maxX) maxX = x;
+                  if (y < minY) minY = y; if (y > maxY) maxY = y;
                 }
               }
             }
@@ -802,8 +874,7 @@
             if (count > 140) {
               normX = (sumX / count) / W;
               normY = (sumY / count) / H;
-              const spanW = (maxX - minX) / W;
-              normScale = clamp(spanW * 1.85, 0.82, 1.28);
+              normScale = clamp(((maxX - minX) / W) * 1.85, 0.82, 1.28);
               faceFound = true;
             }
           }
@@ -813,25 +884,22 @@
           el.dynamicHeadFrame.style.transform = `translate(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px) scale(${normScale.toFixed(2)})`;
 
           if (!faceFound) {
-            el.guidanceSubText.textContent = 'Placera ansiktet i bra ljus framför kameran';
-            el.frameFrontSvg.classList.replace('text-emerald-400', 'text-cyan-300');
+            el.guidanceSubText.textContent = 'Position face in good light';
           } else if (normScale < 0.84) {
-            el.guidanceSubText.textContent = 'Flytta kameran lite närmare ansiktet';
+            el.guidanceSubText.textContent = 'Move slightly closer';
           } else if (normScale > 1.24) {
-            el.guidanceSubText.textContent = 'Håll kameran lite längre bort';
+            el.guidanceSubText.textContent = 'Hold slightly further back';
           } else if (Math.abs(normX - 0.5) > 0.16) {
-            el.guidanceSubText.textContent = normX < 0.5 ? 'Centrera huvudet lite åt höger' : 'Centrera huvudet lite åt vänster';
+            el.guidanceSubText.textContent = normX < 0.5 ? 'Shift head slightly right' : 'Shift head slightly left';
           } else {
             el.guidanceSubText.textContent = state.step === 'front'
-              ? '✓ Perfekt position — tryck på knappen för Framsida'
-              : '✓ Perfekt 90° vinkel — tryck för att starta AI-analys';
-            el.frameFrontSvg.classList.replace('text-cyan-300', 'text-emerald-400');
+              ? '✓ Aligned — tap shutter for Front'
+              : '✓ 90° aligned — tap shutter to analyze';
           }
         }, 160);
       }
 
-      async function triggerSelfieFlash() {
-        // Försök även aktivera torch om drivrutinen tillåter det
+      async function triggerStrongSelfieFlash() {
         let torchTrack = null;
         if (state.stream) {
           const track = state.stream.getVideoTracks()[0];
@@ -843,12 +911,9 @@
             } catch (_) {}
           }
         }
-
-        // Snapchat/TikTok-metod: intensiv skärmblixt som lyser upp ansiktet framför selfiekameran
         el.screenFlashOverlay.classList.add('flash-pop');
-        await new Promise((r) => setTimeout(r, 220));
+        await new Promise((r) => setTimeout(r, 280));
         el.screenFlashOverlay.classList.remove('flash-pop');
-
         if (torchTrack) {
           try { await torchTrack.applyConstraints({ advanced: [{ torch: false }] }); } catch (_) {}
         }
@@ -857,12 +922,10 @@
       async function captureCurrentFrame() {
         if (state.isCapturing || !state.stream || !el.liveVideo.videoWidth) return;
         state.isCapturing = true;
-
         try {
           if (state.flashOn) {
-            await triggerSelfieFlash();
+            await triggerStrongSelfieFlash();
           }
-
           const canvas = el.hiddenCanvas;
           const vw = el.liveVideo.videoWidth;
           const vh = el.liveVideo.videoHeight;
@@ -872,17 +935,14 @@
             if (w >= h) { h = Math.round((h * maxSide) / w); w = maxSide; }
             else { w = Math.round((w * maxSide) / h); h = maxSide; }
           }
-          canvas.width = w;
-          canvas.height = h;
+          canvas.width = w; canvas.height = h;
           const ctx = canvas.getContext('2d');
           ctx.save();
           ctx.translate(w, 0);
           ctx.scale(-1, 1);
           ctx.drawImage(el.liveVideo, 0, 0, w, h);
           ctx.restore();
-
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
-          handleCapturedPhoto(dataUrl);
+          handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
         } finally {
           state.isCapturing = false;
         }
@@ -902,8 +962,7 @@
               else { w = Math.round((w * maxSide) / h); h = maxSide; }
             }
             const canvas = el.hiddenCanvas;
-            canvas.width = w;
-            canvas.height = h;
+            canvas.width = w; canvas.height = h;
             canvas.getContext('2d').drawImage(img, 0, 0, w, h);
             handleCapturedPhoto(canvas.toDataURL('image/jpeg', 0.88));
           };
@@ -925,9 +984,7 @@
         }
       }
 
-      // =========================================================
-      // STRIKT PSL-BEDÖMNING
-      // =========================================================
+      // Advanced Strict PSL Engine (v4)
       function mapStrictPsl(psl) {
         const val = clamp(Number(psl) || 4.2, 1.0, 8.0);
         let idx = PSL_LEVELS.findIndex((t) => val >= t.min && val <= t.max);
@@ -939,17 +996,15 @@
         return new Promise((resolve) => {
           const img = new Image();
           img.onload = () => {
-            const W = 90, H = 112;
+            const W = 96, H = 120;
             const canvas = el.hiddenCanvas;
-            canvas.width = W;
-            canvas.height = H;
+            canvas.width = W; canvas.height = H;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, W, H);
             const { data } = ctx.getImageData(0, 0, W, H);
 
             const lum = new Float32Array(W * H);
-            let sum = 0, sqSum = 0, edges = 0, symDiff = 0, symN = 0;
-            let hash = 2166136261;
+            let sum = 0, sqSum = 0, edges = 0, symDiff = 0, symN = 0, hash = 2166136261;
 
             for (let i = 0; i < W * H; i++) {
               const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
@@ -963,16 +1018,16 @@
               }
             }
 
-            for (let y = 20; y < H - 18; y++) {
-              for (let x = 20; x < W - 20; x++) {
+            for (let y = 22; y < H - 20; y++) {
+              for (let x = 22; x < W - 22; x++) {
                 const idx = y * W + x;
                 edges += (Math.abs(lum[idx + 1] - lum[idx - 1]) + Math.abs(lum[idx + W] - lum[idx - W])) * 0.5;
               }
             }
 
             const half = Math.floor(W / 2);
-            for (let y = 22; y < H - 18; y++) {
-              for (let x = 18; x < half - 1; x++) {
+            for (let y = 24; y < H - 20; y++) {
+              for (let x = 20; x < half - 1; x++) {
                 symDiff += Math.abs(lum[y * W + x] - lum[y * W + (W - 1 - x)]);
                 symN++;
               }
@@ -980,7 +1035,7 @@
 
             const mean = sum / (W * H);
             const std = Math.sqrt(Math.max(0, sqSum / (W * H) - mean * mean));
-            const edgeAvg = edges / ((W - 40) * (H - 38));
+            const edgeAvg = edges / ((W - 44) * (H - 42));
             const symDelta = symN ? symDiff / symN : 28;
 
             resolve({
@@ -995,13 +1050,13 @@
         });
       }
 
-      function computeStrictLocalReport(frontBio, profileBio, isDemo) {
+      function computeAdvancedLocalReport(frontBio, profileBio, isDemo) {
         const s = ((frontBio.seed * 17 + profileBio.seed) % 1000) / 1000;
         const micro = (s - 0.5) * 0.7;
 
         const jawline = Number(clamp(profileBio.definition * 0.55 + profileBio.boneContrast * 0.45 + micro, 2.6, 8.4).toFixed(1));
-        const cheekbones = Number(clamp(frontBio.boneContrast * 0.55 + frontBio.definition * 0.45 + micro * 0.8, 2.8, 8.3).toFixed(1));
         const eyeArea = Number(clamp(frontBio.definition * 0.5 + (frontBio.symmetryPct / 12) * 0.5 + micro * 0.6, 2.8, 8.2).toFixed(1));
+        const cheekbones = Number(clamp(frontBio.boneContrast * 0.55 + frontBio.definition * 0.45 + micro * 0.8, 2.8, 8.3).toFixed(1));
         const symmetryScore = Number(clamp((frontBio.symmetryPct - 52) / 5.2, 2.5, 8.6).toFixed(1));
         const skin = Number(clamp(frontBio.lighting * 0.6 + (8.2 - Math.abs(frontBio.definition - 5.4) * 0.5) * 0.4, 2.8, 8.4).toFixed(1));
 
@@ -1012,74 +1067,81 @@
         const maxPotTier = mapStrictPsl(maxPotPsl).tier;
 
         const gonial = Math.round(clamp(129 - (jawline - 4.5) * 2.6 + (s - 0.5) * 3, 114, 138));
-        const eline = jawline >= 6.2 ? 'Skarp projektion' : jawline >= 4.7 ? 'Neutral / lätt mjuk' : 'Tillbakadragen';
+        const eline = jawline >= 6.2 ? 'Forward' : jawline >= 4.7 ? 'Neutral' : 'Recessed';
+        const fwhr = Number(clamp(1.72 + (frontBio.symmetryPct - 75) * 0.008 + (s - 0.5) * 0.12, 1.58, 2.08).toFixed(2));
 
         const metrics = [
-          { name: 'Käklinje & Gonial (90°)', score: jawline, fix: 'Sänk kroppsfett, minska vätskeansamling & träna nackhållning.' },
-          { name: 'Ögonområde & Canthal Tilt', score: eyeArea, fix: 'Tjockare/mörkare ögonbryn, 8h sömn & minska mörka ringar.' },
-          { name: 'Kindben & Maxilla', score: cheekbones, fix: 'Lägre bf% ger skarpare skuggning under zygomaticus.' },
-          { name: 'Bilateral Symmetri', score: symmetryScore, fix: 'Sov på rygg, tugga jämnt på båda sidor & anpassa frisyr.' },
-          { name: 'Hudkvalitet & Lyster', score: skin, fix: 'Daglig rengöring, fukt, retinol/niacinamid & solskydd.' }
+          { name: 'Jawline & Gonial (90°)', score: jawline, fix: 'Lower body fat %, reduce bloat & train neck posture.' },
+          { name: 'Eye Area & Brow Frame', score: eyeArea, fix: 'Grow/groom brows, 8h sleep & reduce dark circles.' },
+          { name: 'Cheekbones & Maxilla', score: cheekbones, fix: 'Leaner face definition sharpens zygomatic shadow.' },
+          { name: 'Bilateral Symmetry', score: symmetryScore, fix: 'Back sleeping, even chewing & balanced hair framing.' },
+          { name: 'Skin Quality & Clarity', score: skin, fix: 'Daily cleanser, moisturizer, retinoid & sunscreen.' }
         ];
 
         const weakest = [...metrics].sort((a, b) => a.score - b.score).slice(0, 3);
 
         return {
-          source: isDemo ? 'Demo • Strict PSL' : 'Biometrisk Pixelmotor (Strict)',
+          id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+          source: isDemo ? 'v4 Demo • Strict PSL' : 'v4 Biometric Engine',
           rank: mapped.tier.name,
           rankIdx: mapped.idx,
           psl: mapped.psl,
-          potential: `Realistisk maxpotential: ${maxPotTier.name} (${maxPotPsl.toFixed(1)} PSL)`,
+          potential: `Ceiling: ${maxPotTier.name} (${maxPotPsl.toFixed(1)} PSL)`,
           gonial: `${gonial}°`,
           eline,
+          fwhr: fwhr.toFixed(2),
           symmetry: `${frontBio.symmetryPct}%`,
           metrics,
-          verdict: `Strikt bedömning av framsida och 90° sidoprofil ger ${mapped.tier.name} (${mapped.psl} PSL). Största flaskhalsarna just nu är ${weakest[0].name.toLowerCase()} (${weakest[0].score}/10) och ${weakest[1].name.toLowerCase()} (${weakest[1].score}/10).`,
-          weaknesses: weakest.map((w) => `<strong>${w.name} (${w.score}/10):</strong> ${w.fix}`)
+          verdict: `Strict v4 front + 90° profile evaluation places you at ${mapped.tier.name} (${mapped.psl} PSL) with fWHR ${fwhr.toFixed(2)}. Primary bottlenecks: ${weakest[0].name.toLowerCase()} (${weakest[0].score}/10) and ${weakest[1].name.toLowerCase()} (${weakest[1].score}/10).`,
+          weaknesses: weakest.map((w) => `<strong>${w.name} (${w.score}/10):</strong> ${w.fix}`),
+          frontPhoto: state.photos.front,
+          profilePhoto: state.photos.profile
         };
       }
 
-      async function callStrictGeminiAI(frontUrl, profileUrl) {
+      async function callAdvancedGeminiAI(frontUrl, profileUrl) {
         const key = state.gemini.apiKey.trim();
         const model = state.gemini.model || 'gemini-2.5-flash';
         const frontB64 = frontUrl.split(',')[1];
         const profB64 = profileUrl.split(',')[1];
 
-        const strictPrompt = `Du är en extremt strikt, objektiv biometrisk PSL-bedömare på svenska.
-Analysera de 2 bilderna noggrant:
-Bild 1: FRAMSIDA (symmetri, IPD, canthal tilt, ögonbrynsram, kindben, hudkvalitet, ansiktsbredd/fWHR).
-Bild 2: SIDOPROFIL 90° (käklinjens skärpa, gonialvinkel, hakans projektion, Ricketts E-line, maxillaprojektion).
+        const prompt = `You are an ultra-strict, objective v4 biometric PSL facial aesthetics analyst. Respond strictly in English.
+Analyze both images carefully:
+Image 1: FRONTAL VIEW (symmetry, IPD, canthal tilt, brow ridge/eyebrows, cheekbones, skin quality, facial width-to-height ratio fWHR).
+Image 2: 90° SIDE PROFILE (mandibular definition, gonial angle, chin projection, Ricketts E-line balance, maxillary projection).
 
-VIKTIG KALIBRERING (VAR HÅRD OCH ÄRLIG — DELA INTE UT HÖGA BETYG LÄTTVINDIGT):
-- Sub-3 (1.0–2.4 PSL): Kraftiga avvikelser/asymmetri.
-- Sub-5 (2.5–3.4 PSL): Tydligt under medel.
-- LTN (3.5–4.3 PSL): Något under medel (mjuk käklinje, svag ögonram eller sämre hud).
-- MTN (4.4–5.2 PSL): Normalt genomsnitt (hit hör majoriteten av vanliga personer).
-- HTN (5.3–6.0 PSL): Tydligt över medel, skarp benstruktur och bra harmoni (topp 10–15%).
-- Chadlite (6.1–6.8 PSL): Mycket sällsynt, stark käklinje, positiva ögonvinklar och hög dimorfism (topp 2–4%).
-- Chad (6.9–7.5 PSL): Modellnivå (topp 0.5%).
-- True Adam (7.6–8.0 PSL): Praktiskt taget ouppnåelig perfektion.
+STRICT PSL CALIBRATION (DO NOT INFLATE RATINGS):
+- Sub-3 (1.0–2.4 PSL): Severe disharmony/asymmetry.
+- Sub-5 (2.5–3.4 PSL): Clearly below average.
+- LTN (3.5–4.3 PSL): Below average (soft jaw, weak eye area, or poor skin).
+- MTN (4.4–5.2 PSL): Average baseline (most everyday people).
+- HTN (5.3–6.0 PSL): Clearly above average with crisp bone structure (top 10–15%).
+- Chadlite (6.1–6.8 PSL): Rare, strong jaw & eye tilt, high dimorphism (top 2–4%).
+- Chad (6.9–7.5 PSL): Model tier (top 0.5%).
+- True Adam (7.6–8.0 PSL): Near-impossible aesthetic ideal.
 
-Svara ENDAST med giltig JSON i exakt detta format:
+Return ONLY valid JSON in this exact format:
 {
   "rank": "MTN",
   "psl": 4.6,
-  "potential": "Realistisk maxpotential: HTN (5.5 PSL)",
+  "potential": "Ceiling: HTN (5.5 PSL)",
   "gonial": "124°",
-  "eline": "Neutral / lätt mjuk",
+  "eline": "Neutral",
+  "fwhr": "1.82",
   "symmetry": "88%",
   "metrics": [
-    { "name": "Käklinje & Gonial (90°)", "score": 4.8, "fix": "Konkret åtgärd på svenska" },
-    { "name": "Ögonområde & Canthal Tilt", "score": 4.9, "fix": "Konkret åtgärd på svenska" },
-    { "name": "Kindben & Maxilla", "score": 4.6, "fix": "Konkret åtgärd på svenska" },
-    { "name": "Bilateral Symmetri", "score": 5.1, "fix": "Konkret åtgärd på svenska" },
-    { "name": "Hudkvalitet & Lyster", "score": 4.7, "fix": "Konkret åtgärd på svenska" }
+    { "name": "Jawline & Gonial (90°)", "score": 4.8, "fix": "Concrete actionable fix in English" },
+    { "name": "Eye Area & Brow Frame", "score": 4.9, "fix": "Concrete actionable fix in English" },
+    { "name": "Cheekbones & Maxilla", "score": 4.6, "fix": "Concrete actionable fix in English" },
+    { "name": "Bilateral Symmetry", "score": 5.1, "fix": "Concrete actionable fix in English" },
+    { "name": "Skin Quality & Clarity", "score": 4.7, "fix": "Concrete actionable fix in English" }
   ],
-  "verdict": "Ärlig, konkret analys på 2 meningar om styrkor och exakt vad som drar ner betyget.",
+  "verdict": "Direct, objective 2-sentence assessment in English covering strengths and main holding factors.",
   "weaknesses": [
-    "<strong>Svaghet 1:</strong> Exakt vad som bör tränas/förbättras",
-    "<strong>Svaghet 2:</strong> Exakt vad som bör tränas/förbättras",
-    "<strong>Svaghet 3:</strong> Exakt vad som bör tränas/förbättras"
+    "<strong>Priority 1:</strong> Specific improvement action",
+    "<strong>Priority 2:</strong> Specific improvement action",
+    "<strong>Priority 3:</strong> Specific improvement action"
   ]
 }`;
 
@@ -1089,9 +1151,7 @@ Svara ENDAST med giltig JSON i exakt detta format:
           : `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
 
         const headers = { 'Content-Type': 'application/json' };
-        if (isBearerToken) {
-          headers['Authorization'] = `Bearer ${key}`;
-        }
+        if (isBearerToken) headers['Authorization'] = `Bearer ${key}`;
 
         const res = await fetch(url, {
           method: 'POST',
@@ -1099,15 +1159,12 @@ Svara ENDAST med giltig JSON i exakt detta format:
           body: JSON.stringify({
             contents: [{
               parts: [
-                { text: strictPrompt },
+                { text: prompt },
                 { inlineData: { mimeType: 'image/jpeg', data: frontB64 } },
                 { inlineData: { mimeType: 'image/jpeg', data: profB64 } }
               ]
             }],
-            generationConfig: {
-              temperature: 0.25,
-              responseMimeType: 'application/json'
-            }
+            generationConfig: { temperature: 0.25, responseMimeType: 'application/json' }
           })
         });
 
@@ -1118,25 +1175,30 @@ Svara ENDAST med giltig JSON i exakt detta format:
         const mapped = mapStrictPsl(parsed.psl);
 
         return {
-          source: `Gemini AI (${model})`,
+          id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+          source: `v4 Gemini (${model})`,
           rank: parsed.rank || mapped.tier.name,
           rankIdx: mapped.idx,
           psl: mapped.psl,
-          potential: parsed.potential || `Max potential: ${mapStrictPsl(mapped.psl + 0.8).tier.name}`,
+          potential: parsed.potential || `Ceiling: ${mapStrictPsl(mapped.psl + 0.8).tier.name}`,
           gonial: parsed.gonial || '124°',
           eline: parsed.eline || 'Neutral',
+          fwhr: parsed.fwhr || '1.80',
           symmetry: parsed.symmetry || '89%',
           metrics: Array.isArray(parsed.metrics) ? parsed.metrics.slice(0, 5) : [],
           verdict: parsed.verdict || '',
-          weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses.slice(0, 3) : []
+          weaknesses: Array.isArray(parsed.weaknesses) ? parsed.weaknesses.slice(0, 3) : [],
+          frontPhoto: state.photos.front,
+          profilePhoto: state.photos.profile
         };
       }
 
       async function runFullAnalysis(isDemo) {
         el.analyzingOverlay.classList.remove('hidden');
         el.analyzingTitle.textContent = state.gemini.apiKey.trim() && !isDemo
-          ? 'Gemini AI analyserar 2 vinklar...'
-          : 'Kör strikt biometrisk analys...';
+          ? 'v4 Gemini AI analyzing 2 angles...'
+          : 'Running v4 strict biometric scan...';
 
         try {
           const [fBio, pBio] = await Promise.all([
@@ -1147,18 +1209,19 @@ Svara ENDAST med giltig JSON i exakt detta format:
           let report = null;
           if (!isDemo && state.gemini.apiKey.trim()) {
             try {
-              const aiRep = await callStrictGeminiAI(state.photos.front, state.photos.profile);
+              const aiRep = await callAdvancedGeminiAI(state.photos.front, state.photos.profile);
               if (aiRep.metrics.length) report = aiRep;
             } catch (_) {
-              report = computeStrictLocalReport(fBio, pBio, false);
-              report.source = 'Lokal Fallback (Kontrollera AI-nyckel)';
+              report = computeAdvancedLocalReport(fBio, pBio, false);
+              report.source = 'v4 Local Fallback';
             }
           }
 
           if (!report) {
-            report = computeStrictLocalReport(fBio, pBio, isDemo);
+            report = computeAdvancedLocalReport(fBio, pBio, isDemo);
           }
 
+          state.currentReport = report;
           stopCameraStream();
           renderResultsScreen(report);
           showScreen('results');
@@ -1168,16 +1231,21 @@ Svara ENDAST med giltig JSON i exakt detta format:
       }
 
       function renderResultsScreen(rep) {
+        state.currentReport = rep;
         el.resSourceTag.textContent = rep.source;
         el.resRankName.textContent = rep.rank;
-        el.resPslScore.textContent = `${rep.psl.toFixed(1)} PSL`;
+        el.resPslScore.textContent = `${Number(rep.psl).toFixed(1)} PSL`;
         el.resPotential.textContent = rep.potential;
-        el.resImgFront.src = state.photos.front;
-        el.resImgProfile.src = state.photos.profile;
+        el.resImgFront.src = rep.frontPhoto || state.photos.front || '';
+        el.resImgProfile.src = rep.profilePhoto || state.photos.profile || '';
         el.resGonial.textContent = rep.gonial;
         el.resEline.textContent = rep.eline;
+        el.resFwhr.textContent = rep.fwhr || '1.80';
         el.resSymmetry.textContent = rep.symmetry;
         el.resVerdictText.textContent = rep.verdict;
+
+        el.saveScanBtn.textContent = '💾 Save Scan';
+        el.saveScanBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-black shadow-md active:scale-95 transition';
 
         document.querySelectorAll('.psl-bar').forEach((bar, i) => {
           const col = PSL_LEVELS[i]?.color || 'bg-cyan-400';
@@ -1190,9 +1258,9 @@ Svara ENDAST med giltig JSON i exakt detta format:
           const sc = clamp(Number(m.score) || 4.5, 1, 10);
           const pct = clamp(sc * 10, 10, 100);
           return `
-            <div class="rounded-xl px-3 py-2 bg-surface border border-white/10">
-              <div class="flex justify-between text-xs mb-1">
-                <span class="font-semibold text-white">${escapeHtml(m.name)}</span>
+            <div class="rounded-xl px-3 py-1.5 bg-surface border border-white/10">
+              <div class="flex justify-between text-[11px] mb-0.5">
+                <span class="font-bold text-white">${escapeHtml(m.name)}</span>
                 <span class="font-mono font-bold text-cyan-300">${sc.toFixed(1)}/10</span>
               </div>
               <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
@@ -1208,11 +1276,80 @@ Svara ENDAST med giltig JSON i exakt detta format:
 
         renderCompactRoutine();
         switchResultTab('metrics');
+        updateSavedBadges();
       }
+
+      // Saved Scans Modal
+      function saveCurrentScan() {
+        if (!state.currentReport) return;
+        const exists = state.savedScans.some((item) => item.id === state.currentReport.id);
+        if (!exists) {
+          state.savedScans.unshift({ ...state.currentReport });
+          saveScansToStorage();
+        }
+        el.saveScanBtn.textContent = '✓ Saved';
+        el.saveScanBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-extrabold bg-cyan-400 text-black active:scale-95 transition';
+      }
+
+      function openSavedModal() {
+        renderSavedList();
+        el.savedModal.classList.remove('hidden');
+      }
+
+      function renderSavedList() {
+        updateSavedBadges();
+        if (!state.savedScans.length) {
+          el.savedScansList.innerHTML = '<p class="text-xs text-zinc-400 text-center py-8">No saved scans yet. Finish a scan and tap "Save Scan".</p>';
+          return;
+        }
+        el.savedScansList.innerHTML = state.savedScans.map((item) => `
+          <div class="flex items-center justify-between gap-2.5 p-2.5 rounded-2xl bg-surface border border-white/10">
+            <button type="button" data-load-id="${escapeHtml(item.id)}" class="flex items-center gap-2.5 text-left flex-1 min-w-0 active:opacity-80">
+              <img src="${item.frontPhoto || ''}" alt="Scan" class="w-10 h-12 rounded-lg object-cover border border-white/15 shrink-0" />
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm font-black text-white">${escapeHtml(item.rank)}</span>
+                  <span class="text-xs font-mono font-bold text-cyan-300">${Number(item.psl).toFixed(1)} PSL</span>
+                </div>
+                <span class="text-[10px] font-mono text-zinc-400 block truncate">${escapeHtml(item.timestamp || '')} • ${escapeHtml(item.source || '')}</span>
+              </div>
+            </button>
+            <button type="button" data-del-id="${escapeHtml(item.id)}" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-rose-500/15 text-rose-300 border border-rose-500/25 active:scale-95 shrink-0">
+              Delete
+            </button>
+          </div>
+        `).join('');
+      }
+
+      el.savedScansList.addEventListener('click', (e) => {
+        const loadBtn = e.target.closest('[data-load-id]');
+        if (loadBtn) {
+          const found = state.savedScans.find((x) => x.id === loadBtn.getAttribute('data-load-id'));
+          if (found) {
+            stopCameraStream();
+            renderResultsScreen(found);
+            el.savedModal.classList.add('hidden');
+            showScreen('results');
+          }
+          return;
+        }
+        const delBtn = e.target.closest('[data-del-id]');
+        if (delBtn) {
+          state.savedScans = state.savedScans.filter((x) => x.id !== delBtn.getAttribute('data-del-id'));
+          saveScansToStorage();
+          renderSavedList();
+        }
+      });
+
+      el.clearAllSavedBtn.addEventListener('click', () => {
+        state.savedScans = [];
+        saveScansToStorage();
+        renderSavedList();
+      });
 
       function renderCompactRoutine() {
         el.compactRoutineList.innerHTML = state.routine.map((r) => `
-          <button type="button" data-rid="${r.id}" class="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs transition ${
+          <button type="button" data-rid="${r.id}" class="w-full text-left flex items-center gap-2.5 px-3 py-1.5 rounded-xl border text-[11px] transition ${
             r.done ? 'bg-emerald-500/15 border-emerald-500/35 text-zinc-400 line-through' : 'bg-surface border-white/10 text-zinc-100'
           }">
             <span class="w-4 h-4 rounded flex items-center justify-center text-[10px] font-bold shrink-0 ${
@@ -1228,11 +1365,11 @@ Svara ENDAST med giltig JSON i exakt detta format:
         el.panelMetrics.classList.toggle('hidden', !isMetrics);
         el.panelTrain.classList.toggle('hidden', isMetrics);
         el.tabMetricsBtn.className = isMetrics
-          ? 'py-1.5 rounded-xl text-xs font-bold bg-violet-600 text-white transition'
-          : 'py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition';
+          ? 'py-2 rounded-xl text-xs font-extrabold bg-violet-600 text-white transition'
+          : 'py-2 rounded-xl text-xs font-extrabold text-zinc-300 hover:text-white transition';
         el.tabTrainBtn.className = !isMetrics
-          ? 'py-1.5 rounded-xl text-xs font-bold bg-cyan-600 text-white transition'
-          : 'py-1.5 rounded-xl text-xs font-bold text-zinc-400 hover:text-white transition';
+          ? 'py-2 rounded-xl text-xs font-extrabold bg-cyan-600 text-white transition'
+          : 'py-2 rounded-xl text-xs font-extrabold text-zinc-300 hover:text-white transition';
       }
 
       function makeDemoPair() {
@@ -1252,8 +1389,8 @@ Svara ENDAST med giltig JSON i exakt detta format:
           ctx.fillText(label, 20, 34);
           return c.toDataURL('image/jpeg', 0.8);
         };
-        state.photos.front = make('DEMO FRAMSIDA');
-        state.photos.profile = make('DEMO 90° PROFIL');
+        state.photos.front = make('v4 DEMO FRONT');
+        state.photos.profile = make('v4 DEMO 90°');
         runFullAnalysis(true);
       }
 
@@ -1261,8 +1398,15 @@ Svara ENDAST med giltig JSON i exakt detta format:
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
+      // Event bindings
       el.startScanFlowBtn.addEventListener('click', openCameraFlow);
       el.quickDemoStartBtn.addEventListener('click', makeDemoPair);
+      el.startSavedFromHomeBtn.addEventListener('click', openSavedModal);
+      el.openSavedBtn.addEventListener('click', openSavedModal);
+      el.resSavedListBtn.addEventListener('click', openSavedModal);
+      el.closeSavedModalBtn.addEventListener('click', () => el.savedModal.classList.add('hidden'));
+      el.doneSavedModalBtn.addEventListener('click', () => el.savedModal.classList.add('hidden'));
+      el.saveScanBtn.addEventListener('click', saveCurrentScan);
       el.shutterBtn.addEventListener('click', captureCurrentFrame);
       el.fallbackFileInput.addEventListener('change', handleGalleryUpload);
       el.cameraGalleryInput.addEventListener('change', handleGalleryUpload);
@@ -1290,7 +1434,6 @@ Svara ENDAST med giltig JSON i exakt detta format:
         el.geminiModal.classList.remove('hidden');
       };
       el.openGeminiBtn.addEventListener('click', openModal);
-      el.resGeminiBtn.addEventListener('click', openModal);
       el.closeGeminiModalBtn.addEventListener('click', () => el.geminiModal.classList.add('hidden'));
       el.resetDefaultKeyBtn.addEventListener('click', () => {
         el.geminiKeyInput.value = DEFAULT_GEMINI_KEY;
