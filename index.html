@@ -450,9 +450,9 @@
         <button id="closeGeminiModalBtn" type="button" class="w-9 h-9 rounded-full bg-white/10 text-white font-bold text-sm active:scale-95">✕</button>
       </div>
       <p class="text-xs text-zinc-400 leading-relaxed">
-        Locked to deep analysis model <strong class="text-zinc-200">gemini-2.5-pro</strong> for slower, thorough visual inspection.
+        Locked to <strong class="text-zinc-200">gemini-2.5-pro</strong>. Paste an <code class="text-cyan-300">AIza...</code> key or keep your preset token.
       </p>
-      <input id="geminiKeyInput" type="password" placeholder="AIzaSy..." class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
+      <input id="geminiKeyInput" type="password" placeholder="AIzaSy... or AQ...." class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15 focus:outline-none focus:border-violet-400" />
       <select id="geminiModelInput" class="w-full px-3.5 py-3 rounded-xl text-xs font-mono bg-surface text-white border border-white/15">
         <option value="gemini-2.5-pro">gemini-2.5-pro (Deepest • Default)</option>
       </select>
@@ -471,8 +471,8 @@
       const APP_VERSION = 'v4';
       const APP_PASSWORD = 'bradar';
       const DEEP_MODEL = 'gemini-2.5-pro';
-      const DEFAULT_GEMINI_KEY = 'AQ.Ab8RN6JadGBmNKfESpjeL3JJBXeqpZIGwWT8Jota5MjPynE-uQ';
-      const STORAGE_GEMINI = 'aesthetix_v4_gemini_pro';
+      const DEFAULT_GEMINI_KEY = 'AQ.Ab8RN6K9_qgH3G2sENLPhta6scb-SuAPCZ4YLSWLjJ-1LX9Jaw';
+      const STORAGE_GEMINI = 'aesthetix_v4_gemini_pro_aq';
       const STORAGE_ROUTINE = 'aesthetix_v4_routine';
       const STORAGE_AUTH = 'aesthetix_v4_session';
       const STORAGE_SAVED = 'aesthetix_v4_saved_scans';
@@ -673,7 +673,7 @@
       }
 
       function updateGeminiDot() {
-        const active = Boolean(state.gemini.apiKey.trim());
+        const active = Boolean((state.gemini.apiKey || '').trim());
         el.geminiStatusDot.className = `inline-block w-2 h-2 rounded-full mr-1.5 ${active ? 'bg-emerald-400' : 'bg-amber-400'}`;
       }
 
@@ -1041,13 +1041,13 @@ Return ONLY valid JSON in this exact format:
   ]
 }`;
 
-        const isBearerToken = key.startsWith('AQ.') || key.startsWith('ya29.');
-        const url = isBearerToken
+        const useBearer = key.startsWith('AQ.') || key.startsWith('ya29.');
+        const url = useBearer
           ? `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`
           : `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`;
 
         const headers = { 'Content-Type': 'application/json' };
-        if (isBearerToken) headers['Authorization'] = `Bearer ${key}`;
+        if (useBearer) headers['Authorization'] = `Bearer ${key}`;
 
         const res = await fetch(url, {
           method: 'POST',
@@ -1070,7 +1070,12 @@ Return ONLY valid JSON in this exact format:
 
         if (!res.ok) {
           const errTxt = await res.text().catch(() => '');
-          throw new Error(`Gemini Pro error (${res.status}): ${errTxt.slice(0, 140)}`);
+          let apiMsg = '';
+          try {
+            const errJson = JSON.parse(errTxt);
+            apiMsg = errJson?.error?.message || '';
+          } catch (_) {}
+          throw new Error(apiMsg || `HTTP ${res.status}`);
         }
 
         const json = await res.json();
@@ -1117,11 +1122,11 @@ Return ONLY valid JSON in this exact format:
           const fallbackReport = {
             id: `${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
             timestamp: new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-            source: 'AI Error • Check Key/Quota',
+            source: 'AI Auth / API Error',
             rank: 'N/A',
             rankIdx: 2,
             psl: 0,
-            potential: 'AI analysis failed',
+            potential: 'Check AI key under AI button',
             gonial: '—',
             eline: '—',
             fwhr: '—',
@@ -1133,8 +1138,8 @@ Return ONLY valid JSON in this exact format:
               { name: 'Bilateral Symmetry', score: 0, fix: 'AI scan did not complete.' },
               { name: 'Skin Quality & Clarity', score: 0, fix: 'AI scan did not complete.' }
             ],
-            verdict: `Could not complete ${DEEP_MODEL} scan: ${err && err.message ? err.message : 'Network/API error'}. Open AI settings to verify your key/quota and retry.`,
-            weaknesses: ['<strong>AI Connection:</strong> Verify your Gemini API key or billing quota in AI settings, then scan again.'],
+            verdict: `${err && err.message ? err.message : 'Request failed'}. If AQ... is rejected by Google, open AI at the top and paste a standard AIza... key from Google AI Studio.`,
+            weaknesses: ['<strong>Credential Check:</strong> If Google rejects AQ..., paste an AIza... API key under AI settings and save.'],
             frontPhoto: state.photos.front,
             profilePhoto: state.photos.profile
           };
